@@ -1,4 +1,5 @@
 import React from 'react';
+import { bakeryConfig } from '../config/bakeryConfig';
 
 export const About: React.FC = () => {
   return (
@@ -6,7 +7,7 @@ export const About: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4">
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold mb-6" style={{ color: '#000000' }}>Our Story</h1>
-          <div className="w-24 h-1 mx-auto" style={{ backgroundColor: '#FFB22C' }}></div>
+          <div className="w-24 h-1 mx-auto" style={{ backgroundColor: bakeryConfig.primaryColor }}></div>
         </div>
         
         <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
@@ -22,13 +23,12 @@ export const About: React.FC = () => {
               Crafting Sweet Memories Since 2015
             </h2>
             <p className="text-gray-600 text-lg leading-relaxed mb-6">
-              Sweet Moments began as a dream shared by two passionate bakers who believed that 
+              {bakeryConfig.name} began as a dream shared by two passionate bakers who believed that 
               great food brings people together. What started in a small kitchen has grown into 
               a beloved community gathering place.
             </p>
             <p className="text-gray-600 text-lg leading-relaxed">
-              We're committed to using only the finest ingredients, traditional techniques, and 
-              innovative flavors to create pastries, coffee, and meals that make every moment special.
+              {bakeryConfig.tagline}
             </p>
           </div>
         </div>

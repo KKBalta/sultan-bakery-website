@@ -1,4 +1,5 @@
 import React from 'react';
+import { bakeryConfig } from '../config/bakeryConfig';
 
 export const Gallery: React.FC = () => {
   const galleryImages = [
@@ -54,7 +55,7 @@ export const Gallery: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold mb-6" style={{ color: '#000000' }}>Gallery</h1>
-          <div className="w-24 h-1 mx-auto mb-6" style={{ backgroundColor: '#FFB22C' }}></div>
+          <div className="w-24 h-1 mx-auto mb-6" style={{ backgroundColor: bakeryConfig.primaryColor }}></div>
           <p className="text-xl text-gray-600">
             Take a visual journey through our delicious creations and cozy atmosphere
           </p>
@@ -85,20 +86,20 @@ export const Gallery: React.FC = () => {
           <div className="bg-white rounded-2xl shadow-lg p-12">
             <h2 className="text-3xl font-bold mb-6" style={{ color: '#000000' }}>Visit Us Today</h2>
             <p className="text-xl text-gray-600 mb-8">
-              Experience the warmth and delicious aromas of Sweet Moments in person
+              Experience the warmth and delicious aromas of {bakeryConfig.name} in person
             </p>
             <div className="grid md:grid-cols-3 gap-8 text-center">
               <div>
                 <h3 className="font-bold mb-2" style={{ color: '#000000' }}>Location</h3>
-                <p className="text-gray-600">123 Baker Street<br />Sweet Town, ST 12345</p>
+                <p className="text-gray-600">{bakeryConfig.address}</p>
               </div>
               <div>
                 <h3 className="font-bold mb-2" style={{ color: '#000000' }}>Hours</h3>
-                <p className="text-gray-600">Mon-Sat: 6am-8pm<br />Sunday: 7am-6pm</p>
+                <p className="text-gray-600">{bakeryConfig.hours}</p>
               </div>
               <div>
                 <h3 className="font-bold mb-2" style={{ color: '#000000' }}>Contact</h3>
-                <p className="text-gray-600">(555) 123-CAKE<br />hello@sweetmoments.com</p>
+                <p className="text-gray-600">{bakeryConfig.phone}<br />{bakeryConfig.email}</p>
               </div>
             </div>
           </div>

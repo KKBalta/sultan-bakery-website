@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Coffee, Heart } from 'lucide-react';
+import { ArrowLeft, Coffee, Heart, RefreshCw } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { menuItems, categories } from '../data/menuData';
+import { categories } from '../data/menuData';
+import { useMenuData } from '../hooks/useMenuData';
+import { bakeryConfig } from '../config/bakeryConfig';
 
 export const TabletMenu: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('coffee');
+  const { menuItems, loading, error, refresh } = useMenuData();
 
-  const filteredItems = menuItems.filter(item => item.category === selectedCategory);
+  const filteredItems = menuItems.filter((item: any) => item.category === selectedCategory);
 
   return (
-    <div className="min-h-screen" style={{ background: `linear-gradient(to bottom right, #F7F7F7, #FFB22C)` }}>
+    <div className="min-h-screen" style={{ background: `linear-gradient(to bottom right, ${bakeryConfig.secondaryColor}, ${bakeryConfig.primaryColor})` }}>
       {/* Header */}
       <div className="bg-white shadow-lg">
         <div className="max-w-7xl mx-auto px-8 py-6">
@@ -18,20 +21,35 @@ export const TabletMenu: React.FC = () => {
               <Link
                 to="/"
                 className="p-3 rounded-full transition-colors"
-                style={{ backgroundColor: '#F7F7F7' }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#FFB22C'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#F7F7F7'}
+                style={{ backgroundColor: bakeryConfig.secondaryColor }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = bakeryConfig.primaryColor}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = bakeryConfig.secondaryColor}
               >
                 <ArrowLeft className="h-6 w-6" style={{ color: '#000000' }} />
               </Link>
               <div className="flex items-center space-x-3">
-                <Coffee className="h-10 w-10" style={{ color: '#FFB22C' }} />
-                <h1 className="text-3xl font-bold" style={{ color: '#000000' }}>Sweet Moments Menu</h1>
+                <Coffee className="h-10 w-10" style={{ color: bakeryConfig.primaryColor }} />
+                <h1 className="text-3xl font-bold" style={{ color: '#000000' }}>{bakeryConfig.name} Menu</h1>
               </div>
             </div>
             <div className="text-right">
               <p className="text-lg text-gray-600">Touch to explore our delicious offerings</p>
               <p className="text-sm text-gray-500">Prices include tax</p>
+              {loading && (
+                <div className="flex items-center justify-end mt-2">
+                  <RefreshCw className="h-4 w-4 animate-spin mr-2" />
+                  <span className="text-sm text-gray-500">Updating menu...</span>
+                </div>
+              )}
+              {error && (
+                <button 
+                  onClick={refresh}
+                  className="flex items-center justify-end mt-2 text-sm text-red-600 hover:text-red-800"
+                >
+                  <RefreshCw className="h-4 w-4 mr-1" />
+                  Retry
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -73,7 +91,7 @@ export const TabletMenu: React.FC = () => {
       {/* Menu Grid */}
       <div className="max-w-7xl mx-auto px-8 py-8">
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredItems.map((item) => (
+          {filteredItems.map((item: any) => (
             <div
               key={item.id}
               className={`bg-white rounded-3xl shadow-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl ${
@@ -152,15 +170,15 @@ export const TabletMenu: React.FC = () => {
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center">
                 <h3 className="font-bold mb-2 text-lg" style={{ color: '#000000' }}>Location</h3>
-                <p className="text-gray-600">123 Baker Street, Sweet Town, ST 12345</p>
+                <p className="text-gray-600">{bakeryConfig.address}</p>
               </div>
               <div className="text-center">
                 <h3 className="font-bold mb-2 text-lg" style={{ color: '#000000' }}>Hours</h3>
-                <p className="text-gray-600">Mon-Sat: 6am-8pm • Sun: 7am-6pm</p>
+                <p className="text-gray-600">{bakeryConfig.hours}</p>
               </div>
               <div className="text-center">
                 <h3 className="font-bold mb-2 text-lg" style={{ color: '#000000' }}>Phone</h3>
-                <p className="text-gray-600 text-xl font-medium">(555) 123-CAKE</p>
+                <p className="text-gray-600 text-xl font-medium">{bakeryConfig.phone}</p>
               </div>
             </div>
           </div>

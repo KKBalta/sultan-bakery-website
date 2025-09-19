@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { menuItems, categories } from '../data/menuData';
+import { categories } from '../data/menuData';
+import { useMenuData } from '../hooks/useMenuData';
 
 export const Menu: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const { menuItems, loading, error, refresh } = useMenuData();
 
   const filteredItems = selectedCategory === 'all' 
     ? menuItems 
@@ -14,6 +16,31 @@ export const Menu: React.FC = () => {
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold mb-6" style={{ color: '#000000' }}>Our Menu</h1>
           <div className="w-24 h-1 mx-auto" style={{ backgroundColor: '#FFB22C' }}></div>
+          
+          {/* Loading and Error States */}
+          {loading && (
+            <div className="mt-8">
+              <div className="inline-flex items-center px-4 py-2 bg-yellow-100 text-yellow-800 rounded-lg">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-yellow-600 mr-2"></div>
+                Loading menu from Google Sheets...
+              </div>
+            </div>
+          )}
+          
+          {error && (
+            <div className="mt-8">
+              <div className="inline-flex items-center px-4 py-2 bg-red-100 text-red-800 rounded-lg">
+                <span className="mr-2">⚠️</span>
+                {error}
+                <button 
+                  onClick={refresh}
+                  className="ml-2 underline hover:no-underline"
+                >
+                  Retry
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Category Filter */}

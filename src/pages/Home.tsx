@@ -1,24 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Clock, Heart, Award } from 'lucide-react';
+import { bakeryConfig } from '../config/bakeryConfig';
 
 export const Home: React.FC = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center" style={{ background: `linear-gradient(to bottom right, #F7F7F7, #FFB22C)` }}>
+      <section className="relative h-screen flex items-center justify-center" style={{ background: `linear-gradient(to bottom right, ${bakeryConfig.secondaryColor}, ${bakeryConfig.primaryColor})` }}>
         <div className="text-center max-w-4xl mx-auto px-4">
           <h1 className="text-5xl md:text-7xl font-bold mb-6" style={{ color: '#000000' }}>
-            Sweet Moments
+            {bakeryConfig.name}
           </h1>
           <p className="text-xl md:text-2xl mb-8 leading-relaxed" style={{ color: '#000000' }}>
-            Freshly baked pastries, artisan coffee, and warm memories made daily
+            {bakeryConfig.tagline}
           </p>
           <div className="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
             <Link
               to="/menu"
               className="inline-block text-white px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
-              style={{ backgroundColor: '#FFB22C', color: '#000000' }}
+              style={{ backgroundColor: bakeryConfig.primaryColor, color: '#000000' }}
               onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
               onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
             >
@@ -27,8 +28,8 @@ export const Home: React.FC = () => {
             <Link
               to="/tablet-menu"
               className="inline-block bg-white border-2 px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
-              style={{ color: '#000000', borderColor: '#FFB22C' }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#FFB22C'}
+              style={{ color: '#000000', borderColor: bakeryConfig.primaryColor }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = bakeryConfig.primaryColor}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
             >
               Tablet Menu
@@ -50,13 +51,13 @@ export const Home: React.FC = () => {
       <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16" style={{ color: '#000000' }}>
-            Why Choose Sweet Moments?
+            Why Choose {bakeryConfig.name}?
           </h2>
           
           <div className="grid md:grid-cols-3 gap-12">
             <div className="text-center">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: '#F7F7F7' }}>
-                <Clock className="h-10 w-10" style={{ color: '#FFB22C' }} />
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: bakeryConfig.secondaryColor }}>
+                <Clock className="h-10 w-10" style={{ color: bakeryConfig.primaryColor }} />
               </div>
               <h3 className="text-2xl font-bold mb-4" style={{ color: '#000000' }}>Fresh Daily</h3>
               <p className="text-gray-600 leading-relaxed">
@@ -65,8 +66,8 @@ export const Home: React.FC = () => {
             </div>
             
             <div className="text-center">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: '#F7F7F7' }}>
-                <Heart className="h-10 w-10" style={{ color: '#FFB22C' }} />
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: bakeryConfig.secondaryColor }}>
+                <Heart className="h-10 w-10" style={{ color: bakeryConfig.primaryColor }} />
               </div>
               <h3 className="text-2xl font-bold mb-4" style={{ color: '#000000' }}>Made with Love</h3>
               <p className="text-gray-600 leading-relaxed">
@@ -75,8 +76,8 @@ export const Home: React.FC = () => {
             </div>
             
             <div className="text-center">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: '#F7F7F7' }}>
-                <Award className="h-10 w-10" style={{ color: '#FFB22C' }} />
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: bakeryConfig.secondaryColor }}>
+                <Award className="h-10 w-10" style={{ color: bakeryConfig.primaryColor }} />
               </div>
               <h3 className="text-2xl font-bold mb-4" style={{ color: '#000000' }}>Award Winning</h3>
               <p className="text-gray-600 leading-relaxed">
@@ -88,7 +89,7 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Featured Items Preview */}
-      <section className="py-20" style={{ backgroundColor: '#F7F7F7' }}>
+      <section className="py-20" style={{ backgroundColor: bakeryConfig.secondaryColor }}>
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16" style={{ color: '#000000' }}>
             Featured Items
@@ -104,7 +105,7 @@ export const Home: React.FC = () => {
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2" style={{ color: '#000000' }}>Butter Croissant</h3>
                 <p className="text-gray-600 mb-4">Flaky, buttery pastry baked fresh daily</p>
-                <div className="font-bold text-lg" style={{ color: '#FFB22C' }}>$3.25</div>
+                <div className="font-bold text-lg" style={{ color: bakeryConfig.primaryColor }}>$3.25</div>
               </div>
             </div>
             
@@ -117,7 +118,7 @@ export const Home: React.FC = () => {
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2" style={{ color: '#000000' }}>Classic Cappuccino</h3>
                 <p className="text-gray-600 mb-4">Perfectly steamed milk with our signature espresso</p>
-                <div className="font-bold text-lg" style={{ color: '#FFB22C' }}>$4.25</div>
+                <div className="font-bold text-lg" style={{ color: bakeryConfig.primaryColor }}>$4.25</div>
               </div>
             </div>
             
@@ -130,7 +131,7 @@ export const Home: React.FC = () => {
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2" style={{ color: '#000000' }}>Turkey Avocado Club</h3>
                 <p className="text-gray-600 mb-4">Fresh turkey, avocado, bacon on multigrain bread</p>
-                <div className="font-bold text-lg" style={{ color: '#FFB22C' }}>$9.75</div>
+                <div className="font-bold text-lg" style={{ color: bakeryConfig.primaryColor }}>$9.75</div>
               </div>
             </div>
           </div>
@@ -139,7 +140,7 @@ export const Home: React.FC = () => {
             <Link
               to="/menu"
               className="inline-block text-white px-8 py-4 rounded-full text-lg font-medium transition-colors duration-300 shadow-lg"
-              style={{ backgroundColor: '#FFB22C', color: '#000000' }}
+              style={{ backgroundColor: bakeryConfig.primaryColor, color: '#000000' }}
               onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
               onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
             >

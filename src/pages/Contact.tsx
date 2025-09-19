@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { bakeryConfig } from '../config/bakeryConfig';
 
 export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -29,7 +30,7 @@ export const Contact: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold mb-6" style={{ color: '#000000' }}>Contact Us</h1>
-          <div className="w-24 h-1 mx-auto mb-6" style={{ backgroundColor: '#FFB22C' }}></div>
+          <div className="w-24 h-1 mx-auto mb-6" style={{ backgroundColor: bakeryConfig.primaryColor }}></div>
           <p className="text-xl text-gray-600">
             We'd love to hear from you! Get in touch with any questions or feedback.
           </p>
@@ -42,47 +43,45 @@ export const Contact: React.FC = () => {
             
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
-                <div className="p-3 rounded-full" style={{ backgroundColor: '#F7F7F7' }}>
-                  <MapPin className="h-6 w-6" style={{ color: '#FFB22C' }} />
+                <div className="p-3 rounded-full" style={{ backgroundColor: bakeryConfig.secondaryColor }}>
+                  <MapPin className="h-6 w-6" style={{ color: bakeryConfig.primaryColor }} />
                 </div>
                 <div>
                   <h3 className="font-bold mb-1" style={{ color: '#000000' }}>Address</h3>
                   <p className="text-gray-600">
-                    123 Baker Street<br />
-                    Sweet Town, ST 12345
+                    {bakeryConfig.address}
                   </p>
                 </div>
               </div>
               
               <div className="flex items-start space-x-4">
-                <div className="p-3 rounded-full" style={{ backgroundColor: '#F7F7F7' }}>
-                  <Phone className="h-6 w-6" style={{ color: '#FFB22C' }} />
+                <div className="p-3 rounded-full" style={{ backgroundColor: bakeryConfig.secondaryColor }}>
+                  <Phone className="h-6 w-6" style={{ color: bakeryConfig.primaryColor }} />
                 </div>
                 <div>
                   <h3 className="font-bold mb-1" style={{ color: '#000000' }}>Phone</h3>
-                  <p className="text-gray-600">(555) 123-CAKE</p>
+                  <p className="text-gray-600">{bakeryConfig.phone}</p>
                 </div>
               </div>
               
               <div className="flex items-start space-x-4">
-                <div className="p-3 rounded-full" style={{ backgroundColor: '#F7F7F7' }}>
-                  <Mail className="h-6 w-6" style={{ color: '#FFB22C' }} />
+                <div className="p-3 rounded-full" style={{ backgroundColor: bakeryConfig.secondaryColor }}>
+                  <Mail className="h-6 w-6" style={{ color: bakeryConfig.primaryColor }} />
                 </div>
                 <div>
                   <h3 className="font-bold mb-1" style={{ color: '#000000' }}>Email</h3>
-                  <p className="text-gray-600">hello@sweetmoments.com</p>
+                  <p className="text-gray-600">{bakeryConfig.email}</p>
                 </div>
               </div>
               
               <div className="flex items-start space-x-4">
-                <div className="p-3 rounded-full" style={{ backgroundColor: '#F7F7F7' }}>
-                  <Clock className="h-6 w-6" style={{ color: '#FFB22C' }} />
+                <div className="p-3 rounded-full" style={{ backgroundColor: bakeryConfig.secondaryColor }}>
+                  <Clock className="h-6 w-6" style={{ color: bakeryConfig.primaryColor }} />
                 </div>
                 <div>
                   <h3 className="font-bold mb-1" style={{ color: '#000000' }}>Hours</h3>
                   <p className="text-gray-600">
-                    Monday - Saturday: 6:00 AM - 8:00 PM<br />
-                    Sunday: 7:00 AM - 6:00 PM
+                    {bakeryConfig.hours}
                   </p>
                 </div>
               </div>
@@ -115,8 +114,8 @@ export const Contact: React.FC = () => {
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-2 transition-colors"
-                  style={{ '--tw-ring-color': '#FFB22C' } as React.CSSProperties}
-                  onFocus={(e) => e.currentTarget.style.borderColor = '#FFB22C'}
+                  style={{ '--tw-ring-color': bakeryConfig.primaryColor } as React.CSSProperties}
+                  onFocus={(e) => e.currentTarget.style.borderColor = bakeryConfig.primaryColor}
                   onBlur={(e) => e.currentTarget.style.borderColor = '#d1d5db'}
                 />
               </div>
@@ -133,7 +132,7 @@ export const Contact: React.FC = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-2 transition-colors"
-                  onFocus={(e) => e.currentTarget.style.borderColor = '#FFB22C'}
+                  onFocus={(e) => e.currentTarget.style.borderColor = bakeryConfig.primaryColor}
                   onBlur={(e) => e.currentTarget.style.borderColor = '#d1d5db'}
                 />
               </div>
@@ -149,7 +148,7 @@ export const Contact: React.FC = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-2 transition-colors"
-                  onFocus={(e) => e.currentTarget.style.borderColor = '#FFB22C'}
+                  onFocus={(e) => e.currentTarget.style.borderColor = bakeryConfig.primaryColor}
                   onBlur={(e) => e.currentTarget.style.borderColor = '#d1d5db'}
                 />
               </div>
@@ -166,7 +165,7 @@ export const Contact: React.FC = () => {
                   value={formData.message}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-2 transition-colors resize-none"
-                  onFocus={(e) => e.currentTarget.style.borderColor = '#FFB22C'}
+                  onFocus={(e) => e.currentTarget.style.borderColor = bakeryConfig.primaryColor}
                   onBlur={(e) => e.currentTarget.style.borderColor = '#d1d5db'}
                 />
               </div>
@@ -174,7 +173,7 @@ export const Contact: React.FC = () => {
               <button
                 type="submit"
                 className="w-full text-white py-3 rounded-lg font-medium transition-colors duration-300 shadow-lg hover:shadow-xl"
-                style={{ backgroundColor: '#FFB22C', color: '#000000' }}
+                style={{ backgroundColor: bakeryConfig.primaryColor, color: '#000000' }}
                 onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
                 onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
               >
