@@ -1,152 +1,366 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Clock, Heart, Award } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { HeroMeshBackground } from '../components/MeshBackground';
 import { bakeryConfig } from '../config/bakeryConfig';
 
 export const Home: React.FC = () => {
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center" style={{ background: `linear-gradient(to bottom right, ${bakeryConfig.secondaryColor}, ${bakeryConfig.primaryColor})` }}>
-        <div className="text-center max-w-4xl mx-auto px-4">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6" style={{ color: '#000000' }}>
+      {/* Hero Section with Enhanced Ottoman-Inspired Effects */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Enhanced Hero Overlay */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-black/40 via-transparent to-black/60" />
+        
+        {/* Additional Hero Mesh Layer for Extra Depth */}
+        <HeroMeshBackground 
+          className="absolute inset-0 z-1" 
+          opacity={0.4} 
+          speed={0.5} 
+        />
+        
+        {/* Content Layer */}
+        <div className="text-center max-w-4xl mx-auto px-4 relative z-10">
+          {/* Animated Title with Ottoman Typography Feel */}
+          <motion.h1 
+            className="text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-2xl" 
+            style={{ 
+              textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+              fontFamily: 'serif'
+            }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             {bakeryConfig.name}
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 leading-relaxed" style={{ color: '#000000' }}>
+          </motion.h1>
+          
+          {/* Animated Tagline with Gold Accent */}
+          <motion.p 
+            className="text-xl md:text-2xl mb-8 leading-relaxed text-white drop-shadow-lg" 
+            style={{ 
+              textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
+              color: '#ffc107' // Ottoman Gold
+            }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
             {bakeryConfig.tagline}
-          </p>
-          <div className="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
+          </motion.p>
+          
+          {/* Animated Buttons with Ottoman Styling */}
+          <motion.div 
+            className="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
             <Link
               to="/menu"
-              className="inline-block text-white px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
-              style={{ backgroundColor: bakeryConfig.primaryColor, color: '#000000' }}
-              onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
-              onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+              className="inline-block text-white px-8 py-4 rounded-full text-lg font-medium shadow-2xl hover:shadow-3xl transition-all duration-300 border-2 border-white"
+              style={{ 
+                backgroundColor: '#d32f2f', // Terracotta Red
+                color: '#ffffff',
+                boxShadow: '0 8px 32px rgba(211, 47, 47, 0.4)'
+              }}
             >
               View Menu
             </Link>
+            
             <Link
               to="/tablet-menu"
-              className="inline-block bg-white border-2 px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
-              style={{ color: '#000000', borderColor: bakeryConfig.primaryColor }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = bakeryConfig.primaryColor}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
+              className="inline-block px-8 py-4 rounded-full text-lg font-medium shadow-2xl hover:shadow-3xl transition-all duration-300 border-2"
+              style={{ 
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                color: '#ffc107', // Ottoman Gold
+                borderColor: '#ffc107',
+                backdropFilter: 'blur(10px)'
+              }}
             >
               Tablet Menu
             </Link>
-          </div>
+          </motion.div>
         </div>
         
-        {/* Hero Image */}
-        <div className="absolute inset-0 z-[-1] overflow-hidden">
-          <img
-            src="https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg"
-            alt="Fresh baked goods"
-            className="w-full h-full object-cover opacity-20"
-          />
-        </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16" style={{ color: '#000000' }}>
+      <section className="py-20 relative">
+        {/* Glass morphism background */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'rgba(255, 255, 255, 0.1)',
+            backdropFilter: 'blur(20px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+            borderTop: '1px solid rgba(255, 255, 255, 0.2)',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
+          }}
+        />
+        <div className="max-w-6xl mx-auto px-4 relative z-10">
+          <motion.h2 
+            className="text-4xl font-bold text-center mb-16" 
+            style={{ 
+              color: '#ffffff',
+              textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
+            }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
             Why Choose {bakeryConfig.name}?
-          </h2>
+          </motion.h2>
           
           <div className="grid md:grid-cols-3 gap-12">
-            <div className="text-center">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: bakeryConfig.secondaryColor }}>
+            <motion.div 
+              className="text-center"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10 }}
+            >
+              <motion.div 
+                className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" 
+                style={{ backgroundColor: bakeryConfig.secondaryColor }}
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
                 <Clock className="h-10 w-10" style={{ color: bakeryConfig.primaryColor }} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4" style={{ color: '#000000' }}>Fresh Daily</h3>
-              <p className="text-gray-600 leading-relaxed">
+              </motion.div>
+              <h3 className="text-2xl font-bold mb-4" style={{ 
+                color: '#ffffff',
+                textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+              }}>Fresh Daily</h3>
+              <p className="text-white/90 leading-relaxed" style={{ 
+                textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+              }}>
                 Everything is baked fresh every morning using the finest ingredients and traditional recipes.
               </p>
-            </div>
+            </motion.div>
             
-            <div className="text-center">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: bakeryConfig.secondaryColor }}>
+            <motion.div 
+              className="text-center"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10 }}
+            >
+              <motion.div 
+                className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" 
+                style={{ backgroundColor: bakeryConfig.secondaryColor }}
+                whileHover={{ scale: 1.1, rotate: -5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
                 <Heart className="h-10 w-10" style={{ color: bakeryConfig.primaryColor }} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4" style={{ color: '#000000' }}>Made with Love</h3>
-              <p className="text-gray-600 leading-relaxed">
+              </motion.div>
+              <h3 className="text-2xl font-bold mb-4" style={{ 
+                color: '#ffffff',
+                textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+              }}>Made with Love</h3>
+              <p className="text-white/90 leading-relaxed" style={{ 
+                textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+              }}>
                 Our passionate bakers put love and care into every item, creating memorable experiences.
               </p>
-            </div>
+            </motion.div>
             
-            <div className="text-center">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: bakeryConfig.secondaryColor }}>
+            <motion.div 
+              className="text-center"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10 }}
+            >
+              <motion.div 
+                className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" 
+                style={{ backgroundColor: bakeryConfig.secondaryColor }}
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
                 <Award className="h-10 w-10" style={{ color: bakeryConfig.primaryColor }} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4" style={{ color: '#000000' }}>Award Winning</h3>
-              <p className="text-gray-600 leading-relaxed">
+              </motion.div>
+              <h3 className="text-2xl font-bold mb-4" style={{ 
+                color: '#ffffff',
+                textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+              }}>Award Winning</h3>
+              <p className="text-white/90 leading-relaxed" style={{ 
+                textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+              }}>
                 Recognized for excellence in taste, quality, and customer service in our community.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Featured Items Preview */}
-      <section className="py-20" style={{ backgroundColor: bakeryConfig.secondaryColor }}>
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16" style={{ color: '#000000' }}>
+      <section className="py-20 relative">
+        {/* Glass morphism background */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'rgba(255, 255, 255, 0.08)',
+            backdropFilter: 'blur(20px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+            borderTop: '1px solid rgba(255, 255, 255, 0.15)',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.15)'
+          }}
+        />
+        <div className="max-w-6xl mx-auto px-4 relative z-10">
+          <motion.h2 
+            className="text-4xl font-bold text-center mb-16" 
+            style={{ 
+              color: '#ffffff',
+              textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
+            }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
             Featured Items
-          </h2>
+          </motion.h2>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-              <img
+            <motion.div 
+              className="rounded-2xl shadow-lg overflow-hidden"
+              style={{
+                background: 'rgba(255, 255, 255, 0.15)',
+                backdropFilter: 'blur(20px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+              }}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(0,0,0,0.25)" }}
+            >
+              <motion.img
                 src="https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg"
                 alt="Butter Croissant"
                 className="w-full h-48 object-cover"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
               />
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2" style={{ color: '#000000' }}>Butter Croissant</h3>
-                <p className="text-gray-600 mb-4">Flaky, buttery pastry baked fresh daily</p>
-                <div className="font-bold text-lg" style={{ color: bakeryConfig.primaryColor }}>$3.25</div>
+                <h3 className="text-xl font-bold mb-2" style={{ 
+                  color: '#ffffff',
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                }}>Butter Croissant</h3>
+                <p className="text-white/90 mb-4" style={{ 
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                }}>Flaky, buttery pastry baked fresh daily</p>
+                <div className="font-bold text-lg" style={{ 
+                  color: '#ffc107',
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                }}>$3.25</div>
               </div>
-            </div>
+            </motion.div>
             
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-              <img
+            <motion.div 
+              className="rounded-2xl shadow-lg overflow-hidden"
+              style={{
+                background: 'rgba(255, 255, 255, 0.15)',
+                backdropFilter: 'blur(20px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+              }}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(0,0,0,0.25)" }}
+            >
+              <motion.img
                 src="https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg"
                 alt="Cappuccino"
                 className="w-full h-48 object-cover"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
               />
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2" style={{ color: '#000000' }}>Classic Cappuccino</h3>
-                <p className="text-gray-600 mb-4">Perfectly steamed milk with our signature espresso</p>
-                <div className="font-bold text-lg" style={{ color: bakeryConfig.primaryColor }}>$4.25</div>
+                <h3 className="text-xl font-bold mb-2" style={{ 
+                  color: '#ffffff',
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                }}>Classic Cappuccino</h3>
+                <p className="text-white/90 mb-4" style={{ 
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                }}>Perfectly steamed milk with our signature espresso</p>
+                <div className="font-bold text-lg" style={{ 
+                  color: '#ffc107',
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                }}>$4.25</div>
               </div>
-            </div>
+            </motion.div>
             
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-              <img
+            <motion.div 
+              className="rounded-2xl shadow-lg overflow-hidden"
+              style={{
+                background: 'rgba(255, 255, 255, 0.15)',
+                backdropFilter: 'blur(20px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+              }}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(0,0,0,0.25)" }}
+            >
+              <motion.img
                 src="https://images.pexels.com/photos/1647163/pexels-photo-1647163.jpeg"
                 alt="Turkey Avocado Club"
                 className="w-full h-48 object-cover"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
               />
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2" style={{ color: '#000000' }}>Turkey Avocado Club</h3>
-                <p className="text-gray-600 mb-4">Fresh turkey, avocado, bacon on multigrain bread</p>
-                <div className="font-bold text-lg" style={{ color: bakeryConfig.primaryColor }}>$9.75</div>
+                <h3 className="text-xl font-bold mb-2" style={{ 
+                  color: '#ffffff',
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                }}>Turkey Avocado Club</h3>
+                <p className="text-white/90 mb-4" style={{ 
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                }}>Fresh turkey, avocado, bacon on multigrain bread</p>
+                <div className="font-bold text-lg" style={{ 
+                  color: '#ffc107',
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                }}>$9.75</div>
               </div>
-            </div>
+            </motion.div>
           </div>
           
-          <div className="text-center mt-12">
-            <Link
-              to="/menu"
-              className="inline-block text-white px-8 py-4 rounded-full text-lg font-medium transition-colors duration-300 shadow-lg"
-              style={{ backgroundColor: bakeryConfig.primaryColor, color: '#000000' }}
-              onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
-              onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+          <motion.div 
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
-              View Full Menu
-            </Link>
-          </div>
+              <Link
+                to="/menu"
+                className="inline-block text-white px-8 py-4 rounded-full text-lg font-medium shadow-lg"
+                style={{ backgroundColor: bakeryConfig.primaryColor, color: '#000000' }}
+              >
+                View Full Menu
+              </Link>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
     </div>

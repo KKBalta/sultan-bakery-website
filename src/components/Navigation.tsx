@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Coffee, Menu, X } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { bakeryConfig } from '../config/bakeryConfig';
 
 interface NavigationProps {
@@ -20,84 +21,231 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
   ];
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50" style={{ backgroundColor: bakeryConfig.secondaryColor }}>
+    <motion.nav 
+      className="sticky top-0 z-50"
+      style={{ 
+        background: 'rgba(0, 0, 0, 0.15)',
+        backdropFilter: 'blur(25px) saturate(200%)',
+        WebkitBackdropFilter: 'blur(25px) saturate(200%)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+        boxShadow: '0 12px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
+        borderRadius: '0 0 24px 24px',
+        marginTop: '12px'
+      }}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+    >
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <Coffee className="h-8 w-8" style={{ color: bakeryConfig.primaryColor }} />
-            <span className="text-2xl font-bold" style={{ color: '#000000' }}>{bakeryConfig.name}</span>
-          </Link>
+          {/* Animated Logo */}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <Link to="/" className="flex items-center space-x-3">
+              <motion.div
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.6 }}
+                className="p-2 rounded-full"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)'
+                }}
+              >
+                <Coffee className="h-6 w-6 text-white" />
+              </motion.div>
+              <span 
+                className="text-2xl font-bold text-white"
+                style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)' }}
+              >
+                {bakeryConfig.name}
+              </span>
+            </Link>
+          </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
-            {navItems.map((item) => (
-              <Link
+          <div className="hidden md:flex space-x-2">
+            {navItems.map((item, index) => (
+              <motion.div
                 key={item.path}
-                to={item.path}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  location.pathname === item.path
-                    ? 'text-black'
-                    : 'text-gray-700 hover:text-black'
-                }`}
-                style={location.pathname === item.path ? { backgroundColor: bakeryConfig.primaryColor, color: '#000000' } : {}}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
               >
-                {item.label}
-              </Link>
+                <Link
+                  to={item.path}
+                  className={`px-5 py-3 rounded-full text-sm font-medium transition-all duration-500 relative overflow-hidden ${
+                    location.pathname === item.path
+                      ? 'text-black'
+                      : 'text-white hover:text-white'
+                  }`}
+                  style={{
+                    background: location.pathname === item.path 
+                      ? 'rgba(255, 255, 255, 0.35)' 
+                      : 'rgba(255, 255, 255, 0.15)',
+                    backdropFilter: 'blur(20px) saturate(200%)',
+                    WebkitBackdropFilter: 'blur(20px) saturate(200%)',
+                    border: location.pathname === item.path 
+                      ? '1px solid rgba(255, 255, 255, 0.4)' 
+                      : '1px solid rgba(255, 255, 255, 0.25)',
+                    boxShadow: location.pathname === item.path 
+                      ? '0 12px 40px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)' 
+                      : '0 8px 24px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                    color: location.pathname === item.path ? '#000000' : '#ffffff',
+                    fontWeight: location.pathname === item.path ? '600' : '500',
+                    textShadow: location.pathname === item.path ? 'none' : '0 1px 2px rgba(0, 0, 0, 0.5)'
+                  }}
+                >
+                  {location.pathname === item.path && (
+                    <motion.div
+                      className="absolute inset-0 rounded-full"
+                      style={{ backgroundColor: 'rgba(255, 193, 7, 0.2)' }}
+                      layoutId="activeTab"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10">{item.label}</span>
+                </Link>
+              </motion.div>
             ))}
-            <Link
-              to="/tablet-menu"
-              className="text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
-              style={{ backgroundColor: bakeryConfig.primaryColor, color: '#000000' }}
-              onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
-              onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+            
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.6 }}
             >
-              Tablet Menu
-            </Link>
+              <Link
+                to="/tablet-menu"
+                className="px-5 py-3 rounded-full text-sm font-medium transition-all duration-500 text-white"
+                style={{ 
+                  background: 'rgba(255, 107, 107, 0.25)',
+                  backdropFilter: 'blur(20px) saturate(200%)',
+                  WebkitBackdropFilter: 'blur(20px) saturate(200%)',
+                  border: '1px solid rgba(255, 107, 107, 0.35)',
+                  boxShadow: '0 12px 40px rgba(255, 107, 107, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                  fontWeight: '500',
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                }}
+              >
+                Tablet Menu
+              </Link>
+            </motion.div>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <button
+            <motion.button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-md text-gray-700 hover:text-black"
+              className="p-3 rounded-full text-white transition-all duration-500"
+              style={{
+                background: 'rgba(255, 255, 255, 0.2)',
+                backdropFilter: 'blur(20px) saturate(200%)',
+                WebkitBackdropFilter: 'blur(20px) saturate(200%)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
+                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
+              <motion.div
+                animate={{ rotate: isMenuOpen ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </motion.div>
+            </motion.button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden border-t border-gray-200" style={{ borderColor: bakeryConfig.primaryColor }}>
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              {navItems.map((item) => (
+        <motion.div
+          className="md:hidden"
+          initial={false}
+          animate={{ 
+            height: isMenuOpen ? 'auto' : 0,
+            opacity: isMenuOpen ? 1 : 0
+          }}
+          transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+          style={{
+            borderTop: '1px solid rgba(255, 255, 255, 0.2)',
+            background: 'rgba(0, 0, 0, 0.1)',
+            backdropFilter: 'blur(25px) saturate(200%)',
+            WebkitBackdropFilter: 'blur(25px) saturate(200%)',
+            boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15)',
+            overflow: 'hidden',
+            borderRadius: '0 0 24px 24px'
+          }}
+        >
+          <div className="px-2 pt-2 pb-3 space-y-1">
+            {navItems.map((item, index) => (
+              <motion.div
+                key={item.path}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ 
+                  opacity: isMenuOpen ? 1 : 0,
+                  x: isMenuOpen ? 0 : -20
+                }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+              >
                 <Link
-                  key={item.path}
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-500 ${
                     location.pathname === item.path
                       ? 'text-black'
-                      : 'text-gray-700 hover:text-black'
+                      : 'text-white hover:text-white'
                   }`}
-                  style={location.pathname === item.path ? { backgroundColor: bakeryConfig.primaryColor, color: '#000000' } : {}}
+                  style={{
+                    background: location.pathname === item.path 
+                      ? 'rgba(255, 255, 255, 0.35)' 
+                      : 'rgba(255, 255, 255, 0.15)',
+                    backdropFilter: 'blur(20px) saturate(200%)',
+                    WebkitBackdropFilter: 'blur(20px) saturate(200%)',
+                    border: location.pathname === item.path 
+                      ? '1px solid rgba(255, 255, 255, 0.4)' 
+                      : '1px solid rgba(255, 255, 255, 0.25)',
+                    boxShadow: location.pathname === item.path 
+                      ? '0 8px 24px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)' 
+                      : '0 4px 16px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                    fontWeight: location.pathname === item.path ? '600' : '500',
+                    textShadow: location.pathname === item.path ? 'none' : '0 1px 2px rgba(0, 0, 0, 0.5)'
+                  }}
                 >
                   {item.label}
                 </Link>
-              ))}
+              </motion.div>
+            ))}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ 
+                opacity: isMenuOpen ? 1 : 0,
+                x: isMenuOpen ? 0 : -20
+              }}
+              transition={{ duration: 0.3, delay: 0.6 }}
+            >
               <Link
                 to="/tablet-menu"
                 onClick={() => setIsMenuOpen(false)}
-                className="block text-white px-3 py-2 rounded-md text-base font-medium transition-colors"
-                style={{ backgroundColor: bakeryConfig.primaryColor, color: '#000000' }}
+                className="block text-white px-4 py-3 rounded-lg text-base font-medium transition-all duration-500"
+                style={{ 
+                  background: 'rgba(255, 107, 107, 0.25)',
+                  backdropFilter: 'blur(20px) saturate(200%)',
+                  WebkitBackdropFilter: 'blur(20px) saturate(200%)',
+                  border: '1px solid rgba(255, 107, 107, 0.35)',
+                  boxShadow: '0 8px 24px rgba(255, 107, 107, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                  fontWeight: '500',
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                }}
               >
                 Tablet Menu
               </Link>
-            </div>
+            </motion.div>
           </div>
-        )}
+        </motion.div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
