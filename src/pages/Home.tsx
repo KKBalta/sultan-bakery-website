@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Clock, Heart, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { HeroMeshBackground } from '../components/MeshBackground';
 import { bakeryConfig } from '../config/bakeryConfig';
 
 export const Home: React.FC = () => {
@@ -10,14 +9,15 @@ export const Home: React.FC = () => {
     <div>
       {/* Hero Section with Enhanced Ottoman-Inspired Effects */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Enhanced Hero Overlay */}
-        <div className="absolute inset-0 z-0 bg-gradient-to-br from-black/40 via-transparent to-black/60" />
-        
-        {/* Additional Hero Mesh Layer for Extra Depth */}
-        <HeroMeshBackground 
-          className="absolute inset-0 z-1" 
-          opacity={0.4} 
-          speed={0.5} 
+        {/* Glass morphism background - bright like bottom sections */}
+        <div 
+          className="absolute inset-0 z-0"
+          style={{
+            background: bakeryConfig.colors.background,
+            backdropFilter: 'blur(20px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+            borderBottom: `1px solid ${bakeryConfig.colors.border}`
+          }}
         />
         
         {/* Content Layer */}
@@ -27,7 +27,7 @@ export const Home: React.FC = () => {
             className="text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-2xl" 
             style={{ 
               textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-              fontFamily: 'serif'
+              fontFamily: 'Condiment, cursive'
             }}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -41,7 +41,7 @@ export const Home: React.FC = () => {
             className="text-xl md:text-2xl mb-8 leading-relaxed text-white drop-shadow-lg" 
             style={{ 
               textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
-              color: '#ffc107' // Ottoman Gold
+              color: bakeryConfig.colors.text
             }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -73,9 +73,9 @@ export const Home: React.FC = () => {
               to="/tablet-menu"
               className="inline-block px-8 py-4 rounded-full text-lg font-medium shadow-2xl hover:shadow-3xl transition-all duration-300 border-2"
               style={{ 
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                color: '#ffc107', // Ottoman Gold
-                borderColor: '#ffc107',
+                backgroundColor: bakeryConfig.colors.background,
+                color: bakeryConfig.colors.textSecondary,
+                borderColor: bakeryConfig.colors.border,
                 backdropFilter: 'blur(10px)'
               }}
             >
@@ -92,7 +92,7 @@ export const Home: React.FC = () => {
         <div 
           className="absolute inset-0"
           style={{
-            background: 'rgba(255, 255, 255, 0.1)',
+            background: 'rgba(255, 255, 255, 0.12)',
             backdropFilter: 'blur(20px) saturate(180%)',
             WebkitBackdropFilter: 'blur(20px) saturate(180%)',
             borderTop: '1px solid rgba(255, 255, 255, 0.2)',
@@ -205,11 +205,11 @@ export const Home: React.FC = () => {
         <div 
           className="absolute inset-0"
           style={{
-            background: 'rgba(255, 255, 255, 0.08)',
+            background: 'rgba(255, 255, 255, 0.12)',
             backdropFilter: 'blur(20px) saturate(180%)',
             WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-            borderTop: '1px solid rgba(255, 255, 255, 0.15)',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.15)'
+            borderTop: '1px solid rgba(255, 255, 255, 0.2)',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
           }}
         />
         <div className="max-w-6xl mx-auto px-4 relative z-10">
@@ -259,8 +259,8 @@ export const Home: React.FC = () => {
                   textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
                 }}>Flaky, buttery pastry baked fresh daily</p>
                 <div className="font-bold text-lg" style={{ 
-                  color: '#ffc107',
-                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                  color: '#000000',
+                  textShadow: '0 1px 2px rgba(255, 255, 255, 0.5)'
                 }}>$3.25</div>
               </div>
             </motion.div>
@@ -296,8 +296,8 @@ export const Home: React.FC = () => {
                   textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
                 }}>Perfectly steamed milk with our signature espresso</p>
                 <div className="font-bold text-lg" style={{ 
-                  color: '#ffc107',
-                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                  color: '#000000',
+                  textShadow: '0 1px 2px rgba(255, 255, 255, 0.5)'
                 }}>$4.25</div>
               </div>
             </motion.div>
@@ -333,8 +333,8 @@ export const Home: React.FC = () => {
                   textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
                 }}>Fresh turkey, avocado, bacon on multigrain bread</p>
                 <div className="font-bold text-lg" style={{ 
-                  color: '#ffc107',
-                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                  color: '#000000',
+                  textShadow: '0 1px 2px rgba(255, 255, 255, 0.5)'
                 }}>$9.75</div>
               </div>
             </motion.div>

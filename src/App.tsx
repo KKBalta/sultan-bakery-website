@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { PrimaryMeshBackground, SecondaryMeshBackground } from './components/MeshBackground';
+import { MeshGradient } from '@paper-design/shaders-react';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
@@ -11,19 +11,29 @@ import { TabletMenu } from './pages/TabletMenu';
 function App() {
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* Global Mesh Gradient Background */}
-      <PrimaryMeshBackground 
-        className="fixed inset-0 z-[-2]" 
-        opacity={0.3} 
-        speed={0.2} 
-      />
-      
-      {/* Secondary Layer for Depth */}
-      <SecondaryMeshBackground 
-        className="fixed inset-0 z-[-1]" 
-        opacity={0.2} 
-        speed={0.4} 
-      />
+            {/* Classic Bakery Mesh - White, Black, Brown */}
+            <div className="fixed inset-0 z-[-2]" style={{ opacity: 0.6 }}>
+              <MeshGradient
+                speed={0.3}
+                colors={['#ffffff', '#f8f8f8', '#000000', '#2c2c2c', '#8b4513', '#a0522d']}
+                style={{ 
+                  width: '100vw', 
+                  height: '100vh'
+                }}
+              />
+            </div>
+            
+            {/* Secondary Layer - Rich Browns */}
+            <div className="fixed inset-0 z-[-1]" style={{ opacity: 0.4 }}>
+              <MeshGradient
+                speed={0.5}
+                colors={['#f5f5f5', '#e0e0e0', '#1a1a1a', '#404040', '#d2691e', '#cd853f']}
+                style={{ 
+                  width: '100vw', 
+                  height: '100vh'
+                }}
+              />
+            </div>
       
       <Router>
         <Routes>

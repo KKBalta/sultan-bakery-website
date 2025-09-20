@@ -68,7 +68,7 @@ export const TabletMenu: React.FC = () => {
                     ? 'text-black shadow-xl scale-105'
                     : 'bg-white text-black hover:scale-102'
                 }`}
-                style={selectedCategory === category.id ? { backgroundColor: '#FFB22C', color: '#000000' } : { color: '#000000' }}
+                style={selectedCategory === category.id ? { backgroundColor: '#ffffff', color: '#000000' } : { color: '#000000' }}
                 onMouseEnter={(e) => {
                   if (selectedCategory !== category.id) {
                     e.currentTarget.style.backgroundColor = '#F7F7F7';
@@ -106,7 +106,7 @@ export const TabletMenu: React.FC = () => {
                 />
                 <div className="absolute top-4 left-4 flex space-x-2">
                   {item.popular && (
-                    <div className="px-4 py-2 rounded-full text-sm font-bold flex items-center shadow-lg" style={{ backgroundColor: '#FFB22C', color: '#000000' }}>
+                    <div className="px-4 py-2 rounded-full text-sm font-bold flex items-center shadow-lg" style={{ backgroundColor: '#ffffff', color: '#000000' }}>
                       <Heart className="h-4 w-4 mr-1 fill-current" />
                       Popular
                     </div>
@@ -131,7 +131,7 @@ export const TabletMenu: React.FC = () => {
                   {item.description}
                 </p>
                 <div className="flex justify-between items-center">
-                  <span className="text-3xl font-bold" style={{ color: '#FFB22C' }}>
+                  <span className="text-3xl font-bold" style={{ color: '#000000' }}>
                     ${item.price.toFixed(2)}
                   </span>
                   <div className="text-lg text-gray-500 capitalize font-medium bg-gray-100 px-3 py-1 rounded-full">
