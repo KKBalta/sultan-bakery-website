@@ -85,3 +85,116 @@ export const createAvatarProps = (name: string, profilePhotoUrl?: string) => {
     proxyUrl: profilePhotoUrl ? getProxyImageUrl(profilePhotoUrl) : null
   };
 };
+
+/**
+ * Converts Google Drive file ID or URL to direct image URL using thumbnail service
+ * @param input - Google Drive file ID or full URL
+ * @param size - Image size (default: w1000 for 1000px width)
+ * @returns Direct image URL that can be used in img src
+ */
+export const getGoogleDriveImageUrl = (input: string, size: string = 'w1000'): string => {
+  // If it's already a direct image URL, return as is
+  if (input.includes('drive.google.com/uc?export=view&id=') || input.includes('drive.google.com/thumbnail?id=')) {
+    return input;
+  }
+
+  // Extract file ID from various Google Drive URL formats
+  let fileId = '';
+  
+  if (input.includes('drive.google.com/file/d/')) {
+    // Extract from: https://drive.google.com/file/d/FILE_ID/view?usp=drive_link
+    const match = input.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    fileId = match ? match[1] : '';
+  } else if (input.includes('drive.google.com/open?id=')) {
+    // Extract from: https://drive.google.com/open?id=FILE_ID
+    const match = input.match(/id=([a-zA-Z0-9_-]+)/);
+    fileId = match ? match[1] : '';
+  } else if (input.match(/^[a-zA-Z0-9_-]+$/)) {
+    // If it's just a file ID
+    fileId = input;
+  }
+
+  if (!fileId) {
+    console.warn('Could not extract Google Drive file ID from:', input);
+    return input; // Return original if we can't parse it
+  }
+
+  // Return Google Drive thumbnail service URL (more reliable)
+  return `https://drive.google.com/thumbnail?id=${fileId}&sz=${size}`;
+};
+
+/**
+ * Validates if a URL is a valid Google Drive image URL
+ * @param url - URL to validate
+ * @returns boolean indicating if it's a valid Google Drive image URL
+ */
+export const isValidGoogleDriveImageUrl = (url: string): boolean => {
+  return url.includes('drive.google.com/uc?export=view&id=') && 
+         url.match(/id=([a-zA-Z0-9_-]+)/) !== null;
+};
+
+/**
+ * Processes any image URL to ensure it's in the correct format
+ * Handles Google Drive URLs, regular URLs, and file IDs
+ * @param imageUrl - Any image URL or Google Drive link
+ * @returns Properly formatted image URL
+ */
+export const processImageUrl = (imageUrl: string): string => {
+  if (!imageUrl) return '';
+  
+  // If it's a Google Drive URL, convert it
+  if (imageUrl.includes('drive.google.com')) {
+    return getGoogleDriveImageUrl(imageUrl);
+  }
+  
+  // If it's already a proper URL, return as is
+  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+    return imageUrl;
+  }
+  
+  // If it's a relative path, return as is
+  return imageUrl;
+};
+
+/**
+ * Creates multiple fallback URLs for Google Drive images
+ * @param input - Google Drive file ID or full URL
+ * @returns Array of URLs to try in order
+ */
+export const getGoogleDriveFallbackUrls = (input: string): string[] => {
+  const fileId = extractGoogleDriveFileId(input);
+  if (!fileId) return [input];
+
+  return [
+    // Method 1: Direct Googleusercontent URL (most reliable for public files)
+    `https://lh3.googleusercontent.com/d/${fileId}=w1000`,
+    // Method 2: Thumbnail service (redirects to googleusercontent)
+    `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`,
+    // Method 3: Alternative googleusercontent size
+    `https://lh3.googleusercontent.com/d/${fileId}=w800`,
+    // Method 4: Thumbnail service with different size
+    `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`,
+    // Method 5: Direct export (fallback)
+    `https://drive.google.com/uc?export=view&id=${fileId}`,
+    // Method 6: Alternative export format
+    `https://drive.google.com/uc?export=download&id=${fileId}`
+  ];
+};
+
+/**
+ * Extracts Google Drive file ID from various URL formats
+ * @param input - Google Drive URL or file ID
+ * @returns File ID or empty string if not found
+ */
+export const extractGoogleDriveFileId = (input: string): string => {
+  if (input.includes('drive.google.com/file/d/')) {
+    const match = input.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    return match ? match[1] : '';
+  } else if (input.includes('drive.google.com/open?id=')) {
+    const match = input.match(/id=([a-zA-Z0-9_-]+)/);
+    return match ? match[1] : '';
+  } else if (input.match(/^[a-zA-Z0-9_-]+$/)) {
+    return input;
+  }
+  return '';
+};

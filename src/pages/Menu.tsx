@@ -2,7 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { useMenuData } from '../hooks/useMenuData';
 import { bakeryConfig } from '../config/bakeryConfig';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Filter, X, Eye, Heart } from 'lucide-react';
+import { Search, Filter, X, Heart } from 'lucide-react';
+import { GoogleDriveImage } from '../components/GoogleDriveImage';
 
 export const Menu: React.FC = () => {
   const { menuItems, categories, loading, error } = useMenuData();
@@ -367,10 +368,11 @@ export const Menu: React.FC = () => {
                                   {/* Right Side - Image */}
                                   <div className="relative">
                                     <div className="relative h-64 md:h-72 rounded-xl overflow-hidden">
-                                      <img
+                                      <GoogleDriveImage
                                         src={item.image}
                                         alt={item.name}
-                                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                                        className="w-full h-full transition-transform duration-300 hover:scale-105"
+                                        fallbackText="Image not available"
                                       />
                                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                                     </div>
