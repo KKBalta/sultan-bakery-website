@@ -20,6 +20,8 @@ export interface BakeryConfig {
   hours: string;
   email: string;
   googleSheetId: string;
+  googlePlaceId?: string;
+  googleApiKey?: string;
   primaryColor: string;
   secondaryColor: string;
   colors: ColorPalette;
@@ -36,6 +38,8 @@ export const bakeryConfig: BakeryConfig = {
   hours: import.meta.env.VITE_REACT_APP_BAKERY_HOURS || 'Mon-Sat: 6am-8pm • Sun: 7am-6pm',
   email: import.meta.env.VITE_REACT_APP_BAKERY_EMAIL || 'hello@sweetmoments.com',
   googleSheetId: import.meta.env.VITE_REACT_APP_GOOGLE_SHEET_ID || '16qy6axjONcGfzX7eQ4MMvrongq0UtjmdBY_Y1VeyoC8',
+  googlePlaceId: import.meta.env.VITE_REACT_APP_GOOGLE_PLACE_ID || 'ChIJbeQMbwADw4kRHKuH15iKklQ',
+  googleApiKey: import.meta.env.VITE_REACT_APP_GOOGLE_API_KEY,
   primaryColor: import.meta.env.VITE_REACT_APP_PRIMARY_COLOR || '#FFB22C',
   secondaryColor: import.meta.env.VITE_REACT_APP_SECONDARY_COLOR || '#F7F7F7',
   colors: {

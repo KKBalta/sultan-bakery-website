@@ -52,8 +52,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
         borderBottom: `1px solid ${bakeryConfig.colors.border}`,
         boxShadow: '0 12px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
         borderRadius: '0 0 24px 24px',
-        margin: '0 20px',
-        marginTop: '12px'
+        margin: '0 20px'
       }}
       initial={{ y: -100, opacity: 0 }}
       animate={{ 
