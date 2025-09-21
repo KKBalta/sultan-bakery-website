@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Navigation } from './Navigation';
+import { Footer } from './Footer';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -9,9 +10,10 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Navigation isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-      <main>{children}</main>
+      <main className="pt-20 flex-1">{children}</main>
+      <Footer />
     </div>
   );
 };

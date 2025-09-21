@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { MenuItem } from '../data/menuData';
+import { MenuItem, categories } from '../data/menuData';
 import { getCachedMenuData, clearMenuCache } from '../services/googleSheets';
 import { menuItems as fallbackMenuItems } from '../data/menuData'; // Fallback data
 
 interface UseMenuDataReturn {
   menuItems: MenuItem[];
+  categories: typeof categories;
   loading: boolean;
   error: string | null;
   refresh: () => Promise<void>;
@@ -50,6 +51,7 @@ export const useMenuData = (): UseMenuDataReturn => {
 
   return {
     menuItems,
+    categories,
     loading,
     error,
     refresh

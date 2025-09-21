@@ -7,27 +7,29 @@ import { Menu } from './pages/Menu';
 import { Gallery } from './pages/Gallery';
 import { Contact } from './pages/Contact';
 import { TabletMenu } from './pages/TabletMenu';
+import { useState, useEffect } from 'react';
 
 function App() {
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReducedMotion(mediaQuery.matches);
+    
+    // Check for low-end devices (basic heuristic)
+    const isLowEndDevice = navigator.hardwareConcurrency <= 2 || 
+                          (navigator as any).deviceMemory <= 4;
+    setReducedMotion(prev => prev || isLowEndDevice);
+  }, []);
+
   return (
     <div className="relative min-h-screen overflow-hidden">
-            {/* Classic Bakery Mesh - White, Black, Brown */}
-            <div className="fixed inset-0 z-[-2]" style={{ opacity: 0.6 }}>
+            {/* Optimized Single Mesh Background */}
+            <div className="fixed inset-0 z-[-1]" style={{ opacity: 0.7 }}>
               <MeshGradient
-                speed={0.3}
-                colors={['#ffffff', '#f8f8f8', '#000000', '#2c2c2c', '#8b4513', '#a0522d']}
-                style={{ 
-                  width: '100vw', 
-                  height: '100vh'
-                }}
-              />
-            </div>
-            
-            {/* Secondary Layer - Rich Browns */}
-            <div className="fixed inset-0 z-[-1]" style={{ opacity: 0.4 }}>
-              <MeshGradient
-                speed={0.5}
-                colors={['#f5f5f5', '#e0e0e0', '#1a1a1a', '#404040', '#d2691e', '#cd853f']}
+                speed={reducedMotion ? 0.05 : 0.2}
+                colors={['#8b4513', '#a0522d', '#2c2c2c', '#1a1a1a', '#4a4a4a', '#6b6b6b']}
                 style={{ 
                   width: '100vw', 
                   height: '100vh'

@@ -50,37 +50,82 @@ export const Home: React.FC = () => {
             {bakeryConfig.tagline}
           </motion.p>
           
-          {/* Animated Buttons with Ottoman Styling */}
+          {/* Animated Button with Ottoman Styling */}
           <motion.div 
-            className="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center"
+            className="flex justify-center"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <Link
-              to="/menu"
-              className="inline-block text-white px-8 py-4 rounded-full text-lg font-medium shadow-2xl hover:shadow-3xl transition-all duration-300 border-2 border-white"
-              style={{ 
-                backgroundColor: '#d32f2f', // Terracotta Red
-                color: '#ffffff',
-                boxShadow: '0 8px 32px rgba(211, 47, 47, 0.4)'
-              }}
+            <motion.div
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
-              View Menu
-            </Link>
-            
-            <Link
-              to="/tablet-menu"
-              className="inline-block px-8 py-4 rounded-full text-lg font-medium shadow-2xl hover:shadow-3xl transition-all duration-300 border-2"
-              style={{ 
-                backgroundColor: bakeryConfig.colors.background,
-                color: bakeryConfig.colors.textSecondary,
-                borderColor: bakeryConfig.colors.border,
-                backdropFilter: 'blur(10px)'
-              }}
-            >
-              Tablet Menu
-            </Link>
+              <Link
+                to="/menu"
+                className="relative inline-block px-8 py-4 rounded-full text-lg font-medium transition-all duration-500 overflow-hidden group"
+                style={{ 
+                  background: bakeryConfig.colors.surface,
+                  backdropFilter: 'blur(25px) saturate(200%)',
+                  WebkitBackdropFilter: 'blur(25px) saturate(200%)',
+                  border: `2px solid ${bakeryConfig.colors.border}`,
+                  boxShadow: `0 12px 40px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.15)`,
+                  color: bakeryConfig.colors.text,
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                }}
+              >
+                {/* Animated Background Gradient */}
+                <div 
+                  className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-500"
+                  style={{ 
+                    background: 'linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57)',
+                    backgroundSize: '300% 300%',
+                    animation: 'gradientShift 3s ease infinite'
+                  }}
+                />
+                
+                {/* Shimmer Effect */}
+                <div 
+                  className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-500"
+                  style={{ 
+                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent)',
+                    transform: 'translateX(-100%)',
+                    animation: 'shimmer 2s ease-in-out infinite'
+                  }}
+                />
+                
+                {/* Pulsing Glow */}
+                <div 
+                  className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-40 transition-opacity duration-500"
+                  style={{ 
+                    background: `linear-gradient(135deg, ${bakeryConfig.colors.text}, ${bakeryConfig.colors.border})`,
+                    animation: 'pulse 2s ease-in-out infinite'
+                  }}
+                />
+                
+                {/* Text with Glow Effect */}
+                <span className="relative z-10 group-hover:drop-shadow-lg transition-all duration-300">
+                  Explore Our Menu
+                </span>
+                
+                {/* Floating Particles Effect */}
+                <div className="absolute inset-0 overflow-hidden rounded-full pointer-events-none">
+                  {[...Array(6)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="absolute w-1 h-1 rounded-full opacity-0 group-hover:opacity-60 transition-opacity duration-500"
+                      style={{
+                        background: '#ffffff',
+                        left: `${20 + i * 15}%`,
+                        top: `${30 + (i % 2) * 40}%`,
+                        animation: `float 3s ease-in-out infinite ${i * 0.5}s`
+                      }}
+                    />
+                  ))}
+                </div>
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
         
