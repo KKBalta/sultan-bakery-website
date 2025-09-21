@@ -209,112 +209,184 @@ export const Menu: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* Menu Items List */}
-        <div className="space-y-3">
-          <AnimatePresence>
-            {filteredItems.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-              >
-                <div 
-                  className="flex items-center justify-between p-4 rounded-2xl cursor-pointer transition-all duration-300 hover:scale-[1.02]"
-                  style={{ 
-                    background: bakeryConfig.colors.surface,
-                    backdropFilter: 'blur(20px) saturate(180%)',
-                    border: `1px solid ${bakeryConfig.colors.border}`,
-                    boxShadow: `0 4px 20px ${bakeryConfig.colors.shadow}`
-                  }}
-                  onClick={() => setExpandedItem(expandedItem === item.id ? null : item.id)}
-                >
-                  {/* Left side - Name and Category */}
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3">
-                      <h3 className="text-lg font-semibold" style={{ 
-                        color: bakeryConfig.colors.text,
-                        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-                      }}>
-                        {item.name}
-                      </h3>
-                      {item.popular && (
-                        <div className="flex items-center">
-                          <Heart className="h-4 w-4 fill-current text-red-500" />
-                        </div>
-                      )}
-                      {!item.available && (
-                        <div className="text-xs px-2 py-1 rounded-full" style={{ 
-                          background: 'rgba(239, 68, 68, 0.2)', 
-                          color: '#ef4444' 
-                        }}>
-                          Sold Out
-                        </div>
-                      )}
-                    </div>
-                    <div className="text-sm opacity-70 capitalize mt-1" style={{ 
-                      color: bakeryConfig.colors.text,
-                      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-                    }}>
-                      {item.category}
-                    </div>
-                  </div>
+        {/* Menu Items by Category */}
+        <div className="space-y-8">
+          {categories.map((category) => {
+            const categoryItems = filteredItems.filter(item => item.category === category.id);
+            
+            if (categoryItems.length === 0) return null;
 
-                  {/* Right side - Price */}
-                  <div className="text-right">
-                    <span className="text-lg font-semibold tracking-wide" style={{ 
-                      color: '#ffffff',
-                      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                      textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)'
-                    }}>
-                      {item.price.toFixed(2)}
+            return (
+              <motion.div
+                key={category.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                {/* Category Header with Divider */}
+                <div className="mb-6">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">{category.icon}</span>
+                      <h2 
+                        className="text-2xl md:text-3xl font-bold"
+                        style={{ 
+                          color: bakeryConfig.colors.text,
+                          fontFamily: 'Condiment, cursive'
+                        }}
+                      >
+                        {category.name}
+                      </h2>
+                    </div>
+                    <div className="flex-1 h-px" style={{ 
+                      background: `linear-gradient(90deg, ${bakeryConfig.colors.border} 0%, transparent 100%)` 
+                    }}></div>
+                    <span 
+                      className="text-sm font-medium px-3 py-1 rounded-full"
+                      style={{ 
+                        background: bakeryConfig.colors.surface,
+                        color: bakeryConfig.colors.text,
+                        border: `1px solid ${bakeryConfig.colors.border}`
+                      }}
+                    >
+                      {categoryItems.length} item{categoryItems.length !== 1 ? 's' : ''}
                     </span>
                   </div>
                 </div>
 
-                {/* Dropdown Content */}
-                <AnimatePresence>
-                  {expandedItem === item.id && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div 
-                        className="p-4 mt-2 rounded-2xl"
-                        style={{ 
-                          background: bakeryConfig.colors.background,
-                          backdropFilter: 'blur(20px) saturate(180%)',
-                          border: `1px solid ${bakeryConfig.colors.border}`,
-                          boxShadow: `0 4px 20px ${bakeryConfig.colors.shadow}`
-                        }}
+                {/* Category Items */}
+                <div className="space-y-3">
+                  <AnimatePresence>
+                    {categoryItems.map((item, index) => (
+                      <motion.div
+                        key={item.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 20 }}
+                        transition={{ duration: 0.3, delay: index * 0.05 }}
                       >
-                        {/* Description */}
-                        <p className="text-sm mb-4 leading-relaxed opacity-90" style={{ 
-                          color: bakeryConfig.colors.text,
-                          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-                        }}>
-                          {item.description}
-                        </p>
+                        <div 
+                          className="flex items-center justify-between p-4 rounded-2xl cursor-pointer transition-all duration-300 hover:scale-[1.02]"
+                          style={{ 
+                            background: bakeryConfig.colors.surface,
+                            backdropFilter: 'blur(20px) saturate(180%)',
+                            border: `1px solid ${bakeryConfig.colors.border}`,
+                            boxShadow: `0 4px 20px ${bakeryConfig.colors.shadow}`
+                          }}
+                          onClick={() => setExpandedItem(expandedItem === item.id ? null : item.id)}
+                        >
+                          {/* Left side - Name and Category */}
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3">
+                              <h3 className="text-lg font-semibold" style={{ 
+                                color: bakeryConfig.colors.text,
+                                fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                              }}>
+                                {item.name}
+                              </h3>
+                              {item.popular && (
+                                <div className="flex items-center">
+                                  <Heart className="h-4 w-4 fill-current text-red-500" />
+                                </div>
+                              )}
+                              {!item.available && (
+                                <div className="text-xs px-2 py-1 rounded-full" style={{ 
+                                  background: 'rgba(239, 68, 68, 0.2)', 
+                                  color: '#ef4444' 
+                                }}>
+                                  Sold Out
+                                </div>
+                              )}
+                            </div>
+                            <div className="text-sm opacity-70 capitalize mt-1" style={{ 
+                              color: bakeryConfig.colors.text,
+                              fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                            }}>
+                              {item.category}
+                            </div>
+                          </div>
 
-                        {/* Image */}
-                        <div className="relative h-48 rounded-xl overflow-hidden">
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="w-full h-full object-cover"
-                          />
+                          {/* Right side - Price */}
+                          <div className="text-right">
+                            <span className="text-lg font-semibold tracking-wide" style={{ 
+                              color: '#ffffff',
+                              fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                              textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)'
+                            }}>
+                              ${item.price.toFixed(2)}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+
+                        {/* New Dropdown Layout - Details Left, Image Right */}
+                        <AnimatePresence>
+                          {expandedItem === item.id && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="overflow-hidden"
+                            >
+                              <div 
+                                className="p-6 mt-2 rounded-2xl"
+                                style={{ 
+                                  background: bakeryConfig.colors.background,
+                                  backdropFilter: 'blur(20px) saturate(180%)',
+                                  border: `1px solid ${bakeryConfig.colors.border}`,
+                                  boxShadow: `0 4px 20px ${bakeryConfig.colors.shadow}`
+                                }}
+                              >
+                                <div className="grid md:grid-cols-2 gap-6 items-start">
+                                  {/* Left Side - Details */}
+                                  <div className="space-y-4">
+                                    <p 
+                                      className="text-sm leading-relaxed opacity-90"
+                                      style={{ 
+                                        color: bakeryConfig.colors.text,
+                                        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                                      }}
+                                    >
+                                      <span className="font-bold">Details:</span> {item.description}
+                                    </p>
+
+                                    <div className="pt-2">
+                                      <span 
+                                        className="text-xs px-3 py-1 rounded-full capitalize"
+                                        style={{ 
+                                          background: bakeryConfig.colors.surface,
+                                          color: bakeryConfig.colors.text,
+                                          border: `1px solid ${bakeryConfig.colors.border}`
+                                        }}
+                                      >
+                                        {category.icon} {category.name}
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  {/* Right Side - Image */}
+                                  <div className="relative">
+                                    <div className="relative h-64 md:h-72 rounded-xl overflow-hidden">
+                                      <img
+                                        src={item.image}
+                                        alt={item.name}
+                                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                                      />
+                                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </div>
               </motion.div>
-            ))}
-          </AnimatePresence>
+            );
+          })}
         </div>
 
         {/* No Results */}
