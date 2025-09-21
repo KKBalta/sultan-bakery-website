@@ -38,7 +38,6 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
     { path: '/', label: 'Home' },
     { path: '/about', label: 'About' },
     { path: '/menu', label: 'Menu' },
-    { path: '/gallery', label: 'Gallery' },
     { path: '/contact', label: 'Contact' }
   ];
 

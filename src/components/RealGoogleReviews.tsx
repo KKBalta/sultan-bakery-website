@@ -73,6 +73,7 @@ export const RealGoogleReviews: React.FC<RealGoogleReviewsProps> = ({
     fetchGoogleReviews();
   }, [placeId, apiKey, maxReviews]);
 
+
   const nextReviews = () => {
     setCurrentIndex((prev) => (prev + 1) % Math.ceil(reviews.length / 3));
   };
@@ -156,6 +157,7 @@ export const RealGoogleReviews: React.FC<RealGoogleReviewsProps> = ({
     );
   };
 
+
   if (loading) {
     return (
       <motion.section 
@@ -205,7 +207,7 @@ export const RealGoogleReviews: React.FC<RealGoogleReviewsProps> = ({
     >
       <div className="max-w-6xl mx-auto px-4">
         <motion.h2 
-          className="text-4xl font-bold text-center mb-16" 
+          className="text-4xl font-bold text-center mb-6" 
           style={{ 
             color: '#ffffff',
             textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)',
@@ -218,6 +220,7 @@ export const RealGoogleReviews: React.FC<RealGoogleReviewsProps> = ({
         >
           What Our Customers Say
         </motion.h2>
+        
         
         {/* Reviews Carousel */}
         <div className="relative">

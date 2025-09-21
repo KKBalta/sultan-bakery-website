@@ -58,6 +58,96 @@ const mockReviews: GoogleReview[] = [
     relative_time_description: '2 months ago',
     text: 'This bakery is a hidden gem! The artisan breads are incredible and the coffee is always perfect. The owner is so passionate about quality. Love this place!',
     time: Date.now() - 60 * 24 * 60 * 60 * 1000
+  },
+  {
+    id: '6',
+    author_name: 'James Wilson',
+    profile_photo_url: 'https://images.pexels.com/photos/1040882/pexels-photo-1040882.jpeg',
+    rating: 5,
+    relative_time_description: '5 days ago',
+    text: 'Outstanding quality! The bagels are fresh every morning and the cream cheese is homemade. This is exactly what a neighborhood bakery should be.',
+    time: Date.now() - 5 * 24 * 60 * 60 * 1000
+  },
+  {
+    id: '7',
+    author_name: 'Maria Garcia',
+    profile_photo_url: 'https://images.pexels.com/photos/1040883/pexels-photo-1040883.jpeg',
+    rating: 5,
+    relative_time_description: '1 week ago',
+    text: 'The chocolate croissants are absolutely divine! My kids love coming here after school. The staff is so patient and kind with children.',
+    time: Date.now() - 7 * 24 * 60 * 60 * 1000
+  },
+  {
+    id: '8',
+    author_name: 'Robert Brown',
+    profile_photo_url: 'https://images.pexels.com/photos/1040884/pexels-photo-1040884.jpeg',
+    rating: 4,
+    relative_time_description: '3 weeks ago',
+    text: 'Great variety of breads and the sourdough is particularly good. The only downside is it can get quite busy on weekends, but it\'s worth the wait.',
+    time: Date.now() - 21 * 24 * 60 * 60 * 1000
+  },
+  {
+    id: '9',
+    author_name: 'Jennifer Lee',
+    profile_photo_url: 'https://images.pexels.com/photos/1040885/pexels-photo-1040885.jpeg',
+    rating: 5,
+    relative_time_description: '4 days ago',
+    text: 'I\'ve been coming here for years and the quality never disappoints. The seasonal pastries are always a treat. This place has become part of my weekly routine.',
+    time: Date.now() - 4 * 24 * 60 * 60 * 1000
+  },
+  {
+    id: '10',
+    author_name: 'Christopher Davis',
+    profile_photo_url: 'https://images.pexels.com/photos/1040886/pexels-photo-1040886.jpeg',
+    rating: 5,
+    relative_time_description: '2 weeks ago',
+    text: 'The coffee is excellent and pairs perfectly with their pastries. The atmosphere is cozy and perfect for a morning work session. Highly recommend!',
+    time: Date.now() - 14 * 24 * 60 * 60 * 1000
+  },
+  {
+    id: '11',
+    author_name: 'Amanda Taylor',
+    profile_photo_url: 'https://images.pexels.com/photos/1040887/pexels-photo-1040887.jpeg',
+    rating: 5,
+    relative_time_description: '6 days ago',
+    text: 'Best birthday cake I\'ve ever had! They made a custom design and it was both beautiful and delicious. The whole family was impressed.',
+    time: Date.now() - 6 * 24 * 60 * 60 * 1000
+  },
+  {
+    id: '12',
+    author_name: 'Kevin Martinez',
+    profile_photo_url: 'https://images.pexels.com/photos/1040888/pexels-photo-1040888.jpeg',
+    rating: 4,
+    relative_time_description: '1 month ago',
+    text: 'Solid bakery with good selection. The bread is always fresh and the prices are fair. The staff is friendly and helpful.',
+    time: Date.now() - 30 * 24 * 60 * 60 * 1000
+  },
+  {
+    id: '13',
+    author_name: 'Rachel Anderson',
+    profile_photo_url: 'https://images.pexels.com/photos/1040889/pexels-photo-1040889.jpeg',
+    rating: 5,
+    relative_time_description: '3 days ago',
+    text: 'The gluten-free options are amazing! As someone with celiac disease, it\'s hard to find good bakeries. This place understands and delivers quality.',
+    time: Date.now() - 3 * 24 * 60 * 60 * 1000
+  },
+  {
+    id: '14',
+    author_name: 'Daniel White',
+    profile_photo_url: 'https://images.pexels.com/photos/1040890/pexels-photo-1040890.jpeg',
+    rating: 5,
+    relative_time_description: '1 week ago',
+    text: 'The morning rush is worth it for their fresh donuts. The variety changes daily and there\'s always something new to try. Love this place!',
+    time: Date.now() - 7 * 24 * 60 * 60 * 1000
+  },
+  {
+    id: '15',
+    author_name: 'Stephanie Clark',
+    profile_photo_url: 'https://images.pexels.com/photos/1040891/pexels-photo-1040891.jpeg',
+    rating: 5,
+    relative_time_description: '2 days ago',
+    text: 'Perfect spot for a coffee and pastry break. The seating area is comfortable and the WiFi is reliable. Great place to work or catch up with friends.',
+    time: Date.now() - 2 * 24 * 60 * 60 * 1000
   }
 ];
 
@@ -83,11 +173,11 @@ export class GoogleReviewsProxy {
     maxReviews: number = 5
   ): Promise<{ reviews: GoogleReview[]; error: string | null }> {
     try {
-      // Check cache first
-      const cached = this.getCachedReviews(placeId);
+      // Check cache first (include maxReviews in cache key)
+      const cacheKey = `${placeId}-${maxReviews}`;
+      const cached = this.getCachedReviews(cacheKey);
       if (cached) {
-        console.log('Using cached Google reviews');
-        return { reviews: cached.slice(0, maxReviews), error: null };
+        return { reviews: cached, error: null };
       }
 
       // Validate inputs
@@ -99,7 +189,7 @@ export class GoogleReviewsProxy {
       const reviews = await this.fetchWithProxy(placeId, apiKey, maxReviews);
       
       // Cache the results
-      this.setCachedReviews(placeId, reviews);
+      this.setCachedReviews(cacheKey, reviews);
       
       return { reviews, error: null };
     } catch (error) {
@@ -108,7 +198,7 @@ export class GoogleReviewsProxy {
       // Return mock data as fallback
       return {
         reviews: mockReviews.slice(0, maxReviews),
-        error: 'CORS blocked - using sample reviews. For production, use a backend proxy.'
+        error: 'CORS blocked - showing sample reviews. For production, use a backend proxy or enable CORS.'
       };
     }
   }
@@ -122,19 +212,21 @@ export class GoogleReviewsProxy {
     maxReviews: number
   ): Promise<GoogleReview[]> {
     const proxies = [
-      // Method 1: CORS Anywhere (for development)
-      `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews&key=${apiKey}`,
-      
-      // Method 2: AllOrigins (alternative CORS proxy)
+      // Method 1: AllOrigins (most reliable)
       `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews&key=${apiKey}`)}`,
       
-      // Method 3: ThingProxy (another CORS proxy)
-      `https://thingproxy.freeboard.io/fetch/https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews&key=${apiKey}`
+      // Method 2: CORS Proxy (alternative)
+      `https://corsproxy.io/?${encodeURIComponent(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews&key=${apiKey}`)}`,
+      
+      // Method 3: ThingProxy (backup)
+      `https://thingproxy.freeboard.io/fetch/https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews&key=${apiKey}`,
+      
+      // Method 4: CORS Anywhere (last resort - often blocked)
+      `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews&key=${apiKey}`
     ];
 
     for (const proxyUrl of proxies) {
       try {
-        console.log('Trying proxy:', proxyUrl.split('/')[2]);
         const response = await fetch(proxyUrl, {
           method: 'GET',
           headers: {
@@ -153,13 +245,11 @@ export class GoogleReviewsProxy {
         const responseData = data.contents ? JSON.parse(data.contents) : data;
 
         if (responseData.status === 'OK' && responseData.result?.reviews) {
-          console.log('Successfully fetched reviews via proxy');
           return this.transformReviews(responseData.result.reviews.slice(0, maxReviews));
         } else {
           throw new Error(`Google API Error: ${responseData.status} - ${responseData.error_message || 'Unknown error'}`);
         }
       } catch (error) {
-        console.log('Proxy failed, trying next one...', error);
         continue;
       }
     }
@@ -258,9 +348,46 @@ export class GoogleReviewsProxy {
   public clearCache(placeId?: string): void {
     if (placeId) {
       this.cache.delete(placeId);
+      // Also clear from localStorage
+      try {
+        localStorage.removeItem(`google_reviews_${placeId}`);
+      } catch (error) {
+        console.warn('Could not clear localStorage:', error);
+      }
     } else {
       this.cache.clear();
+      // Clear all review caches from localStorage
+      try {
+        Object.keys(localStorage).forEach(key => {
+          if (key.startsWith('google_reviews_')) {
+            localStorage.removeItem(key);
+          }
+        });
+      } catch (error) {
+        console.warn('Could not clear localStorage:', error);
+      }
     }
+  }
+
+  /**
+   * Force refresh reviews (bypass cache)
+   */
+  public async forceRefreshReviews(
+    placeId: string,
+    apiKey: string,
+    maxReviews: number = 5
+  ): Promise<{ reviews: GoogleReview[]; error: string | null }> {
+    // Clear cache for this specific request
+    const cacheKey = `${placeId}-${maxReviews}`;
+    this.cache.delete(cacheKey);
+    try {
+      localStorage.removeItem(`google_reviews_${cacheKey}`);
+    } catch (error) {
+      console.warn('Could not clear localStorage:', error);
+    }
+
+    // Fetch fresh data
+    return this.fetchReviews(placeId, apiKey, maxReviews);
   }
 
   /**

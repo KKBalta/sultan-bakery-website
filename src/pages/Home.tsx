@@ -466,7 +466,7 @@ export const Home: React.FC = () => {
       <RealGoogleReviews 
         placeId={bakeryConfig.googlePlaceId}
         apiKey={bakeryConfig.googleApiKey}
-        maxReviews={15}
+        maxReviews={5}
         showProfilePhotos={true}
         showRatings={true}
         showTimestamps={true}
