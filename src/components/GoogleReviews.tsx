@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { bakeryConfig } from '../config/bakeryConfig';
 
 interface Review {
   id: string;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getGoogleDriveFallbackUrls, extractGoogleDriveFileId } from '../utils/imageUtils';
+import { getGoogleDriveFallbackUrls } from '../utils/imageUtils';
 import { imageCache } from '../utils/imageCache';
 
 interface GoogleDriveImageProps {

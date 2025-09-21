@@ -5,6 +5,7 @@ import { bakeryConfig } from '../config/bakeryConfig';
 import { useMenuData } from '../hooks/useMenuData';
 import { ScrollingBand } from '../components/ScrollingBand';
 import { RealGoogleReviews } from '../components/RealGoogleReviews';
+import { GoogleDriveImage } from '../components/GoogleDriveImage';
 
 export const Home: React.FC = () => {
   const { menuItems, loading } = useMenuData();
@@ -375,13 +376,18 @@ export const Home: React.FC = () => {
                   viewport={{ once: true }}
                   whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(0,0,0,0.25)" }}
                 >
-                  <motion.img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-48 object-cover"
+                  <motion.div
+                    className="w-full h-48 overflow-hidden"
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
-                  />
+                  >
+                    <GoogleDriveImage
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full"
+                      fallbackText="Image not available"
+                    />
+                  </motion.div>
                   <div className="p-6">
                     <h3 className="text-xl font-bold mb-2" style={{ 
                       color: '#ffffff',

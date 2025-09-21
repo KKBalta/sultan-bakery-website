@@ -27,7 +27,7 @@ function App() {
             {/* Optimized Single Mesh Background */}
             <div className="fixed inset-0 z-[-1]" style={{ opacity: 0.7 }}>
               <MeshGradient
-                speed={reducedMotion ? 0.05 : 0.2}
+                speed={reducedMotion ? 0.01 : 0.1}
                 colors={['#8b4513', '#a0522d', '#2c2c2c', '#1a1a1a', '#4a4a4a', '#6b6b6b']}
                 style={{ 
                   width: '100vw', 
