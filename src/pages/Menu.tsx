@@ -3,7 +3,8 @@ import { useMenuData } from '../hooks/useMenuData';
 import { bakeryConfig } from '../config/bakeryConfig';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Filter, X, Heart } from 'lucide-react';
-import { GoogleDriveImage } from '../components/GoogleDriveImage';
+import { Image } from '../components/Image';
+import { MenuItemDetails } from '../components/MenuItemDetails';
 
 export const Menu: React.FC = () => {
   const { menuItems, categories, loading, error } = useMenuData();
@@ -339,36 +340,15 @@ export const Menu: React.FC = () => {
                                 }}
                               >
                                 <div className="grid md:grid-cols-2 gap-6 items-start">
-                                  {/* Left Side - Details */}
+                                  {/* Left Side - Enhanced Details */}
                                   <div className="space-y-4">
-                                    <p 
-                                      className="text-sm leading-relaxed opacity-90"
-                                      style={{ 
-                                        color: bakeryConfig.colors.text,
-                                        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-                                      }}
-                                    >
-                                      <span className="font-bold">Details:</span> {item.description}
-                                    </p>
-
-                                    <div className="pt-2">
-                                      <span 
-                                        className="text-xs px-3 py-1 rounded-full capitalize"
-                                        style={{ 
-                                          background: bakeryConfig.colors.surface,
-                                          color: bakeryConfig.colors.text,
-                                          border: `1px solid ${bakeryConfig.colors.border}`
-                                        }}
-                                      >
-                                        {category.icon} {category.name}
-                                      </span>
-                                    </div>
+                                    <MenuItemDetails item={item} />
                                   </div>
 
                                   {/* Right Side - Image */}
                                   <div className="relative">
                                     <div className="relative h-64 md:h-72 rounded-xl overflow-hidden">
-                                      <GoogleDriveImage
+                                      <Image
                                         src={item.image}
                                         alt={item.name}
                                         className="w-full h-full transition-transform duration-300 hover:scale-105"

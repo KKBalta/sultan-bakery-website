@@ -25,10 +25,10 @@ function App() {
   return (
     <div className="relative min-h-screen overflow-hidden">
             {/* Optimized Single Mesh Background */}
-            <div className="fixed inset-0 z-[-1]" style={{ opacity: 0.7 }}>
+            <div className="fixed inset-0 z-[-1]" style={{ opacity: 1.0 }}>
               <MeshGradient
                 speed={reducedMotion ? 0.01 : 0.1}
-                colors={['#8b4513', '#a0522d', '#2c2c2c', '#1a1a1a', '#4a4a4a', '#6b6b6b']}
+                colors={['#1e1b4b', '#312e81', '#3730a3', '#2d1b69', '#1a0b2e', '#3b0764']}
                 style={{ 
                   width: '100vw', 
                   height: '100vh'

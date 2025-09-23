@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { categories } from '../data/menuData';
 import { useMenuData } from '../hooks/useMenuData';
 import { bakeryConfig } from '../config/bakeryConfig';
+import { Image } from '../components/Image';
+import { MenuItemDetails } from '../components/MenuItemDetails';
 
 export const TabletMenu: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('coffee');
@@ -99,10 +101,11 @@ export const TabletMenu: React.FC = () => {
               }`}
             >
               <div className="relative">
-                <img
+                <Image
                   src={item.image}
                   alt={item.name}
                   className="w-full h-64 object-cover"
+                  fallbackText="Image not available"
                 />
                 <div className="absolute top-4 left-4 flex space-x-2">
                   {item.popular && (
@@ -130,6 +133,12 @@ export const TabletMenu: React.FC = () => {
                 <p className="text-gray-600 text-lg leading-relaxed mb-4 min-h-[3rem]">
                   {item.description}
                 </p>
+                
+                {/* Enhanced Details */}
+                <div className="mb-4">
+                  <MenuItemDetails item={item} className="text-sm" />
+                </div>
+                
                 <div className="flex justify-between items-center">
                   <span className="text-3xl font-bold" style={{ color: '#000000' }}>
                     ${item.price.toFixed(2)}

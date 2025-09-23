@@ -5,7 +5,7 @@ import { bakeryConfig } from '../config/bakeryConfig';
 import { useMenuData } from '../hooks/useMenuData';
 import { ScrollingBand } from '../components/ScrollingBand';
 import { RealGoogleReviews } from '../components/RealGoogleReviews';
-import { GoogleDriveImage } from '../components/GoogleDriveImage';
+import { Image } from '../components/Image';
 
 export const Home: React.FC = () => {
   const { menuItems, loading } = useMenuData();
@@ -22,14 +22,11 @@ export const Home: React.FC = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
       >
-        {/* Glass morphism background - bright like bottom sections */}
+        {/* Background with same opacity as other components */}
         <div 
-          className="absolute inset-0 z-0"
+          className="absolute inset-0"
           style={{
-            background: bakeryConfig.colors.background,
-            backdropFilter: 'blur(20px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-            borderBottom: `1px solid ${bakeryConfig.colors.border}`
+            background: 'rgba(255, 255, 255, 0.05)',
           }}
         />
         
@@ -80,8 +77,6 @@ export const Home: React.FC = () => {
                 className="relative inline-block px-8 py-4 rounded-full text-lg font-medium transition-all duration-500 overflow-hidden group"
                 style={{ 
                   background: bakeryConfig.colors.surface,
-                  backdropFilter: 'blur(25px) saturate(200%)',
-                  WebkitBackdropFilter: 'blur(25px) saturate(200%)',
                   border: `2px solid ${bakeryConfig.colors.border}`,
                   boxShadow: `0 12px 40px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.15)`,
                   color: bakeryConfig.colors.text,
@@ -132,11 +127,7 @@ export const Home: React.FC = () => {
         <div 
           className="absolute inset-0"
           style={{
-            background: 'rgba(255, 255, 255, 0.12)',
-            backdropFilter: 'blur(20px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-            borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
+            background: 'rgba(255, 255, 255, 0.05)',
           }}
         />
         <div className="max-w-6xl mx-auto px-4 relative z-10">
@@ -320,11 +311,7 @@ export const Home: React.FC = () => {
         <div 
           className="absolute inset-0"
           style={{
-            background: 'rgba(255, 255, 255, 0.12)',
-            backdropFilter: 'blur(20px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-            borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
+            background: 'rgba(255, 255, 255, 0.05)',
           }}
         />
         <div className="max-w-6xl mx-auto px-4 relative z-10">
@@ -364,11 +351,11 @@ export const Home: React.FC = () => {
                   key={item.id}
                   className="rounded-2xl shadow-lg overflow-hidden"
                   style={{
-                    background: 'rgba(255, 255, 255, 0.2)',
+                    background: 'rgba(255, 255, 255, 0.05)',
                     backdropFilter: 'blur(25px) saturate(200%)',
                     WebkitBackdropFilter: 'blur(25px) saturate(200%)',
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                    boxShadow: '0 12px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    boxShadow: '0 12px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
                   }}
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -381,7 +368,7 @@ export const Home: React.FC = () => {
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <GoogleDriveImage
+                    <Image
                       src={item.image}
                       alt={item.name}
                       className="w-full h-full"
@@ -428,8 +415,6 @@ export const Home: React.FC = () => {
                 className="relative inline-block px-8 py-4 rounded-full text-lg font-medium transition-all duration-500 overflow-hidden group"
                 style={{ 
                   background: bakeryConfig.colors.surface,
-                  backdropFilter: 'blur(25px) saturate(200%)',
-                  WebkitBackdropFilter: 'blur(25px) saturate(200%)',
                   border: `2px solid ${bakeryConfig.colors.border}`,
                   boxShadow: `0 12px 40px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.15)`,
                   color: bakeryConfig.colors.text,

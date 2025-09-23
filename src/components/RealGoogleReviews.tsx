@@ -163,11 +163,7 @@ export const RealGoogleReviews: React.FC<RealGoogleReviewsProps> = ({
       <motion.section 
         className="py-24 relative"
         style={{
-          background: 'rgba(255, 255, 255, 0.12)',
-          backdropFilter: 'blur(20px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
+          background: 'rgba(255, 255, 255, 0.05)',
         }}
       >
         <div className="max-w-6xl mx-auto px-4">
@@ -194,11 +190,7 @@ export const RealGoogleReviews: React.FC<RealGoogleReviewsProps> = ({
     <motion.section 
       className="py-24 relative"
       style={{
-        background: 'rgba(255, 255, 255, 0.12)',
-        backdropFilter: 'blur(20px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-        borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
+        background: 'rgba(255, 255, 255, 0.05)',
       }}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -306,13 +298,11 @@ export const RealGoogleReviews: React.FC<RealGoogleReviewsProps> = ({
             <motion.div 
               key={currentIndex}
               className="rounded-2xl p-6 mx-4"
-              style={{
-                background: 'rgba(255, 255, 255, 0.2)',
-                backdropFilter: 'blur(25px) saturate(200%)',
-                WebkitBackdropFilter: 'blur(25px) saturate(200%)',
-                border: '1px solid rgba(255, 255, 255, 0.3)',
-                boxShadow: '0 12px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
-              }}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  boxShadow: '0 12px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
+                }}
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
@@ -378,11 +368,9 @@ export const RealGoogleReviews: React.FC<RealGoogleReviewsProps> = ({
                 key={review.id}
                 className="rounded-2xl p-6 h-full"
                 style={{
-                  background: 'rgba(255, 255, 255, 0.2)',
-                  backdropFilter: 'blur(25px) saturate(200%)',
-                  WebkitBackdropFilter: 'blur(25px) saturate(200%)',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
-                  boxShadow: '0 12px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  boxShadow: '0 12px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
                 }}
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}

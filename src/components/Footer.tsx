@@ -8,7 +8,7 @@ export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative mt-20">
+    <footer className="relative">
       {/* Glassmorphism Background */}
       <div 
         className="absolute inset-0"
@@ -22,7 +22,7 @@ export const Footer: React.FC = () => {
       />
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           
           {/* Company Info */}
           <motion.div
@@ -92,39 +92,6 @@ export const Footer: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            viewport={{ once: true }}
-          >
-            <h4 
-              className="text-lg font-semibold mb-4"
-              style={{ color: bakeryConfig.colors.text }}
-            >
-              Quick Links
-            </h4>
-            <ul className="space-y-2">
-              {[
-                { path: '/', label: 'Home' },
-                { path: '/about', label: 'About Us' },
-                { path: '/menu', label: 'Menu' },
-                { path: '/gallery', label: 'Gallery' },
-                { path: '/contact', label: 'Contact' }
-              ].map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-sm transition-colors duration-300 hover:opacity-80"
-                    style={{ color: bakeryConfig.colors.text }}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
 
           {/* Services */}
           <motion.div

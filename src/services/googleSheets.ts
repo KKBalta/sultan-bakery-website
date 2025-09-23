@@ -3,7 +3,7 @@ import { bakeryConfig } from '../config/bakeryConfig';
 
 // Get Google Sheet ID from config
 const SHEET_ID = bakeryConfig.googleSheetId;
-const RANGE = 'A1:H'; // All data from A1 to H column
+const RANGE = 'A1:J'; // All data from A1 to J column (Name, Description, Price, Category, Available, Calori, Size, Image URL, Popular, ID)
 
 // Parse CSV text into array of arrays
 const parseCSV = (csvText: string): string[][] => {
@@ -41,7 +41,8 @@ const parseMenuData = (values: string[][]): MenuItem[] => {
   return values.slice(1)
     .filter(row => row.length >= 7 && row[0]) // Ensure we have all required columns and name exists
     .map((row, index) => {
-      const [name, description, price, category, available, image, popular, id] = row;
+      // Column order: Name, Description, Price, Category, Available, Calori, Size, Image URL, Popular, ID
+      const [name, description, price, category, available, calories, scale, image, popular, id] = row;
       
       return {
         id: id || `item-${index}`,
@@ -51,7 +52,11 @@ const parseMenuData = (values: string[][]): MenuItem[] => {
         image: image || 'https://via.placeholder.com/400x300?text=No+Image',
         category: (category?.toLowerCase() as 'coffee' | 'pastries' | 'sandwiches') || 'coffee',
         available: available?.toLowerCase() === 'true' || available === '1',
-        popular: popular?.toLowerCase() === 'true' || popular === '1'
+        popular: popular?.toLowerCase() === 'true' || popular === '1',
+        calories: calories ? parseInt(calories) : undefined,
+        scale: scale || undefined,
+        allergens: undefined, // Not in your current sheet
+        prepTime: undefined   // Not in your current sheet
       };
     });
 };

@@ -7,6 +7,10 @@ export interface MenuItem {
   category: 'coffee' | 'pastries' | 'sandwiches';
   available: boolean;
   popular?: boolean;
+  calories?: number;
+  scale?: string;
+  allergens?: string[];
+  prepTime?: string;
 }
 
 export const menuItems: MenuItem[] = [
@@ -19,7 +23,10 @@ export const menuItems: MenuItem[] = [
     image: 'https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg',
     category: 'coffee',
     available: true,
-    popular: true
+    popular: true,
+    calories: 5,
+    scale: '2 oz',
+    prepTime: '2 min'
   },
   {
     id: 'cappuccino',
@@ -58,7 +65,11 @@ export const menuItems: MenuItem[] = [
     image: 'https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg',
     category: 'pastries',
     available: true,
-    popular: true
+    popular: true,
+    calories: 280,
+    scale: 'Large',
+    allergens: ['Gluten', 'Dairy'],
+    prepTime: '5 min'
   },
   {
     id: 'chocolate-muffin',
@@ -96,7 +107,11 @@ export const menuItems: MenuItem[] = [
     price: 8.50,
     image: 'https://images.pexels.com/photos/1647163/pexels-photo-1647163.jpeg',
     category: 'sandwiches',
-    available: true
+    available: true,
+    calories: 450,
+    scale: '8 inch',
+    allergens: ['Gluten', 'Dairy'],
+    prepTime: '8 min'
   },
   {
     id: 'turkey-avocado',
