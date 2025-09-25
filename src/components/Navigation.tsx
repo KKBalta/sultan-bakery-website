@@ -3,8 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { bakeryConfig } from '../config/bakeryConfig';
-import { BackgroundColorPicker } from './BackgroundColorPicker';
-import { useBackgroundColors } from '../App';
 
 interface NavigationProps {
   isMenuOpen: boolean;
@@ -15,7 +13,6 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
   const location = useLocation();
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const { setColors } = useBackgroundColors();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,13 +45,14 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
     <motion.nav 
       className="fixed top-0 left-0 right-0 z-50"
       style={{ 
-        background: bakeryConfig.colors.background,
+        background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(184, 134, 11, 0.05) 50%, rgba(255, 215, 0, 0.1) 100%), ' + bakeryConfig.colors.background,
         backdropFilter: 'blur(25px) saturate(200%)',
         WebkitBackdropFilter: 'blur(25px) saturate(200%)',
         borderBottom: `1px solid ${bakeryConfig.colors.border}`,
         boxShadow: '0 12px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
         borderRadius: '0 0 24px 24px',
-        margin: '0 20px'
+        margin: '0 20px',
+        paddingTop: 'env(safe-area-inset-top, 0px)'
       }}
       initial={{ y: -100, opacity: 0 }}
       animate={{ 
@@ -67,14 +65,14 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
       }}
     >
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-12 md:h-16">
           {/* Mobile: Centered Logo, Desktop: Left Logo */}
           <div className="md:block absolute left-1/2 transform -translate-x-1/2 md:relative md:left-auto md:transform-none">
             <Link to="/" className="flex items-center">
-               <span 
-                 className="text-2xl font-bold text-white drop-shadow-lg"
-                 style={{ fontFamily: 'Condiment, cursive', marginTop: '4px' }}
-               >
+                 <span 
+                   className="text-2xl font-bold text-white drop-shadow-lg"
+                   style={{ fontFamily: 'Condiment, cursive', marginTop: '7px' }}
+                 >
                  {bakeryConfig.name}
                </span>
             </Link>
@@ -91,7 +89,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
               >
                 <Link
                   to={item.path}
-                  className={`px-5 py-3 rounded-full text-sm font-medium transition-all duration-500 relative overflow-hidden ${
+                  className={`px-3 py-1.5 md:px-5 md:py-3 rounded-full text-xs md:text-sm font-medium transition-all duration-500 relative overflow-hidden ${
                     location.pathname === item.path
                       ? 'text-black'
                       : 'text-white hover:text-white'
@@ -131,17 +129,9 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.6 }}
             >
-              <BackgroundColorPicker onColorChange={setColors} />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.7 }}
-            >
               <Link
                 to="/tablet-menu"
-                className="px-5 py-3 rounded-full text-sm font-medium transition-all duration-500 text-white"
+                className="px-3 py-1.5 md:px-5 md:py-3 rounded-full text-xs md:text-sm font-medium transition-all duration-500 text-white"
                 style={{ 
                   background: bakeryConfig.colors.background,
                   backdropFilter: 'blur(20px) saturate(200%)',
@@ -161,7 +151,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
           <div className="md:hidden ml-auto">
             <motion.button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-3 rounded-full text-white transition-all duration-500"
+              className="p-2 md:p-3 rounded-full text-white transition-all duration-500"
               style={{
                 background: 'rgba(255, 255, 255, 0.2)',
                 backdropFilter: 'blur(20px) saturate(200%)',
@@ -177,7 +167,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
                 animate={{ rotate: isMenuOpen ? 180 : 0 }}
                 transition={{ duration: 0.3 }}
               >
-                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                {isMenuOpen ? <X className="h-5 w-5 md:h-6 md:w-6" /> : <Menu className="h-5 w-5 md:h-6 md:w-6" />}
               </motion.div>
             </motion.button>
           </div>
@@ -185,7 +175,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
 
         {/* Mobile Navigation */}
         <motion.div
-          className="md:hidden relative"
+          className="md:hidden"
           initial={false}
           animate={{ 
             height: isMenuOpen ? 'auto' : 0,
@@ -198,7 +188,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
             backdropFilter: 'blur(25px) saturate(200%)',
             WebkitBackdropFilter: 'blur(25px) saturate(200%)',
             boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15)',
-            overflow: 'visible',
+            overflow: 'hidden',
             borderRadius: '0 0 24px 24px'
           }}
         >
@@ -216,7 +206,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
                 <Link
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-500 ${
+                  className={`block px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-500 ${
                     location.pathname === item.path
                       ? 'text-white'
                       : 'text-white/90 hover:text-white'
@@ -248,23 +238,10 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
               }}
               transition={{ duration: 0.3, delay: 0.6 }}
             >
-              <div className="px-3 py-2 relative">
-                <BackgroundColorPicker onColorChange={setColors} isMobile={true} />
-              </div>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ 
-                opacity: isMenuOpen ? 1 : 0,
-                x: isMenuOpen ? 0 : -20
-              }}
-              transition={{ duration: 0.3, delay: 0.7 }}
-            >
               <Link
                 to="/tablet-menu"
                 onClick={() => setIsMenuOpen(false)}
-                className="block text-white px-3 py-2 rounded-md text-base font-medium transition-all duration-500"
+                className="block text-white px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-500"
                   style={{ 
                     background: 'rgba(255, 255, 255, 0.12)',
                     backdropFilter: 'blur(16px) saturate(180%)',

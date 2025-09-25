@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { bakeryConfig } from '../config/bakeryConfig';
+import { Star, Users, Leaf, Sparkles } from 'lucide-react';
 
 export const About: React.FC = () => {
   return (
@@ -75,8 +76,8 @@ export const About: React.FC = () => {
                 transition={{ duration: 0.3 }}
               >
                 <img
-                  src="https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg"
-                  alt="Bakery interior"
+                  src="/src/assets/images/DSC06486.webp"
+                  alt="Sultan Bakery showcase"
                   className="w-full h-96 object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
@@ -158,22 +159,22 @@ export const About: React.FC = () => {
                 {
                   title: "Quality First",
                   description: "We source the best ingredients and never compromise on quality.",
-                  icon: "⭐"
+                  icon: Star
                 },
                 {
                   title: "Community Focus",
                   description: "We're more than a bakery - we're a place where neighbors become friends.",
-                  icon: "🤝"
+                  icon: Users
                 },
                 {
                   title: "Sustainable Practices",
                   description: "We believe in caring for our environment through responsible sourcing.",
-                  icon: "🌱"
+                  icon: Leaf
                 },
                 {
                   title: "Innovation & Tradition",
                   description: "We honor classic recipes while creating new flavors and experiences.",
-                  icon: "✨"
+                  icon: Sparkles
                 }
               ].map((value, index) => (
                 <motion.div 
@@ -186,14 +187,19 @@ export const About: React.FC = () => {
                   whileHover={{ y: -5 }}
                 >
                   <motion.div
-                    className="text-4xl mb-4"
+                    className="flex justify-center mb-4"
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.2 * (index + 1) }}
                     viewport={{ once: true }}
                     whileHover={{ scale: 1.2, rotate: 10 }}
                   >
-                    {value.icon}
+                    <value.icon 
+                      className="w-12 h-12 text-yellow-400" 
+                      style={{ 
+                        filter: 'drop-shadow(0 4px 8px rgba(255, 215, 0, 0.3))'
+                      }}
+                    />
                   </motion.div>
                   
                   <h3 

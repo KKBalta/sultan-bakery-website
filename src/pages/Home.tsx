@@ -59,7 +59,7 @@ export const Home: React.FC = () => {
 
           {/* Top Left Image */}
           <motion.div
-            className="absolute top-12 left-2 w-52 h-52 md:top-16 md:left-8 md:w-64 md:h-64 rounded-2xl overflow-hidden"
+            className="absolute top-12 left-2 w-52 h-52 md:top-16 md:left-8 md:w-64 md:h-64 rounded-2xl overflow-hidden opacity-100"
             style={{
               background: bakeryConfig.colors.surface,
               backdropFilter: 'blur(25px) saturate(200%)',
@@ -92,7 +92,7 @@ export const Home: React.FC = () => {
 
           {/* Top Right Image */}
           <motion.div
-            className="absolute top-12 right-2 w-52 h-52 md:top-16 md:right-8 md:w-64 md:h-64 rounded-2xl overflow-hidden"
+            className="absolute top-12 right-2 w-52 h-52 md:top-16 md:right-8 md:w-64 md:h-64 rounded-2xl overflow-hidden opacity-100"
             style={{
               background: bakeryConfig.colors.surface,
               backdropFilter: 'blur(25px) saturate(200%)',
@@ -125,7 +125,7 @@ export const Home: React.FC = () => {
 
           {/* Bottom Left Image */}
           <motion.div
-            className="absolute bottom-12 left-2 w-52 h-52 md:bottom-16 md:left-8 md:w-64 md:h-64 rounded-2xl overflow-hidden"
+            className="absolute bottom-12 left-2 w-52 h-52 md:bottom-16 md:left-8 md:w-64 md:h-64 rounded-2xl overflow-hidden opacity-100"
             style={{
               background: bakeryConfig.colors.surface,
               backdropFilter: 'blur(25px) saturate(200%)',
@@ -158,7 +158,7 @@ export const Home: React.FC = () => {
 
           {/* Bottom Right Image */}
           <motion.div
-            className="absolute bottom-12 right-2 w-52 h-52 md:bottom-16 md:right-8 md:w-64 md:h-64 rounded-2xl overflow-hidden"
+            className="absolute bottom-12 right-2 w-52 h-52 md:bottom-16 md:right-8 md:w-64 md:h-64 rounded-2xl overflow-hidden opacity-100"
             style={{
               background: bakeryConfig.colors.surface,
               backdropFilter: 'blur(25px) saturate(200%)',
@@ -236,7 +236,7 @@ export const Home: React.FC = () => {
           >
             {/* Background Image 1 */}
             <motion.div
-              className="absolute top-20 left-20 w-64 h-64 rounded-3xl overflow-hidden opacity-40"
+              className="absolute top-20 left-20 w-64 h-64 rounded-3xl overflow-hidden opacity-100"
               style={{
                 background: bakeryConfig.colors.surface,
                 backdropFilter: 'blur(15px) saturate(150%)',
@@ -262,7 +262,7 @@ export const Home: React.FC = () => {
 
             {/* Background Image 2 */}
             <motion.div
-              className="absolute bottom-20 right-20 w-56 h-56 rounded-3xl overflow-hidden opacity-30"
+              className="absolute bottom-20 right-20 w-56 h-56 rounded-3xl overflow-hidden opacity-100"
               style={{
                 background: bakeryConfig.colors.surface,
                 backdropFilter: 'blur(15px) saturate(150%)',
@@ -289,7 +289,7 @@ export const Home: React.FC = () => {
 
             {/* Background Image 3 */}
             <motion.div
-              className="absolute top-1/2 right-20 w-48 h-48 rounded-3xl overflow-hidden opacity-25"
+              className="absolute top-1/2 right-20 w-48 h-48 rounded-3xl overflow-hidden opacity-100"
               style={{
                 background: bakeryConfig.colors.surface,
                 backdropFilter: 'blur(15px) saturate(150%)',
@@ -333,7 +333,7 @@ export const Home: React.FC = () => {
           >
             {/* Middle Image 1 */}
             <motion.div
-              className="absolute top-32 right-32 w-72 h-72 rounded-3xl overflow-hidden opacity-60"
+              className="absolute top-32 right-32 w-72 h-72 rounded-3xl overflow-hidden opacity-100"
               style={{
                 background: bakeryConfig.colors.surface,
                 backdropFilter: 'blur(20px) saturate(180%)',
@@ -360,7 +360,7 @@ export const Home: React.FC = () => {
 
             {/* Middle Image 2 */}
             <motion.div
-              className="absolute bottom-32 left-32 w-60 h-60 rounded-3xl overflow-hidden opacity-50"
+              className="absolute bottom-32 left-32 w-60 h-60 rounded-3xl overflow-hidden opacity-100"
               style={{
                 background: bakeryConfig.colors.surface,
                 backdropFilter: 'blur(20px) saturate(180%)',
@@ -387,7 +387,7 @@ export const Home: React.FC = () => {
 
             {/* Middle Image 3 */}
             <motion.div
-              className="absolute bottom-1/4 left-1/4 w-52 h-52 rounded-3xl overflow-hidden opacity-45"
+              className="absolute bottom-1/4 left-1/4 w-52 h-52 rounded-3xl overflow-hidden opacity-100"
               style={{
                 background: bakeryConfig.colors.surface,
                 backdropFilter: 'blur(20px) saturate(180%)',
@@ -431,7 +431,7 @@ export const Home: React.FC = () => {
           >
             {/* Foreground Image 1 */}
             <motion.div
-              className="absolute top-16 left-1/2 transform -translate-x-1/2 w-80 h-80 rounded-3xl overflow-hidden opacity-80"
+              className="absolute top-16 left-1/2 transform -translate-x-1/2 w-80 h-80 rounded-3xl overflow-hidden opacity-100"
               style={{
                 background: bakeryConfig.colors.surface,
                 backdropFilter: 'blur(25px) saturate(200%)',
@@ -460,7 +460,7 @@ export const Home: React.FC = () => {
 
             {/* Foreground Image 2 */}
             <motion.div
-              className="absolute bottom-16 right-1/3 w-64 h-64 rounded-3xl overflow-hidden opacity-70"
+              className="absolute bottom-16 right-1/3 w-64 h-64 rounded-3xl overflow-hidden opacity-100"
               style={{
                 background: bakeryConfig.colors.surface,
                 backdropFilter: 'blur(25px) saturate(200%)',
@@ -506,7 +506,7 @@ export const Home: React.FC = () => {
           >
             {/* Floating Accent 1 */}
             <motion.div
-              className="absolute top-1/4 left-1/4 w-48 h-48 rounded-2xl overflow-hidden opacity-60"
+              className="absolute top-1/4 left-1/4 w-48 h-48 rounded-2xl overflow-hidden opacity-100"
               style={{
                 background: bakeryConfig.colors.surface,
                 backdropFilter: 'blur(30px) saturate(220%)',
@@ -534,7 +534,7 @@ export const Home: React.FC = () => {
 
             {/* Floating Accent 2 */}
             <motion.div
-              className="absolute bottom-1/4 right-1/4 w-40 h-40 rounded-2xl overflow-hidden opacity-50"
+              className="absolute bottom-1/4 right-1/4 w-40 h-40 rounded-2xl overflow-hidden opacity-100"
               style={{
                 background: bakeryConfig.colors.surface,
                 backdropFilter: 'blur(30px) saturate(220%)',
@@ -564,24 +564,50 @@ export const Home: React.FC = () => {
         </div>
         
         {/* Content Layer */}
-        <div className="text-center max-w-4xl mx-auto px-4 relative z-10 transform -translate-y-8 md:-translate-y-12">
-          {/* Animated Title with Ottoman Typography Feel */}
-          <motion.h1 
-            className="text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-2xl" 
-            style={{ 
-              textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-              fontFamily: 'Condiment, cursive'
-            }}
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
+        <div className="text-center max-w-4xl mx-auto px-4 relative z-10 transform lg:-translate-y-8 lg:md:-translate-y-12">
+          {/* Animated Logo */}
+          <motion.div
+            className="flex justify-center lg:mt-3"
+            initial={{ opacity: 0, scale: 0.8, y: 50 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            {bakeryConfig.name}
-          </motion.h1>
+            <motion.div
+              className="relative"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
+              <img
+                src="/src/assets/images/Sultan_Logo.png"
+                alt="Sultan Bakery & Cafe Logo"
+                className="w-[32rem] h-[32rem] md:w-[36rem] md:h-[36rem] lg:w-[40rem] lg:h-[40rem] xl:w-[44rem] xl:h-[44rem] 2xl:w-[48rem] 2xl:h-[48rem] object-contain drop-shadow-2xl"
+                style={{
+                  filter: 'drop-shadow(0 8px 32px rgba(0, 0, 0, 0.3))',
+                }}
+              />
+              {/* Subtle glow effect */}
+              <motion.div
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: 'radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%)',
+                  filter: 'blur(20px)',
+                }}
+                animate={{
+                  scale: [1, 1.1, 1],
+                  opacity: [0.3, 0.6, 0.3],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            </motion.div>
+          </motion.div>
           
           {/* Animated Tagline with Gold Accent */}
           <motion.p 
-            className="text-xl md:text-2xl mb-8 leading-relaxed text-white drop-shadow-lg" 
+            className="text-xl md:text-2xl leading-relaxed text-white drop-shadow-lg -mt-32" 
             style={{ 
               textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
               color: bakeryConfig.colors.text
