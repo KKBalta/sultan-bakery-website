@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { bakeryConfig } from '../config/bakeryConfig';
+import { BackgroundColorPicker } from './BackgroundColorPicker';
+import { useBackgroundColors } from '../App';
 
 interface NavigationProps {
   isMenuOpen: boolean;
@@ -13,6 +15,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
   const location = useLocation();
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const { setColors } = useBackgroundColors();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -128,6 +131,14 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.6 }}
             >
+              <BackgroundColorPicker onColorChange={setColors} />
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.7 }}
+            >
               <Link
                 to="/tablet-menu"
                 className="px-5 py-3 rounded-full text-sm font-medium transition-all duration-500 text-white"
@@ -174,7 +185,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
 
         {/* Mobile Navigation */}
         <motion.div
-          className="md:hidden"
+          className="md:hidden relative"
           initial={false}
           animate={{ 
             height: isMenuOpen ? 'auto' : 0,
@@ -187,7 +198,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
             backdropFilter: 'blur(25px) saturate(200%)',
             WebkitBackdropFilter: 'blur(25px) saturate(200%)',
             boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15)',
-            overflow: 'hidden',
+            overflow: 'visible',
             borderRadius: '0 0 24px 24px'
           }}
         >
@@ -236,6 +247,19 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
                 x: isMenuOpen ? 0 : -20
               }}
               transition={{ duration: 0.3, delay: 0.6 }}
+            >
+              <div className="px-3 py-2 relative">
+                <BackgroundColorPicker onColorChange={setColors} isMobile={true} />
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ 
+                opacity: isMenuOpen ? 1 : 0,
+                x: isMenuOpen ? 0 : -20
+              }}
+              transition={{ duration: 0.3, delay: 0.7 }}
             >
               <Link
                 to="/tablet-menu"

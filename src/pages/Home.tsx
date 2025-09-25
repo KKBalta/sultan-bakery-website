@@ -30,8 +30,541 @@ export const Home: React.FC = () => {
           }}
         />
         
+        {/* Mobile Layout - 4 Corner Images */}
+        <div className="absolute inset-0 flex items-center justify-center overflow-hidden lg:hidden">
+          
+          {/* Floating Particle Background */}
+          <div className="absolute inset-0">
+            {[...Array(20)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-white/20 rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                }}
+                animate={{
+                  y: [0, -30, 0],
+                  opacity: [0.2, 0.8, 0.2],
+                }}
+                transition={{
+                  duration: 3 + Math.random() * 2,
+                  repeat: Infinity,
+                  delay: Math.random() * 2,
+                  ease: "easeInOut"
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Top Left Image */}
+          <motion.div
+            className="absolute top-12 left-2 w-52 h-52 md:top-16 md:left-8 md:w-64 md:h-64 rounded-2xl overflow-hidden"
+            style={{
+              background: bakeryConfig.colors.surface,
+              backdropFilter: 'blur(25px) saturate(200%)',
+              WebkitBackdropFilter: 'blur(25px) saturate(200%)',
+              border: `1px solid ${bakeryConfig.colors.border}`,
+              boxShadow: `0 12px 40px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.15)`
+            }}
+            initial={{ opacity: 0, scale: 0.8, rotate: -15 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1, 
+              rotate: [-8, -5, -8]
+            }}
+            transition={{ 
+              duration: 0.8, 
+              delay: 0.3,
+              rotate: {
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }
+            }}
+          >
+            <img
+              src="https://res.cloudinary.com/djdp7vvpm/image/upload/v1758665186/samples/food/fish-vegetables.jpg"
+              alt="Fresh fish and vegetables"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+
+          {/* Top Right Image */}
+          <motion.div
+            className="absolute top-12 right-2 w-52 h-52 md:top-16 md:right-8 md:w-64 md:h-64 rounded-2xl overflow-hidden"
+            style={{
+              background: bakeryConfig.colors.surface,
+              backdropFilter: 'blur(25px) saturate(200%)',
+              WebkitBackdropFilter: 'blur(25px) saturate(200%)',
+              border: `1px solid ${bakeryConfig.colors.border}`,
+              boxShadow: `0 12px 40px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.15)`
+            }}
+            initial={{ opacity: 0, scale: 0.8, rotate: 15 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1, 
+              rotate: [8, 5, 8]
+            }}
+            transition={{ 
+              duration: 0.8, 
+              delay: 0.4,
+              rotate: {
+                duration: 10,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }
+            }}
+          >
+            <img
+              src="/src/assets/images/main.webp"
+              alt="Main bakery showcase"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+
+          {/* Bottom Left Image */}
+          <motion.div
+            className="absolute bottom-12 left-2 w-52 h-52 md:bottom-16 md:left-8 md:w-64 md:h-64 rounded-2xl overflow-hidden"
+            style={{
+              background: bakeryConfig.colors.surface,
+              backdropFilter: 'blur(25px) saturate(200%)',
+              WebkitBackdropFilter: 'blur(25px) saturate(200%)',
+              border: `1px solid ${bakeryConfig.colors.border}`,
+              boxShadow: `0 12px 40px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.15)`
+            }}
+            initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1, 
+              rotate: [-6, -3, -6]
+            }}
+            transition={{ 
+              duration: 0.8, 
+              delay: 0.5,
+              rotate: {
+                duration: 12,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }
+            }}
+          >
+            <img
+              src="https://res.cloudinary.com/djdp7vvpm/image/upload/v1758665186/samples/food/pot-mussels.jpg"
+              alt="Delicious pot mussels"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+
+          {/* Bottom Right Image */}
+          <motion.div
+            className="absolute bottom-12 right-2 w-52 h-52 md:bottom-16 md:right-8 md:w-64 md:h-64 rounded-2xl overflow-hidden"
+            style={{
+              background: bakeryConfig.colors.surface,
+              backdropFilter: 'blur(25px) saturate(200%)',
+              WebkitBackdropFilter: 'blur(25px) saturate(200%)',
+              border: `1px solid ${bakeryConfig.colors.border}`,
+              boxShadow: `0 12px 40px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.15)`
+            }}
+            initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1, 
+              rotate: [6, 3, 6]
+            }}
+            transition={{ 
+              duration: 0.8, 
+              delay: 0.6,
+              rotate: {
+                duration: 9,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }
+            }}
+          >
+            <img
+              src="/src/assets/images/DSC06491-optimized.webp"
+              alt="Delicious bakery item"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+
+        </div>
+
+        {/* Desktop Layout - Parallax 3D Gallery */}
+        <div className="hidden lg:block absolute inset-0 overflow-hidden" style={{ perspective: '1000px' }}>
+          
+          {/* Enhanced Floating Particles for Desktop */}
+          <div className="absolute inset-0">
+            {[...Array(30)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-white/30 rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                }}
+                animate={{
+                  y: [0, -50, 0],
+                  opacity: [0.1, 0.9, 0.1],
+                  x: [0, Math.random() * 20 - 10, 0],
+                }}
+                transition={{
+                  duration: 4 + Math.random() * 3,
+                  repeat: Infinity,
+                  delay: Math.random() * 3,
+                  ease: "easeInOut"
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Layer 1: Background Images (Slowest Parallax) */}
+          <motion.div
+            className="absolute inset-0"
+            style={{ zIndex: 1 }}
+            animate={{
+              y: [0, -20, 0],
+              rotateX: [0, 2, 0],
+              rotateY: [0, 1, 0],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            {/* Background Image 1 */}
+            <motion.div
+              className="absolute top-20 left-20 w-64 h-64 rounded-3xl overflow-hidden opacity-40"
+              style={{
+                background: bakeryConfig.colors.surface,
+                backdropFilter: 'blur(15px) saturate(150%)',
+                border: `1px solid ${bakeryConfig.colors.border}`,
+                boxShadow: `0 8px 32px ${bakeryConfig.colors.shadow}`
+              }}
+              animate={{
+                rotate: [0, 5, 0],
+                scale: [1, 1.05, 1],
+              }}
+              transition={{
+                duration: 20,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <img
+                src="https://res.cloudinary.com/djdp7vvpm/image/upload/v1758665186/samples/food/fish-vegetables.jpg"
+                alt="Fresh fish and vegetables"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+
+            {/* Background Image 2 */}
+            <motion.div
+              className="absolute bottom-20 right-20 w-56 h-56 rounded-3xl overflow-hidden opacity-30"
+              style={{
+                background: bakeryConfig.colors.surface,
+                backdropFilter: 'blur(15px) saturate(150%)',
+                border: `1px solid ${bakeryConfig.colors.border}`,
+                boxShadow: `0 8px 32px ${bakeryConfig.colors.shadow}`
+              }}
+              animate={{
+                rotate: [0, -3, 0],
+                scale: [1, 1.03, 1],
+              }}
+              transition={{
+                duration: 18,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2
+              }}
+            >
+              <img
+                src="/src/assets/images/DSC06491-optimized.webp"
+                alt="Delicious bakery item"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+
+            {/* Background Image 3 */}
+            <motion.div
+              className="absolute top-1/2 right-20 w-48 h-48 rounded-3xl overflow-hidden opacity-25"
+              style={{
+                background: bakeryConfig.colors.surface,
+                backdropFilter: 'blur(15px) saturate(150%)',
+                border: `1px solid ${bakeryConfig.colors.border}`,
+                boxShadow: `0 8px 32px ${bakeryConfig.colors.shadow}`
+              }}
+              animate={{
+                rotate: [0, 4, 0],
+                scale: [1, 1.04, 1],
+              }}
+              transition={{
+                duration: 22,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 3
+              }}
+            >
+              <img
+                src="https://res.cloudinary.com/djdp7vvpm/image/upload/v1758665197/cld-sample-4.jpg"
+                alt="Delicious food sample"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+          </motion.div>
+
+          {/* Layer 2: Middle Images (Medium Parallax) */}
+          <motion.div
+            className="absolute inset-0"
+            style={{ zIndex: 2 }}
+            animate={{
+              y: [0, -30, 0],
+              rotateX: [0, 3, 0],
+              rotateY: [0, 2, 0],
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1
+            }}
+          >
+            {/* Middle Image 1 */}
+            <motion.div
+              className="absolute top-32 right-32 w-72 h-72 rounded-3xl overflow-hidden opacity-60"
+              style={{
+                background: bakeryConfig.colors.surface,
+                backdropFilter: 'blur(20px) saturate(180%)',
+                border: `1px solid ${bakeryConfig.colors.border}`,
+                boxShadow: `0 12px 40px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.1)`
+              }}
+              animate={{
+                rotate: [0, 8, 0],
+                scale: [1, 1.08, 1],
+              }}
+              transition={{
+                duration: 14,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.5
+              }}
+            >
+              <img
+                src="/src/assets/images/main.webp"
+                alt="Main bakery showcase"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+
+            {/* Middle Image 2 */}
+            <motion.div
+              className="absolute bottom-32 left-32 w-60 h-60 rounded-3xl overflow-hidden opacity-50"
+              style={{
+                background: bakeryConfig.colors.surface,
+                backdropFilter: 'blur(20px) saturate(180%)',
+                border: `1px solid ${bakeryConfig.colors.border}`,
+                boxShadow: `0 12px 40px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.1)`
+              }}
+              animate={{
+                rotate: [0, -6, 0],
+                scale: [1, 1.06, 1],
+              }}
+              transition={{
+                duration: 16,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.5
+              }}
+            >
+              <img
+                src="https://res.cloudinary.com/djdp7vvpm/image/upload/v1758665186/samples/food/pot-mussels.jpg"
+                alt="Delicious pot mussels"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+
+            {/* Middle Image 3 */}
+            <motion.div
+              className="absolute bottom-1/4 left-1/4 w-52 h-52 rounded-3xl overflow-hidden opacity-45"
+              style={{
+                background: bakeryConfig.colors.surface,
+                backdropFilter: 'blur(20px) saturate(180%)',
+                border: `1px solid ${bakeryConfig.colors.border}`,
+                boxShadow: `0 12px 40px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.1)`
+              }}
+              animate={{
+                rotate: [0, 7, 0],
+                scale: [1, 1.07, 1],
+              }}
+              transition={{
+                duration: 17,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2.2
+              }}
+            >
+              <img
+                src="https://res.cloudinary.com/djdp7vvpm/image/upload/v1758665194/samples/breakfast.jpg"
+                alt="Delicious breakfast"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+          </motion.div>
+
+          {/* Layer 3: Foreground Images (Fastest Parallax) */}
+          <motion.div
+            className="absolute inset-0"
+            style={{ zIndex: 3 }}
+            animate={{
+              y: [0, -40, 0],
+              rotateX: [0, 4, 0],
+              rotateY: [0, 3, 0],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2
+            }}
+          >
+            {/* Foreground Image 1 */}
+            <motion.div
+              className="absolute top-16 left-1/2 transform -translate-x-1/2 w-80 h-80 rounded-3xl overflow-hidden opacity-80"
+              style={{
+                background: bakeryConfig.colors.surface,
+                backdropFilter: 'blur(25px) saturate(200%)',
+                border: `2px solid ${bakeryConfig.colors.border}`,
+                boxShadow: `0 16px 50px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.2)`
+              }}
+              animate={{
+                rotate: [0, 12, 0],
+                scale: [1, 1.1, 1],
+                rotateX: [0, 5, 0],
+                rotateY: [0, 3, 0],
+              }}
+              transition={{
+                duration: 12,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1
+              }}
+            >
+              <img
+                src="https://res.cloudinary.com/djdp7vvpm/image/upload/v1758665546/DSCF5707_sy4dat.jpg"
+                alt="Delicious short ribs with vegetables"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+
+            {/* Foreground Image 2 */}
+            <motion.div
+              className="absolute bottom-16 right-1/3 w-64 h-64 rounded-3xl overflow-hidden opacity-70"
+              style={{
+                background: bakeryConfig.colors.surface,
+                backdropFilter: 'blur(25px) saturate(200%)',
+                border: `2px solid ${bakeryConfig.colors.border}`,
+                boxShadow: `0 16px 50px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.2)`
+              }}
+              animate={{
+                rotate: [0, -10, 0],
+                scale: [1, 1.12, 1],
+                rotateX: [0, -4, 0],
+                rotateY: [0, -2, 0],
+              }}
+              transition={{
+                duration: 11,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2.5
+              }}
+            >
+              <img
+                src="https://res.cloudinary.com/djdp7vvpm/image/upload/v1758665186/samples/food/dessert.jpg"
+                alt="Delicious dessert"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+          </motion.div>
+
+          {/* Layer 4: Floating Accent Images */}
+          <motion.div
+            className="absolute inset-0"
+            style={{ zIndex: 4 }}
+            animate={{
+              y: [0, -50, 0],
+              rotateX: [0, 5, 0],
+              rotateY: [0, 4, 0],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 3
+            }}
+          >
+            {/* Floating Accent 1 */}
+            <motion.div
+              className="absolute top-1/4 left-1/4 w-48 h-48 rounded-2xl overflow-hidden opacity-60"
+              style={{
+                background: bakeryConfig.colors.surface,
+                backdropFilter: 'blur(30px) saturate(220%)',
+                border: `1px solid ${bakeryConfig.colors.border}`,
+                boxShadow: `0 20px 60px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.3)`
+              }}
+              animate={{
+                rotate: [0, 15, 0],
+                scale: [1, 1.15, 1],
+                y: [0, -20, 0],
+              }}
+              transition={{
+                duration: 9,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.8
+              }}
+            >
+              <img
+                src="/src/assets/images/DSCF5820.jpg"
+                alt="Fresh bakery goods"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+
+            {/* Floating Accent 2 */}
+            <motion.div
+              className="absolute bottom-1/4 right-1/4 w-40 h-40 rounded-2xl overflow-hidden opacity-50"
+              style={{
+                background: bakeryConfig.colors.surface,
+                backdropFilter: 'blur(30px) saturate(220%)',
+                border: `1px solid ${bakeryConfig.colors.border}`,
+                boxShadow: `0 20px 60px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.3)`
+              }}
+              animate={{
+                rotate: [0, -12, 0],
+                scale: [1, 1.18, 1],
+                y: [0, 15, 0],
+              }}
+              transition={{
+                duration: 7,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.2
+              }}
+            >
+              <img
+                src="/src/assets/images/DSC06486.webp"
+                alt="Delicious bakery item"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+          </motion.div>
+
+        </div>
+        
         {/* Content Layer */}
-        <div className="text-center max-w-4xl mx-auto px-4 relative z-10">
+        <div className="text-center max-w-4xl mx-auto px-4 relative z-10 transform -translate-y-8 md:-translate-y-12">
           {/* Animated Title with Ottoman Typography Feel */}
           <motion.h1 
             className="text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-2xl" 
@@ -87,7 +620,7 @@ export const Home: React.FC = () => {
                 <div 
                   className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-500"
                   style={{ 
-                    background: 'linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57)',
+                    background: 'linear-gradient(45deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6), rgba(255,255,255,0.8))',
                     backgroundSize: '300% 300%',
                     animation: 'gradientShift 3s ease infinite'
                   }}
@@ -425,7 +958,7 @@ export const Home: React.FC = () => {
                 <div 
                   className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-500"
                   style={{ 
-                    background: 'linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57)',
+                    background: 'linear-gradient(45deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6), rgba(255,255,255,0.8))',
                     backgroundSize: '300% 300%',
                     animation: 'gradientShift 3s ease infinite'
                   }}

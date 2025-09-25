@@ -40,7 +40,7 @@ export const bakeryConfig: BakeryConfig = {
   googleSheetId: import.meta.env.VITE_REACT_APP_GOOGLE_SHEET_ID || '16qy6axjONcGfzX7eQ4MMvrongq0UtjmdBY_Y1VeyoC8',
   googlePlaceId: import.meta.env.VITE_REACT_APP_GOOGLE_PLACE_ID || 'ChIJbeQMbwADw4kRHKuH15iKklQ',
   googleApiKey: import.meta.env.VITE_REACT_APP_GOOGLE_API_KEY,
-  primaryColor: import.meta.env.VITE_REACT_APP_PRIMARY_COLOR || '#FFB22C',
+  primaryColor: import.meta.env.VITE_REACT_APP_PRIMARY_COLOR || '#FFFFFF',
   secondaryColor: import.meta.env.VITE_REACT_APP_SECONDARY_COLOR || '#F7F7F7',
   colors: {
     primary: import.meta.env.VITE_REACT_APP_COLOR_PRIMARY || '#000000',
