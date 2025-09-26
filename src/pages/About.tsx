@@ -1,22 +1,64 @@
-import React from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { bakeryConfig } from '../config/bakeryConfig';
 import { Star, Users, Leaf, Sparkles } from 'lucide-react';
 
 export const About: React.FC = () => {
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Performance optimizations
+  useEffect(() => {
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReducedMotion(mediaQuery.matches);
+    
+    // Check for mobile device
+    setIsMobile(window.innerWidth < 768);
+    
+    // Check for low-end devices
+    const isLowEndDevice = navigator.hardwareConcurrency <= 2 || 
+                          (navigator as any).deviceMemory <= 4;
+    setReducedMotion(prev => prev || isLowEndDevice);
+  }, []);
+  
+  // Memoize values array to prevent recreation on every render
+  const values = useMemo(() => [
+    {
+      title: "Quality First",
+      description: "We source the best ingredients and never compromise on quality.",
+      icon: Star
+    },
+    {
+      title: "Community Focus",
+      description: "We're more than a bakery - we're a place where neighbors become friends.",
+      icon: Users
+    },
+    {
+      title: "Sustainable Practices",
+      description: "We believe in caring for our environment through responsible sourcing.",
+      icon: Leaf
+    },
+    {
+      title: "Innovation & Tradition",
+      description: "We honor classic recipes while creating new flavors and experiences.",
+      icon: Sparkles
+    }
+  ], []);
+
   return (
     <div className="min-h-screen -mt-20">
-      {/* Single Unified Section - Full Size */}
+      {/* Single Unified Section - Full Size - Optimized for Mobile */}
       <motion.section 
         className="py-24 relative"
         style={{
-          background: 'rgba(255, 255, 255, 0.05)',
-          backdropFilter: 'blur(20px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          background: isMobile ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.05)',
+          backdropFilter: isMobile ? 'blur(10px) saturate(120%)' : 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: isMobile ? 'blur(10px) saturate(120%)' : 'blur(20px) saturate(180%)',
         }}
-        initial={{ opacity: 0, y: 50 }}
+        initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={reducedMotion ? { duration: 0 } : { duration: isMobile ? 0.5 : 0.8, ease: "easeOut" }}
         viewport={{ once: true, margin: "-100px" }}
       >
         <div className="max-w-6xl mx-auto px-4">
@@ -28,9 +70,9 @@ export const About: React.FC = () => {
                 textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
                 fontFamily: 'Condiment, cursive'
               }}
-              initial={{ opacity: 0, y: 30 }}
+              initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={reducedMotion ? { duration: 0 } : { duration: isMobile ? 0.4 : 0.8, delay: isMobile ? 0.1 : 0.2 }}
               viewport={{ once: true }}
             >
               Our Story
@@ -42,9 +84,9 @@ export const About: React.FC = () => {
                 textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
                 color: bakeryConfig.colors.text
               }}
-              initial={{ opacity: 0, y: 20 }}
+              initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={reducedMotion ? { duration: 0 } : { duration: isMobile ? 0.4 : 0.8, delay: isMobile ? 0.2 : 0.4 }}
               viewport={{ once: true }}
             >
               Where Tradition Meets Innovation
@@ -53,9 +95,9 @@ export const About: React.FC = () => {
             <motion.div
               className="w-24 h-1 mx-auto"
               style={{ backgroundColor: bakeryConfig.primaryColor }}
-              initial={{ width: 0 }}
+              initial={reducedMotion ? { width: 96 } : { width: 0 }}
               whileInView={{ width: 96 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              transition={reducedMotion ? { duration: 0 } : { duration: isMobile ? 0.4 : 0.8, delay: isMobile ? 0.3 : 0.6 }}
               viewport={{ once: true }}
             />
           </div>
@@ -65,15 +107,15 @@ export const About: React.FC = () => {
             {/* Image Section */}
             <motion.div
               className="relative"
-              initial={{ opacity: 0, x: -50 }}
+              initial={reducedMotion ? { opacity: 0 } : { opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={reducedMotion ? { duration: 0 } : { duration: isMobile ? 0.4 : 0.8 }}
               viewport={{ once: true }}
             >
               <motion.div
                 className="relative rounded-3xl overflow-hidden shadow-2xl"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
+                whileHover={reducedMotion ? {} : { scale: 1.02 }}
+                transition={reducedMotion ? {} : { duration: 0.3 }}
               >
                 <img
                   src="/src/assets/images/DSC06486.webp"
@@ -87,9 +129,9 @@ export const About: React.FC = () => {
             {/* Content Section */}
             <motion.div
               className="space-y-8"
-              initial={{ opacity: 0, x: 50 }}
+              initial={reducedMotion ? { opacity: 0 } : { opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={reducedMotion ? { duration: 0 } : { duration: isMobile ? 0.4 : 0.8, delay: isMobile ? 0.1 : 0.2 }}
               viewport={{ once: true }}
             >
               <motion.h2 
@@ -99,9 +141,9 @@ export const About: React.FC = () => {
                   textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)',
                   fontFamily: 'Condiment, cursive'
                 }}
-                initial={{ opacity: 0, y: 30 }}
+                initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
+                transition={reducedMotion ? { duration: 0 } : { duration: isMobile ? 0.4 : 0.8, delay: isMobile ? 0.2 : 0.3 }}
                 viewport={{ once: true }}
               >
                 Crafting Sweet Memories Since 2015
@@ -112,9 +154,9 @@ export const About: React.FC = () => {
                 style={{ 
                   textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
                 }}
-                initial={{ opacity: 0, y: 20 }}
+                initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
+                transition={reducedMotion ? { duration: 0 } : { duration: isMobile ? 0.4 : 0.8, delay: isMobile ? 0.3 : 0.4 }}
                 viewport={{ once: true }}
               >
                 {bakeryConfig.name} began as a dream shared by two passionate bakers who believed that 
@@ -127,9 +169,9 @@ export const About: React.FC = () => {
                 style={{ 
                   textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
                 }}
-                initial={{ opacity: 0, y: 20 }}
+                initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
+                transition={reducedMotion ? { duration: 0 } : { duration: isMobile ? 0.4 : 0.8, delay: isMobile ? 0.4 : 0.5 }}
                 viewport={{ once: true }}
               >
                 {bakeryConfig.tagline}
@@ -155,44 +197,23 @@ export const About: React.FC = () => {
             </motion.h2>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[
-                {
-                  title: "Quality First",
-                  description: "We source the best ingredients and never compromise on quality.",
-                  icon: Star
-                },
-                {
-                  title: "Community Focus",
-                  description: "We're more than a bakery - we're a place where neighbors become friends.",
-                  icon: Users
-                },
-                {
-                  title: "Sustainable Practices",
-                  description: "We believe in caring for our environment through responsible sourcing.",
-                  icon: Leaf
-                },
-                {
-                  title: "Innovation & Tradition",
-                  description: "We honor classic recipes while creating new flavors and experiences.",
-                  icon: Sparkles
-                }
-              ].map((value, index) => (
+              {values.map((value, index) => (
                 <motion.div 
                   key={value.title}
                   className="text-center p-6"
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 * (index + 1) }}
+                  transition={{ duration: isMobile ? 0.4 : 0.6, delay: isMobile ? 0.05 * (index + 1) : 0.1 * (index + 1) }}
                   viewport={{ once: true }}
-                  whileHover={{ y: -5 }}
+                  whileHover={reducedMotion ? {} : { y: -5 }}
                 >
                   <motion.div
                     className="flex justify-center mb-4"
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.2 * (index + 1) }}
+                    transition={{ duration: isMobile ? 0.3 : 0.5, delay: isMobile ? 0.1 * (index + 1) : 0.2 * (index + 1) }}
                     viewport={{ once: true }}
-                    whileHover={{ scale: 1.2, rotate: 10 }}
+                    whileHover={reducedMotion ? {} : { scale: 1.2, rotate: 10 }}
                   >
                     <value.icon 
                       className="w-12 h-12 text-yellow-400" 

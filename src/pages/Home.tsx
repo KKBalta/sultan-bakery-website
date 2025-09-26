@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { bakeryConfig } from '../config/bakeryConfig';
@@ -9,9 +9,42 @@ import { Image } from '../components/Image';
 
 export const Home: React.FC = () => {
   const { menuItems, loading } = useMenuData();
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   
-  // Get popular items (first 3 popular items)
-  const popularItems = menuItems.filter(item => item.popular && item.available).slice(0, 3);
+  // Performance optimizations
+  useEffect(() => {
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReducedMotion(mediaQuery.matches);
+    
+    // Check for mobile device
+    setIsMobile(window.innerWidth < 768);
+    
+    // Check for low-end devices
+    const isLowEndDevice = navigator.hardwareConcurrency <= 2 || 
+                          (navigator as any).deviceMemory <= 4;
+    setReducedMotion(prev => prev || isLowEndDevice);
+  }, []);
+  
+  // Memoize expensive calculations
+  const popularItems = useMemo(() => 
+    menuItems.filter(item => item.popular && item.available).slice(0, 3),
+    [menuItems]
+  );
+  
+  // Optimize particle count based on device performance
+  const particleCount = useMemo(() => {
+    if (reducedMotion) return 0;
+    if (isMobile) return 10; // Reduced for mobile
+    return 20; // Desktop
+  }, [reducedMotion, isMobile]);
+  
+  const desktopParticleCount = useMemo(() => {
+    if (reducedMotion) return 0;
+    if (isMobile) return 15; // Reduced for mobile
+    return 30; // Desktop
+  }, [reducedMotion, isMobile]);
   
   return (
     <div className="-mt-20">
@@ -33,29 +66,31 @@ export const Home: React.FC = () => {
         {/* Mobile Layout - 4 Corner Images */}
         <div className="absolute inset-0 flex items-center justify-center overflow-hidden lg:hidden">
           
-          {/* Floating Particle Background */}
-          <div className="absolute inset-0">
-            {[...Array(20)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-white/20 rounded-full"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                }}
-                animate={{
-                  y: [0, -30, 0],
-                  opacity: [0.2, 0.8, 0.2],
-                }}
-                transition={{
-                  duration: 3 + Math.random() * 2,
-                  repeat: Infinity,
-                  delay: Math.random() * 2,
-                  ease: "easeInOut"
-                }}
-              />
-            ))}
-          </div>
+          {/* Floating Particle Background - Optimized */}
+          {particleCount > 0 && (
+            <div className="absolute inset-0">
+              {[...Array(particleCount)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 bg-white/20 rounded-full"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                  }}
+                  animate={reducedMotion ? {} : {
+                    y: [0, -30, 0],
+                    opacity: [0.2, 0.8, 0.2],
+                  }}
+                  transition={reducedMotion ? {} : {
+                    duration: 3 + Math.random() * 2,
+                    repeat: Infinity,
+                    delay: Math.random() * 2,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Top Left Image */}
           <motion.div
@@ -67,13 +102,19 @@ export const Home: React.FC = () => {
               border: `1px solid ${bakeryConfig.colors.border}`,
               boxShadow: `0 12px 40px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.15)`
             }}
-            initial={{ opacity: 0, scale: 0.8, rotate: -15 }}
-            animate={{ 
+            initial={reducedMotion ? { opacity: 0, scale: 0.8 } : { opacity: 0, scale: 0.8, rotate: -15 }}
+            animate={reducedMotion ? { 
+              opacity: 1, 
+              scale: 1
+            } : { 
               opacity: 1, 
               scale: 1, 
               rotate: [-8, -5, -8]
             }}
-            transition={{ 
+            transition={reducedMotion ? { 
+              duration: 0.8, 
+              delay: 0.3
+            } : { 
               duration: 0.8, 
               delay: 0.3,
               rotate: {
@@ -100,13 +141,19 @@ export const Home: React.FC = () => {
               border: `1px solid ${bakeryConfig.colors.border}`,
               boxShadow: `0 12px 40px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.15)`
             }}
-            initial={{ opacity: 0, scale: 0.8, rotate: 15 }}
-            animate={{ 
+            initial={reducedMotion ? { opacity: 0, scale: 0.8 } : { opacity: 0, scale: 0.8, rotate: 15 }}
+            animate={reducedMotion ? { 
+              opacity: 1, 
+              scale: 1
+            } : { 
               opacity: 1, 
               scale: 1, 
               rotate: [8, 5, 8]
             }}
-            transition={{ 
+            transition={reducedMotion ? { 
+              duration: 0.8, 
+              delay: 0.4
+            } : { 
               duration: 0.8, 
               delay: 0.4,
               rotate: {
@@ -133,13 +180,19 @@ export const Home: React.FC = () => {
               border: `1px solid ${bakeryConfig.colors.border}`,
               boxShadow: `0 12px 40px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.15)`
             }}
-            initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
-            animate={{ 
+            initial={reducedMotion ? { opacity: 0, scale: 0.8 } : { opacity: 0, scale: 0.8, rotate: -10 }}
+            animate={reducedMotion ? { 
+              opacity: 1, 
+              scale: 1
+            } : { 
               opacity: 1, 
               scale: 1, 
               rotate: [-6, -3, -6]
             }}
-            transition={{ 
+            transition={reducedMotion ? { 
+              duration: 0.8, 
+              delay: 0.5
+            } : { 
               duration: 0.8, 
               delay: 0.5,
               rotate: {
@@ -166,13 +219,19 @@ export const Home: React.FC = () => {
               border: `1px solid ${bakeryConfig.colors.border}`,
               boxShadow: `0 12px 40px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.15)`
             }}
-            initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
-            animate={{ 
+            initial={reducedMotion ? { opacity: 0, scale: 0.8 } : { opacity: 0, scale: 0.8, rotate: 10 }}
+            animate={reducedMotion ? { 
+              opacity: 1, 
+              scale: 1
+            } : { 
               opacity: 1, 
               scale: 1, 
               rotate: [6, 3, 6]
             }}
-            transition={{ 
+            transition={reducedMotion ? { 
+              duration: 0.8, 
+              delay: 0.6
+            } : { 
               duration: 0.8, 
               delay: 0.6,
               rotate: {
@@ -194,41 +253,43 @@ export const Home: React.FC = () => {
         {/* Desktop Layout - Parallax 3D Gallery */}
         <div className="hidden lg:block absolute inset-0 overflow-hidden" style={{ perspective: '1000px' }}>
           
-          {/* Enhanced Floating Particles for Desktop */}
-          <div className="absolute inset-0">
-            {[...Array(30)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-white/30 rounded-full"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                }}
-                animate={{
-                  y: [0, -50, 0],
-                  opacity: [0.1, 0.9, 0.1],
-                  x: [0, Math.random() * 20 - 10, 0],
-                }}
-                transition={{
-                  duration: 4 + Math.random() * 3,
-                  repeat: Infinity,
-                  delay: Math.random() * 3,
-                  ease: "easeInOut"
-                }}
-              />
-            ))}
-          </div>
+          {/* Enhanced Floating Particles for Desktop - Optimized */}
+          {desktopParticleCount > 0 && (
+            <div className="absolute inset-0">
+              {[...Array(desktopParticleCount)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 bg-white/30 rounded-full"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                  }}
+                  animate={reducedMotion ? {} : {
+                    y: [0, -50, 0],
+                    opacity: [0.1, 0.9, 0.1],
+                    x: [0, Math.random() * 20 - 10, 0],
+                  }}
+                  transition={reducedMotion ? {} : {
+                    duration: 4 + Math.random() * 3,
+                    repeat: Infinity,
+                    delay: Math.random() * 3,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Layer 1: Background Images (Slowest Parallax) */}
           <motion.div
             className="absolute inset-0"
             style={{ zIndex: 1 }}
-            animate={{
+            animate={reducedMotion ? {} : {
               y: [0, -20, 0],
               rotateX: [0, 2, 0],
               rotateY: [0, 1, 0],
             }}
-            transition={{
+            transition={reducedMotion ? {} : {
               duration: 15,
               repeat: Infinity,
               ease: "easeInOut"
@@ -243,11 +304,11 @@ export const Home: React.FC = () => {
                 border: `1px solid ${bakeryConfig.colors.border}`,
                 boxShadow: `0 8px 32px ${bakeryConfig.colors.shadow}`
               }}
-              animate={{
+              animate={reducedMotion ? {} : {
                 rotate: [0, 5, 0],
                 scale: [1, 1.05, 1],
               }}
-              transition={{
+              transition={reducedMotion ? {} : {
                 duration: 20,
                 repeat: Infinity,
                 ease: "easeInOut"
@@ -585,23 +646,25 @@ export const Home: React.FC = () => {
                   filter: 'drop-shadow(0 8px 32px rgba(0, 0, 0, 0.3))',
                 }}
               />
-              {/* Subtle glow effect */}
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: 'radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%)',
-                  filter: 'blur(20px)',
-                }}
-                animate={{
-                  scale: [1, 1.1, 1],
-                  opacity: [0.3, 0.6, 0.3],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
+              {/* Subtle glow effect - Optimized */}
+              {!reducedMotion && (
+                <motion.div
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    background: 'radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%)',
+                    filter: 'blur(20px)',
+                  }}
+                  animate={{
+                    scale: [1, 1.1, 1],
+                    opacity: [0.3, 0.6, 0.3],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              )}
             </motion.div>
           </motion.div>
           
@@ -713,34 +776,38 @@ export const Home: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
               </motion.div>
               
-              {/* Floating decorative elements */}
-              <motion.div
-                className="absolute -top-4 -right-4 w-8 h-8 rounded-full"
-                style={{ backgroundColor: bakeryConfig.primaryColor }}
-                animate={{ 
-                  scale: [1, 1.2, 1],
-                  opacity: [0.7, 1, 0.7]
-                }}
-                transition={{ 
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-              <motion.div
-                className="absolute -bottom-4 -left-4 w-6 h-6 rounded-full"
-                style={{ backgroundColor: bakeryConfig.secondaryColor }}
-                animate={{ 
-                  scale: [1, 1.3, 1],
-                  opacity: [0.6, 1, 0.6]
-                }}
-                transition={{ 
-                  duration: 2.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.5
-                }}
-              />
+              {/* Floating decorative elements - Optimized */}
+              {!reducedMotion && (
+                <>
+                  <motion.div
+                    className="absolute -top-4 -right-4 w-8 h-8 rounded-full"
+                    style={{ backgroundColor: bakeryConfig.primaryColor }}
+                    animate={{ 
+                      scale: [1, 1.2, 1],
+                      opacity: [0.7, 1, 0.7]
+                    }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                  <motion.div
+                    className="absolute -bottom-4 -left-4 w-6 h-6 rounded-full"
+                    style={{ backgroundColor: bakeryConfig.secondaryColor }}
+                    animate={{ 
+                      scale: [1, 1.3, 1],
+                      opacity: [0.6, 1, 0.6]
+                    }}
+                    transition={{ 
+                      duration: 2.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 0.5
+                    }}
+                  />
+                </>
+              )}
             </motion.div>
 
             {/* Content Section */}
@@ -817,8 +884,8 @@ export const Home: React.FC = () => {
                   <motion.div 
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: bakeryConfig.primaryColor }}
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
+                    animate={reducedMotion ? {} : { scale: [1, 1.2, 1] }}
+                    transition={reducedMotion ? {} : { duration: 2, repeat: Infinity }}
                   />
                   <span className="text-white/90 font-medium">Family Recipes</span>
                 </div>
@@ -826,8 +893,8 @@ export const Home: React.FC = () => {
                   <motion.div 
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: bakeryConfig.primaryColor }}
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                    animate={reducedMotion ? {} : { scale: [1, 1.2, 1] }}
+                    transition={reducedMotion ? {} : { duration: 2, repeat: Infinity, delay: 0.5 }}
                   />
                   <span className="text-white/90 font-medium">Made with Love</span>
                 </div>
@@ -835,8 +902,8 @@ export const Home: React.FC = () => {
                   <motion.div 
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: bakeryConfig.primaryColor }}
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                    animate={reducedMotion ? {} : { scale: [1, 1.2, 1] }}
+                    transition={reducedMotion ? {} : { duration: 2, repeat: Infinity, delay: 1 }}
                   />
                   <span className="text-white/90 font-medium">Fresh Daily</span>
                 </div>
@@ -844,8 +911,8 @@ export const Home: React.FC = () => {
                   <motion.div 
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: bakeryConfig.primaryColor }}
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
+                    animate={reducedMotion ? {} : { scale: [1, 1.2, 1] }}
+                    transition={reducedMotion ? {} : { duration: 2, repeat: Infinity, delay: 1.5 }}
                   />
                   <span className="text-white/90 font-medium">Warm Welcome</span>
                 </div>

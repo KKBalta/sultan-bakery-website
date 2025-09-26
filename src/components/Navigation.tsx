@@ -13,8 +13,19 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
   const location = useLocation();
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
+    // Detect mobile device and reduced motion preference
+    const checkDevice = () => {
+      setIsMobile(window.innerWidth < 768);
+      setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    };
+    
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
@@ -31,7 +42,10 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', checkDevice);
+    };
   }, [lastScrollY]);
 
   const navItems = [
@@ -41,26 +55,33 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
     { path: '/contact', label: 'Contact' }
   ];
 
+  // Optimized styles for mobile vs desktop
+  const navStyle = {
+    background: isMobile 
+      ? `linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(184, 134, 11, 0.04) 50%, rgba(255, 215, 0, 0.08) 100%), ${bakeryConfig.colors.background}`
+      : `linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(184, 134, 11, 0.05) 50%, rgba(255, 215, 0, 0.1) 100%), ${bakeryConfig.colors.background}`,
+    backdropFilter: isMobile ? 'blur(15px) saturate(150%)' : 'blur(25px) saturate(200%)',
+    WebkitBackdropFilter: isMobile ? 'blur(15px) saturate(150%)' : 'blur(25px) saturate(200%)',
+    borderBottom: `1px solid ${bakeryConfig.colors.border}`,
+    boxShadow: isMobile 
+      ? '0 8px 24px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+      : '0 12px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
+    borderRadius: '0 0 24px 24px',
+    margin: '0 20px',
+    paddingTop: 'env(safe-area-inset-top, 0px)'
+  };
+
   return (
     <motion.nav 
       className="fixed top-0 left-0 right-0 z-50"
-      style={{ 
-        background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(184, 134, 11, 0.05) 50%, rgba(255, 215, 0, 0.1) 100%), ' + bakeryConfig.colors.background,
-        backdropFilter: 'blur(25px) saturate(200%)',
-        WebkitBackdropFilter: 'blur(25px) saturate(200%)',
-        borderBottom: `1px solid ${bakeryConfig.colors.border}`,
-        boxShadow: '0 12px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
-        borderRadius: '0 0 24px 24px',
-        margin: '0 20px',
-        paddingTop: 'env(safe-area-inset-top, 0px)'
-      }}
-      initial={{ y: -100, opacity: 0 }}
+      style={navStyle}
+      initial={reducedMotion ? false : { y: -100, opacity: 0 }}
       animate={{ 
-        y: isVisible ? 0 : -100, 
-        opacity: isVisible ? 1 : 0 
+        y: isVisible ? 0 : (reducedMotion ? 0 : -100), 
+        opacity: isVisible ? 1 : (reducedMotion ? 1 : 0)
       }}
-      transition={{ 
-        duration: 0.3, 
+      transition={reducedMotion ? { duration: 0 } : { 
+        duration: isMobile ? 0.2 : 0.3, 
         ease: [0.25, 0.46, 0.45, 0.94] 
       }}
     >
@@ -83,9 +104,9 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
             {navItems.map((item, index) => (
               <motion.div
                 key={item.path}
-                initial={{ opacity: 0, y: -20 }}
+                initial={reducedMotion ? false : { opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
+                transition={reducedMotion ? { duration: 0 } : { duration: 0.4, delay: index * 0.1 }}
               >
                 <Link
                   to={item.path}
@@ -116,7 +137,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
                       className="absolute inset-0 rounded-full"
                       style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}
                       layoutId="activeTab"
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      transition={reducedMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 30 }}
                     />
                   )}
                   <span className="relative z-10">{item.label}</span>
@@ -125,9 +146,9 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
             ))}
             
             <motion.div
-              initial={{ opacity: 0, y: -20 }}
+              initial={reducedMotion ? false : { opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.6 }}
+              transition={reducedMotion ? { duration: 0 } : { duration: 0.4, delay: 0.6 }}
             >
               <Link
                 to="/tablet-menu"
@@ -154,18 +175,18 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
               className="p-2 md:p-3 rounded-full text-white transition-all duration-500"
               style={{
                 background: 'rgba(255, 255, 255, 0.2)',
-                backdropFilter: 'blur(20px) saturate(200%)',
-                WebkitBackdropFilter: 'blur(20px) saturate(200%)',
+                backdropFilter: isMobile ? 'blur(15px) saturate(150%)' : 'blur(20px) saturate(200%)',
+                WebkitBackdropFilter: isMobile ? 'blur(15px) saturate(150%)' : 'blur(20px) saturate(200%)',
                 border: '1px solid rgba(255, 255, 255, 0.3)',
                 boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
                 textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
               }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={reducedMotion ? {} : { scale: 1.05 }}
+              whileTap={reducedMotion ? {} : { scale: 0.95 }}
             >
               <motion.div
                 animate={{ rotate: isMenuOpen ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
+                transition={reducedMotion ? { duration: 0 } : { duration: 0.3 }}
               >
                 {isMenuOpen ? <X className="h-5 w-5 md:h-6 md:w-6" /> : <Menu className="h-5 w-5 md:h-6 md:w-6" />}
               </motion.div>
@@ -173,7 +194,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation - Elegant Glassmorphism Design */}
         <motion.div
           className="md:hidden"
           initial={false}
@@ -181,80 +202,68 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
             height: isMenuOpen ? 'auto' : 0,
             opacity: isMenuOpen ? 1 : 0
           }}
-          transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={reducedMotion ? { duration: 0 } : { duration: isMobile ? 0.25 : 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
           style={{
-            borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-            background: 'rgba(0, 0, 0, 0.1)',
-            backdropFilter: 'blur(25px) saturate(200%)',
-            WebkitBackdropFilter: 'blur(25px) saturate(200%)',
-            boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15)',
+            borderTop: '1px solid rgba(255, 255, 255, 0.15)',
+            background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.05) 100%)',
+            backdropFilter: isMobile ? 'blur(20px) saturate(180%)' : 'blur(25px) saturate(200%)',
+            WebkitBackdropFilter: isMobile ? 'blur(20px) saturate(180%)' : 'blur(25px) saturate(200%)',
+            boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.1)',
             overflow: 'hidden',
             borderRadius: '0 0 24px 24px'
           }}
         >
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            {navItems.map((item, index) => (
-              <motion.div
-                key={item.path}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ 
-                  opacity: isMenuOpen ? 1 : 0,
-                  x: isMenuOpen ? 0 : -20
-                }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-              >
-                <Link
-                  to={item.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`block px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-500 ${
-                    location.pathname === item.path
-                      ? 'text-white'
-                      : 'text-white/90 hover:text-white'
-                  }`}
-                  style={{
-                    background: location.pathname === item.path 
-                      ? 'rgba(0, 0, 0, 0.2)' 
-                      : 'rgba(255, 255, 255, 0.08)',
-                    backdropFilter: 'blur(16px) saturate(180%)',
-                    WebkitBackdropFilter: 'blur(16px) saturate(180%)',
-                    border: location.pathname === item.path 
-                      ? '1px solid rgba(255, 255, 255, 0.3)' 
-                      : '1px solid rgba(255, 255, 255, 0.1)',
-                    boxShadow: location.pathname === item.path 
-                      ? '0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)' 
-                      : 'inset 0 1px 0 rgba(255, 255, 255, 0.05)',
-                    fontWeight: location.pathname === item.path ? '600' : '500'
+          <div className="px-4 py-4">
+            {/* Navigation Items - Seamless Design */}
+            <div className="space-y-2">
+              {navItems.map((item, index) => (
+                <motion.div
+                  key={item.path}
+                  initial={reducedMotion ? false : { opacity: 0, y: 10 }}
+                  animate={{ 
+                    opacity: isMenuOpen ? 1 : 0,
+                    y: isMenuOpen ? 0 : (reducedMotion ? 0 : 10)
                   }}
+                  transition={reducedMotion ? { duration: 0 } : { duration: isMobile ? 0.2 : 0.3, delay: index * 0.08 }}
                 >
-                  {item.label}
-                </Link>
-              </motion.div>
-            ))}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ 
-                opacity: isMenuOpen ? 1 : 0,
-                x: isMenuOpen ? 0 : -20
-              }}
-              transition={{ duration: 0.3, delay: 0.6 }}
-            >
-              <Link
-                to="/tablet-menu"
-                onClick={() => setIsMenuOpen(false)}
-                className="block text-white px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-500"
-                  style={{ 
-                    background: 'rgba(255, 255, 255, 0.12)',
-                    backdropFilter: 'blur(16px) saturate(180%)',
-                    WebkitBackdropFilter: 'blur(16px) saturate(180%)',
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
-                    fontWeight: '500',
-                    color: '#000000'
-                  }}
-              >
-                Tablet Menu
-              </Link>
-            </motion.div>
+                  <Link
+                    to={item.path}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`block px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-300 relative overflow-hidden ${
+                      location.pathname === item.path
+                        ? 'text-white'
+                        : 'text-white/90 hover:text-white'
+                    }`}
+                    style={{
+                      background: location.pathname === item.path 
+                        ? 'linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(184, 134, 11, 0.1) 100%)' 
+                        : 'rgba(255, 255, 255, 0.05)',
+                      backdropFilter: isMobile ? 'blur(15px) saturate(180%)' : 'blur(20px) saturate(200%)',
+                      WebkitBackdropFilter: isMobile ? 'blur(15px) saturate(180%)' : 'blur(20px) saturate(200%)',
+                      border: location.pathname === item.path 
+                        ? '1px solid rgba(255, 215, 0, 0.2)' 
+                        : '1px solid rgba(255, 255, 255, 0.08)',
+                      boxShadow: location.pathname === item.path 
+                        ? '0 8px 24px rgba(255, 215, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15)' 
+                        : '0 4px 16px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+                      fontWeight: location.pathname === item.path ? '600' : '500'
+                    }}
+                  >
+                    {/* Subtle hover effect */}
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
+                        opacity: 0
+                      }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.2 }}
+                    />
+                    <span className="relative z-10">{item.label}</span>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
