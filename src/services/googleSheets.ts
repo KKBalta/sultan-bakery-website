@@ -136,7 +136,8 @@ export const extractCategories = (menuItems: MenuItem[]): Category[] => {
 
 // Cache management
 let menuCache: { data: MenuItem[]; categories: Category[]; timestamp: number } | null = null;
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes - increased for better performance
+const SOFT_REFRESH_INTERVAL = 5 * 60 * 1000; // 5 minutes for production
 
 export const getCachedMenuData = async (): Promise<MenuItem[]> => {
   const now = Date.now();
@@ -174,4 +175,44 @@ export const getCachedCategories = async (): Promise<Category[]> => {
 // Clear cache (useful for testing or manual refresh)
 export const clearMenuCache = () => {
   menuCache = null;
+};
+
+// Soft refresh - fetch new data in background without clearing cache
+export const softRefreshMenuData = async (): Promise<{ data: MenuItem[]; categories: Category[]; isNew: boolean }> => {
+  try {
+    const freshData = await fetchMenuData();
+    const freshCategories = extractCategories(freshData);
+    const now = Date.now();
+    
+    // Check if data has actually changed
+    const isNew = !menuCache || 
+      JSON.stringify(menuCache.data) !== JSON.stringify(freshData) ||
+      JSON.stringify(menuCache.categories) !== JSON.stringify(freshCategories);
+    
+    // Update cache with fresh data
+    menuCache = { data: freshData, categories: freshCategories, timestamp: now };
+    
+    return { data: freshData, categories: freshCategories, isNew };
+  } catch (error) {
+    console.error('Error during soft refresh:', error);
+    // Return cached data if available, otherwise empty arrays
+    return { 
+      data: menuCache?.data || [], 
+      categories: menuCache?.categories || [], 
+      isNew: false 
+    };
+  }
+};
+
+// Check if cache needs refresh
+export const shouldRefreshCache = (): boolean => {
+  if (!menuCache) return true;
+  const now = Date.now();
+  return (now - menuCache.timestamp) > SOFT_REFRESH_INTERVAL;
+};
+
+// Get cache age in minutes
+export const getCacheAge = (): number => {
+  if (!menuCache) return 0;
+  return Math.floor((Date.now() - menuCache.timestamp) / (1000 * 60));
 };

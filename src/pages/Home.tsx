@@ -242,7 +242,7 @@ export const Home: React.FC = () => {
             }}
           >
             <img
-              src="/src/assets/images/DSC06491-optimized.webp"
+              src="/src/assets/images/sultan.jpg"
               alt="Delicious bakery item"
               className="w-full h-full object-cover"
             />
@@ -542,7 +542,7 @@ export const Home: React.FC = () => {
               }}
             >
               <img
-                src="https://res.cloudinary.com/djdp7vvpm/image/upload/v1758665186/samples/food/dessert.jpg"
+                src="/src/assets/images/DSC06486.webp"
                 alt="Delicious dessert"
                 className="w-full h-full object-cover"
               />
@@ -589,34 +589,6 @@ export const Home: React.FC = () => {
               <img
                 src="/src/assets/images/DSCF5820.jpg"
                 alt="Fresh bakery goods"
-                className="w-full h-full object-cover"
-              />
-            </motion.div>
-
-            {/* Floating Accent 2 */}
-            <motion.div
-              className="absolute bottom-1/4 right-1/4 w-40 h-40 rounded-2xl overflow-hidden opacity-100"
-              style={{
-                background: bakeryConfig.colors.surface,
-                backdropFilter: 'blur(30px) saturate(220%)',
-                border: `1px solid ${bakeryConfig.colors.border}`,
-                boxShadow: `0 20px 60px ${bakeryConfig.colors.shadow}, inset 0 1px 0 rgba(255, 255, 255, 0.3)`
-              }}
-              animate={{
-                rotate: [0, -12, 0],
-                scale: [1, 1.18, 1],
-                y: [0, 15, 0],
-              }}
-              transition={{
-                duration: 7,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.2
-              }}
-            >
-              <img
-                src="/src/assets/images/DSC06486.webp"
-                alt="Delicious bakery item"
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -768,7 +740,7 @@ export const Home: React.FC = () => {
                 transition={{ duration: 0.3 }}
               >
                 <img
-                  src="/src/assets/images/DSCF5820.jpg"
+                  src="/src/assets/images/DSC06491-optimized.webp"
                   alt="Delicious home-style meal"
                   className="w-full h-96 object-cover"
                 />

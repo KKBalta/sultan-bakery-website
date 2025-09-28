@@ -2,13 +2,13 @@ import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useMenuData } from '../hooks/useMenuData';
 import { bakeryConfig } from '../config/bakeryConfig';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Filter, X, Heart, Star, TrendingUp, Clock, DollarSign, SortAsc, SortDesc, Flame, Ruler, CheckCircle, XCircle, Crown, Utensils } from 'lucide-react';
+import { Search, Filter, X, Heart, Star, TrendingUp, Clock, DollarSign, SortAsc, SortDesc, Flame, Ruler, CheckCircle, XCircle, Crown, Utensils, RefreshCw } from 'lucide-react';
 import { Image } from '../components/Image';
 
 type SortOption = 'popular' | 'price-low' | 'price-high' | 'name' | 'prep-time';
 
 export const TabletMenu: React.FC = () => {
-  const { menuItems, categories, loading, error } = useMenuData();
+  const { menuItems, categories, loading, error, isRefreshing, lastUpdated, cacheAge } = useMenuData();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>('');
@@ -114,31 +114,46 @@ export const TabletMenu: React.FC = () => {
           >
             Digital Menu
           </p>
+          {/* Refresh Status Indicator */}
+          <div className="flex items-center justify-center gap-2 mt-2">
+            {isRefreshing && (
+              <div className="flex items-center gap-1 text-xs opacity-70">
+                <RefreshCw className="h-3 w-3 animate-spin" style={{ color: bakeryConfig.colors.text }} />
+                <span style={{ color: bakeryConfig.colors.text }}>Updating...</span>
+              </div>
+            )}
+            {lastUpdated && !isRefreshing && (
+              <div className="text-xs opacity-50" style={{ color: bakeryConfig.colors.text }}>
+                Updated {cacheAge}m ago
+              </div>
+            )}
+          </div>
         </div>
         <div className="w-16 h-16"></div> {/* Spacer to balance the layout */}
       </div>
     </motion.div>
   );
 
-  if (loading) {
-    return (
-      <div className="min-h-screen py-8">
-        <CompanyHeader />
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center">
-            <div className="inline-flex items-center px-6 py-3 rounded-2xl" style={{ 
-              background: bakeryConfig.colors.background,
-              backdropFilter: 'blur(20px) saturate(180%)',
-              border: `1px solid ${bakeryConfig.colors.border}`
-            }}>
-              <div className="animate-spin rounded-full h-6 w-6 border-b-2 mr-3" style={{ borderColor: bakeryConfig.colors.text }}></div>
-              <span style={{ color: bakeryConfig.colors.text }}>Loading menu...</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Skip loading screen for tablet menu - show content immediately
+  // if (loading) {
+  //   return (
+  //     <div className="min-h-screen py-8">
+  //       <CompanyHeader />
+  //       <div className="max-w-7xl mx-auto px-4">
+  //         <div className="text-center">
+  //           <div className="inline-flex items-center px-6 py-3 rounded-2xl" style={{ 
+  //             background: bakeryConfig.colors.background,
+  //             backdropFilter: 'blur(20px) saturate(180%)',
+  //             border: `1px solid ${bakeryConfig.colors.border}`
+  //           }}>
+  //             <div className="animate-spin rounded-full h-6 w-6 border-b-2 mr-3" style={{ borderColor: bakeryConfig.colors.text }}></div>
+  //             <span style={{ color: bakeryConfig.colors.text }}>Loading menu...</span>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   if (error) {
     return (

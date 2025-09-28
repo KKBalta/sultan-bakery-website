@@ -159,9 +159,10 @@ export const About: React.FC = () => {
                 transition={reducedMotion ? { duration: 0 } : { duration: isMobile ? 0.4 : 0.8, delay: isMobile ? 0.3 : 0.4 }}
                 viewport={{ once: true }}
               >
-                {bakeryConfig.name} began as a dream shared by two passionate bakers who believed that 
-                great food brings people together. What started in a small kitchen has grown into 
-                a beloved community gathering place.
+                {bakeryConfig.name} represents the exciting expansion of our beloved Fresh Bakery Products, 
+                originally founded in Paterson, New Jersey. Building on decades of artisanal excellence 
+                and community trust, we're proud to bring our time-honored recipes and warm hospitality 
+                to new neighborhoods across the state.
               </motion.p>
 
               <motion.p 
@@ -174,7 +175,25 @@ export const About: React.FC = () => {
                 transition={reducedMotion ? { duration: 0 } : { duration: isMobile ? 0.4 : 0.8, delay: isMobile ? 0.4 : 0.5 }}
                 viewport={{ once: true }}
               >
-                {bakeryConfig.tagline}
+                From our flagship location in Paterson to this new chapter, we remain committed to 
+                crafting exceptional baked goods using traditional techniques passed down through 
+                generations. Every croissant, every loaf of bread, and every custom cake carries 
+                the same dedication to quality that made Fresh Bakery Products a New Jersey institution.
+              </motion.p>
+
+              <motion.p 
+                className="text-lg leading-relaxed text-white/80" 
+                style={{ 
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                }}
+                initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={reducedMotion ? { duration: 0 } : { duration: isMobile ? 0.4 : 0.8, delay: isMobile ? 0.5 : 0.6 }}
+                viewport={{ once: true }}
+              >
+                As we continue our state-wide expansion, we invite you to experience the authentic 
+                taste of New Jersey's finest bakery tradition. Whether you're a longtime customer 
+                from Paterson or discovering us for the first time, welcome to the {bakeryConfig.name} family.
               </motion.p>
             </motion.div>
           </div>

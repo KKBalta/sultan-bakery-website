@@ -191,7 +191,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Section */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+         initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
@@ -199,20 +199,41 @@ export const Footer: React.FC = () => {
           style={{ borderColor: bakeryConfig.colors.border }}
         >
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="flex items-center space-x-2">
-              <span 
-                className="text-sm"
-                style={{ color: bakeryConfig.colors.text }}
-              >
-                © {currentYear} {bakeryConfig.name}. Made with
-              </span>
-              <Heart className="h-4 w-4 fill-current text-red-500" />
-              <span 
-                className="text-sm"
-                style={{ color: bakeryConfig.colors.text }}
-              >
-                for our community.
-              </span>
+            <div className="flex flex-col space-y-2">
+              <div className="flex items-center space-x-2">
+                <span 
+                  className="text-sm"
+                  style={{ color: bakeryConfig.colors.text }}
+                >
+                  © {currentYear} {bakeryConfig.name}. Made with
+                </span>
+                <Heart className="h-4 w-4 fill-current text-red-500" />
+                <span 
+                  className="text-sm"
+                  style={{ color: bakeryConfig.colors.text }}
+                >
+                  for our community.
+                </span>
+              </div>
+              
+              {/* Design Credit */}
+              <div className="flex items-center space-x-2">
+                <span 
+                  className="text-sm opacity-60"
+                  style={{ color: bakeryConfig.colors.text }}
+                >
+                  Design by
+                </span>
+                <a
+                  href="https://korkutkaanbalta.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium transition-all duration-300 hover:scale-105 hover:text-yellow-400"
+                  style={{ color: bakeryConfig.colors.text }}
+                >
+                  KKB
+                </a>
+              </div>
             </div>
             
             <div className="flex items-center space-x-6">
