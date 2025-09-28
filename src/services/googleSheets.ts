@@ -1,4 +1,4 @@
-import { MenuItem } from '../data/menuData';
+import { MenuItem, Category } from '../data/menuData';
 import { bakeryConfig } from '../config/bakeryConfig';
 
 // Get Google Sheet ID from config
@@ -50,7 +50,7 @@ const parseMenuData = (values: string[][]): MenuItem[] => {
         description: description || '',
         price: parseFloat(price) || 0,
         image: image || 'https://via.placeholder.com/400x300?text=No+Image',
-        category: (category?.toLowerCase() as 'coffee' | 'pastries' | 'sandwiches') || 'coffee',
+        category: category?.toLowerCase() || 'uncategorized',
         available: available?.toLowerCase() === 'true' || available === '1',
         popular: popular?.toLowerCase() === 'true' || popular === '1',
         calories: calories ? parseInt(calories) : undefined,
@@ -82,8 +82,60 @@ export const fetchMenuData = async (): Promise<MenuItem[]> => {
   }
 };
 
+// Extract unique categories from menu items
+export const extractCategories = (menuItems: MenuItem[]): Category[] => {
+  const categoryMap = new Map<string, { name: string; count: number; icon: string }>();
+  
+  // Default category icons mapping
+  const defaultIcons: Record<string, string> = {
+    'coffee': '☕',
+    'pastries': '🥐',
+    'sandwiches': '🥪',
+    'desserts': '🍰',
+    'drinks': '🥤',
+    'breakfast': '🍳',
+    'lunch': '🍽️',
+    'dinner': '🍴',
+    'snacks': '🍿',
+    'salads': '🥗',
+    'soups': '🍲',
+    'bread': '🍞',
+    'cakes': '🎂',
+    'cookies': '🍪',
+    'muffins': '🧁',
+    'uncategorized': '📦'
+  };
+
+  // Count items per category
+  menuItems.forEach(item => {
+    const categoryId = item.category.toLowerCase();
+    const categoryName = item.category.charAt(0).toUpperCase() + item.category.slice(1);
+    
+    if (categoryMap.has(categoryId)) {
+      const existing = categoryMap.get(categoryId)!;
+      existing.count++;
+    } else {
+      categoryMap.set(categoryId, {
+        name: categoryName,
+        count: 1,
+        icon: defaultIcons[categoryId] || '📦'
+      });
+    }
+  });
+
+  // Convert to Category array and sort by count (most items first)
+  return Array.from(categoryMap.entries())
+    .map(([id, data]) => ({
+      id,
+      name: data.name,
+      icon: data.icon,
+      count: data.count
+    }))
+    .sort((a, b) => (b.count || 0) - (a.count || 0));
+};
+
 // Cache management
-let menuCache: { data: MenuItem[]; timestamp: number } | null = null;
+let menuCache: { data: MenuItem[]; categories: Category[]; timestamp: number } | null = null;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 export const getCachedMenuData = async (): Promise<MenuItem[]> => {
@@ -96,9 +148,27 @@ export const getCachedMenuData = async (): Promise<MenuItem[]> => {
 
   // Fetch fresh data
   const data = await fetchMenuData();
-  menuCache = { data, timestamp: now };
+  const categories = extractCategories(data);
+  menuCache = { data, categories, timestamp: now };
   
   return data;
+};
+
+// New function to get cached categories
+export const getCachedCategories = async (): Promise<Category[]> => {
+  const now = Date.now();
+  
+  // Return cached data if it's still fresh
+  if (menuCache && (now - menuCache.timestamp) < CACHE_DURATION) {
+    return menuCache.categories;
+  }
+
+  // Fetch fresh data
+  const data = await fetchMenuData();
+  const categories = extractCategories(data);
+  menuCache = { data, categories, timestamp: now };
+  
+  return categories;
 };
 
 // Clear cache (useful for testing or manual refresh)

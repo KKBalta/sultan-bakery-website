@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useMenuData } from '../hooks/useMenuData';
 import { bakeryConfig } from '../config/bakeryConfig';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Filter, X, Heart } from 'lucide-react';
+import { Search, Filter, X, Heart, CheckCircle, XCircle, Star } from 'lucide-react';
 import { Image } from '../components/Image';
 import { MenuItemDetails } from '../components/MenuItemDetails';
 
@@ -12,6 +12,7 @@ export const Menu: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
+  const [showAvailableOnly, setShowAvailableOnly] = useState<boolean>(false);
 
   // Filter and search logic
   const filteredItems = useMemo(() => {
@@ -20,6 +21,11 @@ export const Menu: React.FC = () => {
     // Category filter
     if (selectedCategory !== 'all') {
       filtered = filtered.filter(item => item.category === selectedCategory);
+    }
+
+    // Available filter
+    if (showAvailableOnly) {
+      filtered = filtered.filter(item => item.available);
     }
 
     // Search filter
@@ -31,7 +37,7 @@ export const Menu: React.FC = () => {
     }
 
     return filtered;
-  }, [menuItems, selectedCategory, searchQuery]);
+  }, [menuItems, selectedCategory, searchQuery, showAvailableOnly]);
 
   if (loading) {
     return (
@@ -162,36 +168,57 @@ export const Menu: React.FC = () => {
                     border: `1px solid ${bakeryConfig.colors.border}`
                   }}
                 >
-                  <div className="flex flex-wrap gap-2">
-                    <button
-                      onClick={() => setSelectedCategory('all')}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                        selectedCategory === 'all' ? 'scale-105' : ''
-                      }`}
-                      style={{
-                        background: selectedCategory === 'all' ? bakeryConfig.colors.surface : 'transparent',
-                        color: bakeryConfig.colors.text,
-                        border: `1px solid ${bakeryConfig.colors.border}`
-                      }}
-                    >
-                      All Items
-                    </button>
-                    {categories.map((category) => (
+                  <div className="space-y-4">
+                    {/* Available Filter Toggle */}
+                    <div className="flex items-center gap-3">
                       <button
-                        key={category.id}
-                        onClick={() => setSelectedCategory(category.id)}
-                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                          selectedCategory === category.id ? 'scale-105' : ''
+                        onClick={() => setShowAvailableOnly(!showAvailableOnly)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                          showAvailableOnly ? 'scale-105' : ''
                         }`}
                         style={{
-                          background: selectedCategory === category.id ? bakeryConfig.colors.surface : 'transparent',
+                          background: showAvailableOnly ? bakeryConfig.colors.surface : 'transparent',
                           color: bakeryConfig.colors.text,
                           border: `1px solid ${bakeryConfig.colors.border}`
                         }}
                       >
-                        {category.name}
+                        <CheckCircle className="h-4 w-4 text-green-400" />
+                        Available Only
                       </button>
-                    ))}
+                    </div>
+                    
+                    {/* Category Filters */}
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        onClick={() => setSelectedCategory('all')}
+                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                          selectedCategory === 'all' ? 'scale-105' : ''
+                        }`}
+                        style={{
+                          background: selectedCategory === 'all' ? bakeryConfig.colors.surface : 'transparent',
+                          color: bakeryConfig.colors.text,
+                          border: `1px solid ${bakeryConfig.colors.border}`
+                        }}
+                      >
+                        All Items
+                      </button>
+                      {categories.map((category) => (
+                        <button
+                          key={category.id}
+                          onClick={() => setSelectedCategory(category.id)}
+                          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                            selectedCategory === category.id ? 'scale-105' : ''
+                          }`}
+                          style={{
+                            background: selectedCategory === category.id ? bakeryConfig.colors.surface : 'transparent',
+                            color: bakeryConfig.colors.text,
+                            border: `1px solid ${bakeryConfig.colors.border}`
+                          }}
+                        >
+                          {category.name}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -286,19 +313,25 @@ export const Menu: React.FC = () => {
                               }}>
                                 {item.name}
                               </h3>
-                              {item.popular && (
-                                <div className="flex items-center">
-                                  <Heart className="h-4 w-4 fill-current text-red-500" />
+                              
+                              {/* Status Icons - Minimal Design */}
+                              <div className="flex items-center gap-2">
+                                {/* Popular Status */}
+                                {item.popular && (
+                                  <div className="flex items-center" title="Popular Item">
+                                    <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                                  </div>
+                                )}
+                                
+                                {/* Available Status */}
+                                <div className="flex items-center" title={item.available ? "Available" : "Sold Out"}>
+                                  {item.available ? (
+                                    <CheckCircle className="h-4 w-4 text-green-400" />
+                                  ) : (
+                                    <XCircle className="h-4 w-4 text-red-400" />
+                                  )}
                                 </div>
-                              )}
-                              {!item.available && (
-                                <div className="text-xs px-2 py-1 rounded-full" style={{ 
-                                  background: 'rgba(239, 68, 68, 0.2)', 
-                                  color: '#ef4444' 
-                                }}>
-                                  Sold Out
-                                </div>
-                              )}
+                              </div>
                             </div>
                             <div className="text-sm opacity-70 capitalize mt-1" style={{ 
                               color: bakeryConfig.colors.text,

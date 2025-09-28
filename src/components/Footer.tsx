@@ -7,6 +7,26 @@ import { bakeryConfig } from '../config/bakeryConfig';
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
+  // Handle location click - redirect to Google Maps
+  const handleLocationClick = () => {
+    const encodedAddress = encodeURIComponent(bakeryConfig.address);
+    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+    window.open(mapsUrl, '_blank');
+  };
+
+  // Handle phone click - redirect to phone app
+  const handlePhoneClick = () => {
+    const phoneNumber = bakeryConfig.phone.replace(/\D/g, ''); // Remove non-digits
+    const phoneUrl = `tel:${phoneNumber}`;
+    window.location.href = phoneUrl;
+  };
+
+  // Handle email click - redirect to email client
+  const handleEmailClick = () => {
+    const emailUrl = `mailto:${bakeryConfig.email}`;
+    window.location.href = emailUrl;
+  };
+
   return (
     <footer className="relative">
       {/* Glassmorphism Background */}
@@ -50,35 +70,53 @@ export const Footer: React.FC = () => {
             
             {/* Contact Info */}
             <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <MapPin className="h-4 w-4" style={{ color: bakeryConfig.colors.text }} />
+              <motion.div 
+                className="flex items-center space-x-3 cursor-pointer group"
+                onClick={handleLocationClick}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+              >
+                <MapPin className="h-4 w-4 transition-colors duration-300 group-hover:text-yellow-400" style={{ color: bakeryConfig.colors.text }} />
                 <span 
-                  className="text-sm"
+                  className="text-sm transition-colors duration-300 group-hover:text-yellow-400"
                   style={{ color: bakeryConfig.colors.text }}
                 >
                   {bakeryConfig.address}
                 </span>
-              </div>
+              </motion.div>
               
-              <div className="flex items-center space-x-3">
-                <Phone className="h-4 w-4" style={{ color: bakeryConfig.colors.text }} />
+              <motion.div 
+                className="flex items-center space-x-3 cursor-pointer group"
+                onClick={handlePhoneClick}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Phone className="h-4 w-4 transition-colors duration-300 group-hover:text-yellow-400" style={{ color: bakeryConfig.colors.text }} />
                 <span 
-                  className="text-sm"
+                  className="text-sm transition-colors duration-300 group-hover:text-yellow-400"
                   style={{ color: bakeryConfig.colors.text }}
                 >
                   {bakeryConfig.phone}
                 </span>
-              </div>
+              </motion.div>
               
-              <div className="flex items-center space-x-3">
-                <Mail className="h-4 w-4" style={{ color: bakeryConfig.colors.text }} />
+              <motion.div 
+                className="flex items-center space-x-3 cursor-pointer group"
+                onClick={handleEmailClick}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Mail className="h-4 w-4 transition-colors duration-300 group-hover:text-yellow-400" style={{ color: bakeryConfig.colors.text }} />
                 <span 
-                  className="text-sm"
+                  className="text-sm transition-colors duration-300 group-hover:text-yellow-400"
                   style={{ color: bakeryConfig.colors.text }}
                 >
                   {bakeryConfig.email}
                 </span>
-              </div>
+              </motion.div>
               
               <div className="flex items-center space-x-3">
                 <Clock className="h-4 w-4" style={{ color: bakeryConfig.colors.text }} />

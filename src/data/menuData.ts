@@ -4,13 +4,20 @@ export interface MenuItem {
   description: string;
   price: number;
   image: string;
-  category: 'coffee' | 'pastries' | 'sandwiches';
+  category: string; // Changed to dynamic string instead of fixed union type
   available: boolean;
   popular?: boolean;
   calories?: number;
   scale?: string;
   allergens?: string[];
   prepTime?: string;
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  icon: string;
+  count?: number; // Number of items in this category
 }
 
 export const menuItems: MenuItem[] = [
@@ -143,8 +150,11 @@ export const menuItems: MenuItem[] = [
   }
 ];
 
-export const categories = [
+export const defaultCategories: Category[] = [
   { id: 'coffee', name: 'Coffee', icon: '☕' },
   { id: 'pastries', name: 'Pastries', icon: '🥐' },
   { id: 'sandwiches', name: 'Sandwiches', icon: '🥪' }
 ];
+
+// Legacy export for backward compatibility
+export const categories = defaultCategories;
