@@ -124,9 +124,12 @@ export const Home: React.FC = () => {
               }
             }}
           >
-            <img
-              src="https://res.cloudinary.com/djdp7vvpm/image/upload/v1758665186/samples/food/fish-vegetables.jpg"
-              alt="Fresh fish and vegetables"
+            <video
+              src="https://res.cloudinary.com/djdp7vvpm/video/upload/v1759248698/laurasanibel_take_one_piece_with_fork_--ar_5191_--video_1_4ff601cf-1d72-4002-b49f-7e255ec6ec7a_0_uddpqa.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
               className="w-full h-full object-cover"
             />
           </motion.div>
@@ -202,9 +205,12 @@ export const Home: React.FC = () => {
               }
             }}
           >
-            <img
-              src="https://res.cloudinary.com/djdp7vvpm/image/upload/v1758665186/samples/food/pot-mussels.jpg"
-              alt="Delicious pot mussels"
+            <video
+              src="https://res.cloudinary.com/djdp7vvpm/video/upload/v1759248515/tyler_86524_creamy_spinach_and_marsala_sauce_being_drag_by_a__bd48f50d-2c35-42f9-b3dd-6ebdb7467623_0_kqorsa.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
               className="w-full h-full object-cover"
             />
           </motion.div>
@@ -241,9 +247,12 @@ export const Home: React.FC = () => {
               }
             }}
           >
-            <img
-              src="/src/assets/images/sultan.jpg"
-              alt="Delicious bakery item"
+            <video
+              src="https://res.cloudinary.com/djdp7vvpm/video/upload/v1759247913/domates-salatalik_zstele.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
               className="w-full h-full object-cover"
             />
           </motion.div>
@@ -314,9 +323,12 @@ export const Home: React.FC = () => {
                 ease: "easeInOut"
               }}
             >
-              <img
-                src="https://res.cloudinary.com/djdp7vvpm/image/upload/v1758665186/samples/food/fish-vegetables.jpg"
-                alt="Fresh fish and vegetables"
+              <video
+                src="https://res.cloudinary.com/djdp7vvpm/video/upload/v1759248698/laurasanibel_take_one_piece_with_fork_--ar_5191_--video_1_4ff601cf-1d72-4002-b49f-7e255ec6ec7a_0_uddpqa.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -368,9 +380,12 @@ export const Home: React.FC = () => {
                 delay: 3
               }}
             >
-              <img
-                src="https://res.cloudinary.com/djdp7vvpm/image/upload/v1758665197/cld-sample-4.jpg"
-                alt="Delicious food sample"
+              <video
+                src="https://res.cloudinary.com/djdp7vvpm/video/upload/v1759248515/tyler_86524_creamy_spinach_and_marsala_sauce_being_drag_by_a__bd48f50d-2c35-42f9-b3dd-6ebdb7467623_0_kqorsa.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -466,9 +481,12 @@ export const Home: React.FC = () => {
                 delay: 2.2
               }}
             >
-              <img
-                src="https://res.cloudinary.com/djdp7vvpm/image/upload/v1758665194/samples/breakfast.jpg"
-                alt="Delicious breakfast"
+              <video
+                src="https://res.cloudinary.com/djdp7vvpm/video/upload/v1759247913/domates-salatalik_zstele.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
                 className="w-full h-full object-cover"
               />
             </motion.div>
