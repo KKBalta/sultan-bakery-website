@@ -43,7 +43,7 @@ function App() {
               <div className="fixed inset-0 z-[-1]" style={{ opacity: 1.0 }}>
                 <MeshGradient
                   speed={reducedMotion ? 0.01 : 0.1}
-                  colors={['#000000', '#1a1a1a', '#2d2d2d', '#ffd700', '#b8860b', '#000000']}
+                  colors={['#000000', '#1a1a1a', '#2d2d2d', '#b8860b', '#8b6914', '#000000']}
                   style={{ 
                     width: '100vw', 
                     height: '100vh'

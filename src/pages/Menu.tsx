@@ -341,16 +341,6 @@ export const Menu: React.FC = () => {
                             </div>
                           </div>
 
-                          {/* Right side - Price */}
-                          <div className="text-right">
-                            <span className="text-lg font-semibold tracking-wide" style={{ 
-                              color: '#ffffff',
-                              fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                              textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)'
-                            }}>
-                              ${item.price.toFixed(2)}
-                            </span>
-                          </div>
                         </div>
 
                         {/* New Dropdown Layout - Details Left, Image Right */}

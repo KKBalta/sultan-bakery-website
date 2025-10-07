@@ -91,8 +91,17 @@ export const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, setIsMenuOpe
           <div className="md:block absolute left-1/2 transform -translate-x-1/2 md:relative md:left-auto md:transform-none">
             <Link to="/" className="flex items-center">
                  <span 
-                   className="text-2xl font-bold text-white drop-shadow-lg"
-                   style={{ fontFamily: 'Condiment, cursive', marginTop: '7px' }}
+                   className="text-xl sm:text-2xl md:text-4xl text-white drop-shadow-lg"
+                   style={{ 
+                     fontFamily: 'Merriweather, serif', 
+                     fontOpticalSizing: 'auto',
+                     fontWeight: '400',
+                     fontStyle: 'normal',
+                     fontVariationSettings: '"wdth" 100',
+                     marginTop: '7px',
+                     lineHeight: '1.2',
+                     textAlign: 'center'
+                   }}
                  >
                  {bakeryConfig.name}
                </span>

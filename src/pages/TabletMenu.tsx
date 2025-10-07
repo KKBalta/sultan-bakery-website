@@ -16,6 +16,8 @@ export const TabletMenu: React.FC = () => {
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>('popular');
   const [showPopularSection, setShowPopularSection] = useState<boolean>(true);
+  const [zoomedImage, setZoomedImage] = useState<{ src: string; alt: string } | null>(null);
+  const [storedScrollPosition, setStoredScrollPosition] = useState<number | null>(null);
 
   // Debounced search for better performance
   useEffect(() => {
@@ -24,6 +26,68 @@ export const TabletMenu: React.FC = () => {
     }, 300);
     return () => clearTimeout(timer);
   }, [searchQuery]);
+
+
+  // Handle escape key to close zoomed image and preserve scroll position
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && zoomedImage) {
+        setZoomedImage(null);
+      }
+    };
+
+    if (zoomedImage) {
+      // Store current scroll position in state
+      const scrollY = window.scrollY;
+      setStoredScrollPosition(scrollY);
+      
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.transition = 'none';
+      
+      // Disable global smooth scrolling temporarily
+      document.documentElement.style.scrollBehavior = 'auto';
+    } else {
+      // Restore scroll position from state
+      
+      // Restore body styles immediately
+      document.body.style.overflow = 'unset';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.transition = '';
+      
+      if (storedScrollPosition !== null) {
+        // Use immediate scroll first
+        window.scrollTo(0, storedScrollPosition);
+        
+        // Clear stored position
+        setStoredScrollPosition(null);
+        
+        // Then restore global smooth scrolling after a delay
+        setTimeout(() => {
+          document.documentElement.style.scrollBehavior = 'smooth';
+        }, 100);
+      } else {
+        // Restore global smooth scrolling
+        document.documentElement.style.scrollBehavior = 'smooth';
+      }
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      // Cleanup on unmount
+      document.body.style.overflow = 'unset';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.transition = '';
+      document.documentElement.style.scrollBehavior = 'smooth';
+    };
+  }, [zoomedImage]);
 
   // Get popular items for featured section
   const popularItems = useMemo(() => {
@@ -100,10 +164,15 @@ export const TabletMenu: React.FC = () => {
         />
         <div className="text-center">
           <h1 
-            className="text-3xl md:text-4xl font-bold"
+            className="text-3xl md:text-4xl text-white drop-shadow-lg"
             style={{ 
-              color: bakeryConfig.colors.text,
-              fontFamily: 'Condiment, cursive'
+              fontFamily: 'Merriweather, serif', 
+              fontOpticalSizing: 'auto',
+              fontWeight: '700',
+              fontStyle: 'normal',
+              fontVariationSettings: '"wdth" 100',
+              lineHeight: '1.2',
+              textAlign: 'center'
             }}
           >
             {bakeryConfig.name}
@@ -112,7 +181,7 @@ export const TabletMenu: React.FC = () => {
             className="text-sm opacity-80"
             style={{ color: bakeryConfig.colors.text }}
           >
-            Digital Menu
+            Digital Menu • Fresh Daily • Made with Love
           </p>
           {/* Refresh Status Indicator */}
           <div className="flex items-center justify-center gap-2 mt-2">
@@ -132,6 +201,77 @@ export const TabletMenu: React.FC = () => {
         <div className="w-16 h-16"></div> {/* Spacer to balance the layout */}
       </div>
     </motion.div>
+  );
+
+  // Image Zoom Modal Component
+  const ImageZoomModal = () => (
+    <AnimatePresence mode="wait">
+      {zoomedImage && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          onClick={() => setZoomedImage(null)}
+        >
+          {/* Backdrop */}
+          <motion.div 
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={() => setZoomedImage(null)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          />
+          
+          {/* Modal Content */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.95, opacity: 0, y: 10 }}
+            transition={{ 
+              duration: 0.25, 
+              ease: [0.25, 0.46, 0.45, 0.94],
+              opacity: { duration: 0.2 }
+            }}
+            className="relative max-w-4xl max-h-[90vh] w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setZoomedImage(null)}
+              className="absolute -top-12 right-0 z-10 p-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 transition-all duration-300"
+            >
+              <X className="h-6 w-6 text-white" />
+            </button>
+            
+            {/* Image Container */}
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <Image
+                src={zoomedImage.src}
+                alt={zoomedImage.alt}
+                className="w-full h-full max-h-[80vh] object-contain bg-white/5"
+                fallbackText="Image not available"
+              />
+              
+              {/* Image Info Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                <h3 
+                  className="text-xl font-semibold text-white mb-2"
+                  style={{ fontFamily: 'Condiment, cursive' }}
+                >
+                  {zoomedImage.alt}
+                </h3>
+                <p className="text-white/80 text-sm">
+                  Click outside or press ESC to close
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 
   // Skip loading screen for tablet menu - show content immediately
@@ -178,6 +318,7 @@ export const TabletMenu: React.FC = () => {
   return (
     <div className="min-h-screen py-8">
       <CompanyHeader />
+      <ImageZoomModal />
       <div className="max-w-7xl mx-auto px-4">
 
         {/* Popular Items Section */}
@@ -192,10 +333,14 @@ export const TabletMenu: React.FC = () => {
               <div className="flex items-center gap-3">
                 <TrendingUp className="h-6 w-6" style={{ color: bakeryConfig.colors.text }} />
                 <h2 
-                  className="text-2xl font-bold"
+                  className="text-2xl text-white drop-shadow-lg"
                   style={{ 
-                    color: bakeryConfig.colors.text,
-                    fontFamily: 'Condiment, cursive'
+                    fontFamily: 'Merriweather, serif', 
+                    fontOpticalSizing: 'auto',
+                    fontWeight: '400',
+                    fontStyle: 'normal',
+                    fontVariationSettings: '"wdth" 100',
+                    lineHeight: '1.2'
                   }}
                 >
                   Customer Favorites
@@ -228,7 +373,13 @@ export const TabletMenu: React.FC = () => {
                       boxShadow: `0 4px 20px ${bakeryConfig.colors.shadow}`
                     }}
                   >
-                    <div className="relative h-20 w-full rounded-xl overflow-hidden mb-3">
+                    <div 
+                      className="relative h-20 w-full rounded-xl overflow-hidden mb-3 cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setZoomedImage({ src: item.image, alt: item.name });
+                      }}
+                    >
                       <Image
                         src={item.image}
                         alt={item.name}
@@ -237,6 +388,14 @@ export const TabletMenu: React.FC = () => {
                       />
                       <div className="absolute top-1 right-1">
                         <Star className="h-4 w-4 fill-current text-yellow-400" />
+                      </div>
+                      {/* Zoom indicator */}
+                      <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-all duration-300 flex items-center justify-center opacity-0 hover:opacity-100">
+                        <div className="p-2 rounded-full bg-white/20 backdrop-blur-sm">
+                          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                          </svg>
+                        </div>
                       </div>
                     </div>
                     <h3 className="text-sm font-semibold mb-1 truncate" style={{ color: bakeryConfig.colors.text }}>
@@ -452,11 +611,17 @@ export const TabletMenu: React.FC = () => {
                   >
                     {/* Left side - Image, Name and Category */}
                     <div className="flex items-center gap-4 flex-1">
-                      <div className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
+                      <div 
+                        className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setZoomedImage({ src: item.image, alt: item.name });
+                        }}
+                      >
                         <Image
                           src={item.image}
                           alt={item.name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                           fallbackText=""
                         />
                         {item.popular && (
@@ -464,6 +629,14 @@ export const TabletMenu: React.FC = () => {
                             <Star className="h-4 w-4 fill-current text-yellow-400" />
                           </div>
                         )}
+                        {/* Zoom indicator */}
+                        <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-all duration-300 flex items-center justify-center opacity-0 hover:opacity-100">
+                          <div className="p-1 rounded-full bg-white/20 backdrop-blur-sm">
+                            <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                            </svg>
+                          </div>
+                        </div>
                       </div>
                       
                       <div className="flex-1 min-w-0">
@@ -545,10 +718,14 @@ export const TabletMenu: React.FC = () => {
                                 {/* Header */}
                                 <div>
                                   <h4 
-                                    className="text-xl font-semibold mb-2"
+                                    className="text-xl text-white drop-shadow-lg mb-2"
                                     style={{ 
-                                      color: bakeryConfig.colors.text,
-                                      fontFamily: 'Condiment, cursive'
+                                      fontFamily: 'Merriweather, serif', 
+                                      fontOpticalSizing: 'auto',
+                                      fontWeight: '700',
+                                      fontStyle: 'normal',
+                                      fontVariationSettings: '"wdth" 100',
+                                      lineHeight: '1.2'
                                     }}
                                   >
                                     {item.name}
@@ -567,7 +744,7 @@ export const TabletMenu: React.FC = () => {
                                     className="text-lg leading-relaxed"
                                     style={{ color: bakeryConfig.colors.text }}
                                   >
-                                    {item.description}
+                                    <span className="font-semibold">Description:</span> {item.description}
                                   </p>
                                 </div>
 
@@ -668,7 +845,10 @@ export const TabletMenu: React.FC = () => {
 
                             {/* Right Side - Image (1/3 width) */}
                             <div className="relative">
-                              <div className="relative h-80 lg:h-96 rounded-xl overflow-hidden">
+                              <div 
+                                className="relative h-80 lg:h-96 rounded-xl overflow-hidden cursor-pointer"
+                                onClick={() => setZoomedImage({ src: item.image, alt: item.name })}
+                              >
                                 <Image
                                   src={item.image}
                                   alt={item.name}
@@ -676,6 +856,14 @@ export const TabletMenu: React.FC = () => {
                                   fallbackText="Image not available"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                                {/* Zoom indicator */}
+                                <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-all duration-300 flex items-center justify-center opacity-0 hover:opacity-100">
+                                  <div className="p-3 rounded-full bg-white/20 backdrop-blur-sm">
+                                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                                    </svg>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -754,11 +942,17 @@ export const TabletMenu: React.FC = () => {
                         >
                             {/* Left side - Image, Name and Details */}
                             <div className="flex items-center gap-4 flex-1">
-                              <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                              <div 
+                                className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 cursor-pointer"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setZoomedImage({ src: item.image, alt: item.name });
+                                }}
+                              >
                                 <Image
                                   src={item.image}
                                   alt={item.name}
-                                  className="w-full h-full object-cover"
+                                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                                   fallbackText=""
                                 />
                                 {item.popular && (
@@ -766,6 +960,14 @@ export const TabletMenu: React.FC = () => {
                                     <Star className="h-3 w-3 fill-current text-yellow-400" />
                                   </div>
                                 )}
+                                {/* Zoom indicator */}
+                                <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-all duration-300 flex items-center justify-center opacity-0 hover:opacity-100">
+                                  <div className="p-1 rounded-full bg-white/20 backdrop-blur-sm">
+                                    <svg className="w-2 h-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                                    </svg>
+                                  </div>
+                                </div>
                               </div>
                               
                               <div className="flex-1 min-w-0">
@@ -843,10 +1045,14 @@ export const TabletMenu: React.FC = () => {
                                         {/* Header */}
                                         <div>
                                           <h4 
-                                            className="text-xl font-semibold mb-2"
+                                            className="text-xl text-white drop-shadow-lg mb-2"
                                             style={{ 
-                                              color: bakeryConfig.colors.text,
-                                              fontFamily: 'Condiment, cursive'
+                                              fontFamily: 'Merriweather, serif', 
+                                              fontOpticalSizing: 'auto',
+                                              fontWeight: '700',
+                                              fontStyle: 'normal',
+                                              fontVariationSettings: '"wdth" 100',
+                                              lineHeight: '1.2'
                                             }}
                                           >
                                             {item.name}
@@ -865,7 +1071,7 @@ export const TabletMenu: React.FC = () => {
                                             className="text-lg leading-relaxed"
                                             style={{ color: bakeryConfig.colors.text }}
                                           >
-                                            {item.description}
+                                            <span className="font-semibold">Description:</span> {item.description}
                                           </p>
                                         </div>
 
@@ -966,7 +1172,10 @@ export const TabletMenu: React.FC = () => {
 
                                     {/* Right Side - Image (1/3 width) */}
                                   <div className="relative">
-                                      <div className="relative h-80 lg:h-96 rounded-xl overflow-hidden">
+                                      <div 
+                                        className="relative h-80 lg:h-96 rounded-xl overflow-hidden cursor-pointer"
+                                        onClick={() => setZoomedImage({ src: item.image, alt: item.name })}
+                                      >
                                       <Image
                                         src={item.image}
                                         alt={item.name}
@@ -974,6 +1183,14 @@ export const TabletMenu: React.FC = () => {
                                         fallbackText="Image not available"
                                       />
                                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                                      {/* Zoom indicator */}
+                                      <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-all duration-300 flex items-center justify-center opacity-0 hover:opacity-100">
+                                        <div className="p-3 rounded-full bg-white/20 backdrop-blur-sm">
+                                          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                                          </svg>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>

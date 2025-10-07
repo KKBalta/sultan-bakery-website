@@ -53,10 +53,14 @@ export const Footer: React.FC = () => {
             className="lg:col-span-2"
           >
             <h3 
-              className="text-2xl font-bold mb-4"
+              className="text-2xl text-white drop-shadow-lg mb-4"
               style={{ 
-                color: bakeryConfig.colors.text,
-                fontFamily: 'Condiment, cursive'
+                fontFamily: 'Merriweather, serif', 
+                fontOpticalSizing: 'auto',
+                fontWeight: '400',
+                fontStyle: 'normal',
+                fontVariationSettings: '"wdth" 100',
+                lineHeight: '1.2'
               }}
             >
               {bakeryConfig.name}
