@@ -118,7 +118,7 @@ export const About: React.FC = () => {
                 transition={reducedMotion ? {} : { duration: 0.3 }}
               >
                 <img
-                  src="/src/assets/images/DSC06486.webp"
+                  src="/assets/images/DSC06491-optimized.png"
                   alt="Sultan Bakery showcase"
                   className="w-full h-96 object-cover"
                 />

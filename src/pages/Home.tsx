@@ -31,17 +31,17 @@ const HeroCarousel: React.FC = () => {
   const mobileContent = [
     {
       type: 'video',
-      src: "https://res.cloudinary.com/djdp7vvpm/video/upload/v1759248698/laurasanibel_take_one_piece_with_fork_--ar_5191_--video_1_4ff601cf-1d72-4002-b49f-7e255ec6ec7a_0_uddpqa.mp4",
+      src: "https://res.cloudinary.com/dieihpdkt/video/upload/v1759933205/laurasanibel_take_one_piece_with_fork_--ar_5191_--video_1_4ff601cf-1d72-4002-b49f-7e255ec6ec7a_0_uddpqa_zwhekp.mp4",
       alt: "Fresh food preparation"
     },
     {
       type: 'video',
-      src: "https://res.cloudinary.com/djdp7vvpm/video/upload/v1759248515/tyler_86524_creamy_spinach_and_marsala_sauce_being_drag_by_a__bd48f50d-2c35-42f9-b3dd-6ebdb7467623_0_kqorsa.mp4",
+      src: "https://res.cloudinary.com/dieihpdkt/video/upload/v1759933206/tyler_86524_creamy_spinach_and_marsala_sauce_being_drag_by_a__bd48f50d-2c35-42f9-b3dd-6ebdb7467623_0_kqorsa_ybs5ap.mp4",
       alt: "Creamy spinach and marsala sauce"
     },
     {
       type: 'video',
-      src: "https://res.cloudinary.com/djdp7vvpm/video/upload/v1759876714/hamid_massghati_photorealistic_cinematic_5s_video_of_Mini_Mar_a7275d7d-b98f-49f6-92e6-64abfadd1fdd_0_gmsjmg.mp4",
+      src: "https://res.cloudinary.com/dieihpdkt/video/upload/v1759933208/hamid_massghati_photorealistic_cinematic_5s_video_of_Mini_Mar_a7275d7d-b98f-49f6-92e6-64abfadd1fdd_0_gmsjmg_bhybxt.mp4",
       alt: "Photorealistic cinematic bakery video"
     }
   ];
@@ -49,22 +49,22 @@ const HeroCarousel: React.FC = () => {
   const desktopContent = [
     {
       type: 'image',
-      src: "/src/assets/images/main.webp",
+      src: "/assets/images/DSC06491-optimized.png",
       alt: "Fresh bakery goods"
     },
     {
       type: 'image',
-      src: "/src/assets/images/DSC06491-optimized.webp",
+      src: "/assets/images/DSC06486.png",
       alt: "Delicious pastries"
     },
     {
       type: 'image',
-      src: "/src/assets/images/DSC06486.webp",
+      src: "/assets/images/DSCF5820.jpg",
       alt: "Artisan bread and desserts"
     },
     {
       type: 'image',
-      src: "/src/assets/images/DSCF5820.jpg",
+      src: "/assets/images/main.png",
       alt: "Fresh ingredients and bakery items"
     }
   ];
@@ -201,7 +201,7 @@ export const Home: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             >
               <img
-                src="/src/assets/images/Sultan_Logo.png"
+                src="/assets/images/Sultan_Logo.png"
                 alt="Sultan Bakery & Cafe Logo"
               className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-2xl"
                 style={{
@@ -276,7 +276,7 @@ export const Home: React.FC = () => {
                 transition={{ duration: 0.3 }}
               >
                 <img
-                  src="/src/assets/images/DSC06491-optimized.webp"
+                  src="/assets/images/DSC06491-optimized.png"
                   alt="Delicious home-style meal"
                   className="w-full h-96 object-cover"
                 />

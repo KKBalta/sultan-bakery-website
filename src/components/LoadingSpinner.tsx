@@ -81,7 +81,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <img
-              src="/src/assets/images/Sultan_Logo.png"
+              src="/assets/images/Sultan_Logo.png"
               alt="Sultan Bakery"
               className="w-16 h-16 object-contain mx-auto"
               style={{
@@ -205,7 +205,7 @@ export const FullPageLoading: React.FC<{ text?: string }> = ({ text = 'Loading S
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <img
-            src="/src/assets/images/Sultan_Logo.png"
+            src="/assets/images/Sultan_Logo.png"
             alt="Sultan Bakery"
             className="w-96 h-96 md:w-[28rem] md:h-[28rem] lg:w-[32rem] lg:h-[32rem] object-contain mx-auto"
             style={{

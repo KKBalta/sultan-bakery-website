@@ -155,7 +155,7 @@ export const TabletMenu: React.FC = () => {
     >
       <div className="flex items-center justify-between mb-4">
         <img 
-          src="/src/assets/images/Sultan_Logo.png" 
+          src="/assets/images/Sultan_Logo.png" 
           alt={bakeryConfig.name}
           className="w-16 h-16 object-contain"
           onError={(e) => {
