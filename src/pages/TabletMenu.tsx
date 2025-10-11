@@ -4,11 +4,12 @@ import { bakeryConfig } from '../config/bakeryConfig';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Filter, X, Heart, Star, TrendingUp, Clock, DollarSign, SortAsc, SortDesc, Flame, Ruler, CheckCircle, XCircle, Crown, Utensils, RefreshCw } from 'lucide-react';
 import { Image } from '../components/Image';
+import { WakeUpLoader } from '../components/WakeUpLoader';
 
 type SortOption = 'popular' | 'price-low' | 'price-high' | 'name' | 'prep-time';
 
 export const TabletMenu: React.FC = () => {
-  const { menuItems, categories, loading, error, isRefreshing, lastUpdated, cacheAge } = useMenuData();
+  const { menuItems, categories, loading, error, isRefreshing, lastUpdated, cacheAge, refresh } = useMenuData();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>('');
@@ -317,6 +318,7 @@ export const TabletMenu: React.FC = () => {
 
   return (
     <div className="min-h-screen py-8">
+      <WakeUpLoader duration={2000} onWakeUp={refresh} />
       <CompanyHeader />
       <ImageZoomModal />
       <div className="max-w-7xl mx-auto px-4">
